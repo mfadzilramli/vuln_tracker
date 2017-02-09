@@ -1,0 +1,3 @@
+$('#myEditForm').remove()
+$('#editForm_<%= @affected_host.id %>').show()
+$('#editForm_<%= @affected_host.id %>').html('<%= j render partial: "details", locals: { host: @affected_host } %>')

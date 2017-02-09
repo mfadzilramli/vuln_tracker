@@ -11,7 +11,7 @@
   .panel-body
     %table.table.table-hover
       %thead
-        %tr{ bgcolor: '#0099CC' }
+        %tr{ bgcolor: '#ce93d8' }
           %th VID
           %th Vulnerability Name
           %th Services
@@ -25,13 +25,13 @@
             %td= "#{vuln.port} / #{vuln.svc_name} / #{vuln.protocol}"
             - case vuln.severity
               - when 1
-                %td{ bgcolor: '#d9ffcc', align: 'middle' } Low
+                %td{ bgcolor: '#c8e6c9', align: 'middle' } Low
               - when 2
-                %td{ bgcolor: '#ffffcc', align: 'middle' } Medium
+                %td{ bgcolor: '#fff9c4', align: 'middle' } Medium
               - when 3
-                %td{ bgcolor: '#ffd9cc', align: 'middle' } High
+                %td{ bgcolor: '#ffe0b2', align: 'middle' } High
               - when 4
-                %td{ bgcolor: '#ff8080', align: 'middle' } Critical
+                %td{ bgcolor: '#ffcdd2', align: 'middle' } Critical
             %td.col-md-7
               - if vuln.output?
                 %pre= vuln.output

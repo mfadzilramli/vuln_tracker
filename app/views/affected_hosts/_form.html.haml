@@ -1,0 +1,19 @@
+= form_for @affected_host, remote: true do |f|
+  .panel.panel-default{ id: 'myEditForm'}
+    .panel-heading
+      = "Host Details: #{@affected_host.host_ip}"
+    .panel-body
+      %table.table
+        %thead
+          %th Host FQDN
+          %th Netbios Name
+          %th MAC Address
+          %th Operating System
+        %tbody
+          %td= f.text_field :host_fqdn, class: "form-control"
+          %td= f.text_field :netbios_name, class: "form-control"
+          %td= f.text_field :mac_address, class: "form-control"
+          %td.col-sm-6
+            = f.text_field :os, class: "form-control"
+    .panel-footer
+      = f.submit :update, class: "btn btn-primary"

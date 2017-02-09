@@ -1,0 +1,19 @@
+.panel.panel-default{ id: "editForm_#{host.id}"}
+  .panel-heading
+    = "Host Details: #{host.host_ip}"
+  .panel-body
+    %table.table
+      %thead
+        %th Host FQDN
+        %th Netbios Name
+        %th MAC Address
+        %th Operating System
+      %tbody
+        %td= host.host_fqdn
+        %td= host.netbios_name
+        %td= host.mac_address
+        %td.col-sm-6
+          - if host.os?
+            %pre= host.os
+  .panel-footer
+    = link_to 'Edit', edit_affected_host_path(host), remote: true, class: "btn btn-default"

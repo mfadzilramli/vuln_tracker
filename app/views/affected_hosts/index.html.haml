@@ -4,47 +4,30 @@
   .panel-body
     %table.table.table-striped
       %thead
-        %tr{ bgcolor: '#0099CC' }
+        %tr{ bgcolor: '#ce93d8' }
           %th.center{ rowspan: 2 } No.
           %th.center{ rowspan: 2 } IP Address
-          %th.center{ rowspan: 2 } Host FQDN
-          %th.center{ rowspan: 2 } Netbios Name
+          %th.center{ rowspan: 2 } Scan Date
+          %th.center{ rowspan: 2 } More Details
           %th.center{ colspan: 4 } Severity
         %tr
-          %th.center{ bgcolor: '#ff8080' } Critical
-          %th.center{ bgcolor: '#ffd9cc' } High
-          %th.center{ bgcolor: '#ffffcc' } Medium
-          %th.center{ bgcolor: '#d9ffcc' } Low
+          %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
+          %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
+          %th.center.col-sm-1{ bgcolor: '#fff176' } Medium
+          %th.center.col-sm-1{ bgcolor: '#81c784' } Low
       %tbody
         - @affected_hosts.each_with_index do |host, index|
           %tr
             %td.center= index + 1
             %td.center= link_to host.host_ip, show_vulnerability_path(host.id)
-            %td.center= host.host_fqdn
-            %td.center= host.netbios_name
-            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 4).count
-            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 3).count
-            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 2).count
-            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 1).count
-
-  -#   %th No.
-  -#   %th IP Address
-  -#   %th Host FQDN
-  -#   %th Netbios
-  -#   %th MAC Address
-  -#   %th Operating System
-  -#   %th Scan Start
-  -#   %th Scan End
-  -# %tbody
-  -#   - @affected_hosts.each_with_index do |host, index|
-  -#     %tr
-  -#       %td= index + 1
-  -#       %td= link_to host.host_ip, show_vulnerability_path(host.id)
-  -#       %td= host.host_fqdn
-  -#       %td= host.netbios_name
-  -#       %td= host.mac_address
-  -#       %td
-  -#         - if host.os?
-  -#           %pre= host.os
-  -#       %td= host.scan_start
-  -#       %td= host.scan_end
+            %td.center= host.scan_start
+            %td.center
+              = link_to "#index_#{host.id}", class: "btn btn-xs", data: { toggle: 'collapse' } do
+                %span.glyphicon.glyphicon-triangle-bottom{aria_hidden: "true"}
+            %td.center{ bgcolor: '#ffcdd2' }= Vulnerability.where(affected_host_id: host.id).where(severity: 4).count
+            %td.center{ bgcolor: '#ffe0b2' }= Vulnerability.where(affected_host_id: host.id).where(severity: 3).count
+            %td.center{ bgcolor: '#fff9c4' }= Vulnerability.where(affected_host_id: host.id).where(severity: 2).count
+            %td.center{ bgcolor: '#c8e6c9' }= Vulnerability.where(affected_host_id: host.id).where(severity: 1).count
+          %tr.collapse{ id: "index_#{host.id}" }
+            %td{ colspan: '100%'}
+              = render partial: 'details', locals: { host: host }

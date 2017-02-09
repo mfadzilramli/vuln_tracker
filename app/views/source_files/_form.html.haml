@@ -8,9 +8,9 @@
 
   .field
     = f.label :title
-    = f.text_field :title
+    = f.text_field :title, class: "form-control", style: "width: 300px"
   .field
     = f.label :data
     = f.file_field :data
   .actions
-    = f.submit 'Upload'
+    = f.submit 'Upload', class: "btn btn-primary"
