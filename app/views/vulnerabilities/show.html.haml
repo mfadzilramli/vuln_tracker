@@ -1,0 +1,68 @@
+
+- affected_host = @host.host_ip
+- if @host.host_fqdn?
+  - affected_host << " (#{@host.host_fqdn})"
+- elsif @host.netbios_name?
+  - affected_host << " (#{@host.netbios_name})"
+
+.panel.panel-default
+  .panel-heading.center
+    %h3= affected_host
+  .panel-body
+    %table.table.table-hover
+      %thead
+        %tr{ bgcolor: '#0099CC' }
+          %th VID
+          %th Vulnerability Name
+          %th Services
+          %th Severity
+          %th Output
+      %tbody
+        - @vulns.each do |vuln|
+          %tr
+            %td= vuln.id
+            %td= vuln.plugin_name
+            %td= "#{vuln.port} / #{vuln.svc_name} / #{vuln.protocol}"
+            - case vuln.severity
+              - when 1
+                %td{ bgcolor: '#d9ffcc', align: 'middle' } Low
+              - when 2
+                %td{ bgcolor: '#ffffcc', align: 'middle' } Medium
+              - when 3
+                %td{ bgcolor: '#ffd9cc', align: 'middle' } High
+              - when 4
+                %td{ bgcolor: '#ff8080', align: 'middle' } Critical
+            %td.col-md-7
+              - if vuln.output?
+                %pre= vuln.output
+
+
+-# .alert.alert-success
+-#   %h3{ align: 'center' }= affected_host
+-#
+-# %br
+-# %table.table.table-hover
+-#   %thead
+-#     %th VID
+-#     %th Vulnerability Name
+-#     %th Services
+-#     %th Severity
+-#     %th Output
+-#   %tbody
+-#     - @vulns.each do |vuln|
+-#       %tr
+-#         %td= vuln.id
+-#         %td= vuln.plugin_name
+-#         %td= "#{vuln.port} / #{vuln.svc_name} / #{vuln.protocol}"
+-#         - case vuln.severity
+-#           - when 1
+-#             %td{ bgcolor: '#d9ffcc', align: 'middle' } Low
+-#           - when 2
+-#             %td{ bgcolor: '#ffffcc', align: 'middle' } Medium
+-#           - when 3
+-#             %td{ bgcolor: '#ffd9cc', align: 'middle' } High
+-#           - when 4
+-#             %td{ bgcolor: '#ff8080', align: 'middle' } Critical
+-#         %td.col-md-7
+-#           - if vuln.output?
+-#             %pre= vuln.output

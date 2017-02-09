@@ -1,0 +1,53 @@
+%p#notice= notice
+
+
+-# %table
+-#   %thead
+-#     %th IP Address
+-#     %th Host FQDN
+-#     %th Netbios
+-#     %th MAC Address
+-#     %th Operating System
+-#     %th Scan Start
+-#     %th Scan End
+-#   %tbody
+-#     - @affected_hosts.each do |host|
+-#       %tr
+-#         %td= link_to host.host_ip, show_vulnerability_path(host.id)
+-#         %td= host.host_fqdn
+-#         %td= host.netbios_name
+-#         %td= host.mac_address
+-#         %td
+-#           %pre= host.os
+-#         %td= host.scan_start
+-#         %td= host.scan_end
+.panel.panel-default
+  .panel-heading
+  .panel-body
+    %table.table
+      %thead
+        %tr{ bgcolor: '#0099CC' }
+          %th Title
+          %th.center Host Count
+          %th.center Total
+          %th.center{ bgcolor: '#ff8080' } Critical
+          %th.center{ bgcolor: '#ffd9cc' } High
+          %th.center{ bgcolor: '#ffffcc' } Medium
+          %th.center{ bgcolor: '#d9ffcc' } Low
+      %tbody
+        %tr
+          %td= link_to @source_file.title, affected_hosts_path(source_id: @source_file.id)
+          %td.col-sm-1.center= @affected_hosts.count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 4').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 3').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
+          / %td= source.filename
+          / %td= link_to .count, affected_hosts_path(source_id: source.id)
+
+    / = link_to 'Edit', edit_source_file_path(@source_file)
+    / \|
+
+    .panel-footer
+      = link_to 'Back', source_files_path, class: "btn btn-default"

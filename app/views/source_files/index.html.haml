@@ -1,0 +1,27 @@
+.panel.panel-default
+  .panel-heading
+    %h3 Source Files
+  .panel-body
+    %table.table
+      %thead
+        %tr{ bgcolor: '#0099CC' }
+          %th Title
+          %th Filename
+          %th
+      %tbody
+        - @source_files.each do |source_file|
+          %tr
+            %td= source_file.title
+            %td= source_file.filename
+            %td{ align: 'right' }
+              = link_to  source_file, class: "btn btn-xs" do
+                %span.glyphicon.glyphicon-eye-open{aria_hidden: "true"}
+              &nbsp;&nbsp;
+              = link_to edit_source_file_path(source_file), class: "btn btn-xs" do
+                %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              &nbsp;&nbsp;
+              = link_to source_file, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-xs" do
+                %i.glyphicon.glyphicon-trash{aria_hidden: "true"}
+
+    .panel-footer
+      = link_to 'Add New Source file', new_source_file_path, class: "btn btn-default"

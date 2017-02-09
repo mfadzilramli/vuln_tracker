@@ -1,0 +1,23 @@
+%h1 AffectedHosts#show
+%p Find me in app/views/affected_hosts/show.html.haml
+
+-# %table
+-#   %thead
+-#     %th IP Address
+-#     %th Host FQDN
+-#     %th Netbios
+-#     %th MAC Address
+-#     %th Operating System
+-#     %th Scan Start
+-#     %th Scan End
+-#   %tbody
+-#     - @affected_hosts.each do |host|
+-#       %tr
+-#         %td= link_to host.host_ip, show_vulnerability_path(host.id)
+-#         %td= host.host_fqdn
+-#         %td= host.netbios_name
+-#         %td= host.mac_address
+-#         %td
+-#           %pre= host.os
+-#         %td= host.scan_start
+-#         %td= host.scan_end

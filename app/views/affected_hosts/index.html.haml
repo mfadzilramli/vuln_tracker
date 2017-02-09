@@ -1,0 +1,50 @@
+.panel.panel-default
+  .panel-heading
+    %h3 Affected Hosts
+  .panel-body
+    %table.table.table-striped
+      %thead
+        %tr{ bgcolor: '#0099CC' }
+          %th.center{ rowspan: 2 } No.
+          %th.center{ rowspan: 2 } IP Address
+          %th.center{ rowspan: 2 } Host FQDN
+          %th.center{ rowspan: 2 } Netbios Name
+          %th.center{ colspan: 4 } Severity
+        %tr
+          %th.center{ bgcolor: '#ff8080' } Critical
+          %th.center{ bgcolor: '#ffd9cc' } High
+          %th.center{ bgcolor: '#ffffcc' } Medium
+          %th.center{ bgcolor: '#d9ffcc' } Low
+      %tbody
+        - @affected_hosts.each_with_index do |host, index|
+          %tr
+            %td.center= index + 1
+            %td.center= link_to host.host_ip, show_vulnerability_path(host.id)
+            %td.center= host.host_fqdn
+            %td.center= host.netbios_name
+            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 4).count
+            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 3).count
+            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 2).count
+            %td.center= Vulnerability.where(affected_host_id: host.id).where(severity: 1).count
+
+  -#   %th No.
+  -#   %th IP Address
+  -#   %th Host FQDN
+  -#   %th Netbios
+  -#   %th MAC Address
+  -#   %th Operating System
+  -#   %th Scan Start
+  -#   %th Scan End
+  -# %tbody
+  -#   - @affected_hosts.each_with_index do |host, index|
+  -#     %tr
+  -#       %td= index + 1
+  -#       %td= link_to host.host_ip, show_vulnerability_path(host.id)
+  -#       %td= host.host_fqdn
+  -#       %td= host.netbios_name
+  -#       %td= host.mac_address
+  -#       %td
+  -#         - if host.os?
+  -#           %pre= host.os
+  -#       %td= host.scan_start
+  -#       %td= host.scan_end
