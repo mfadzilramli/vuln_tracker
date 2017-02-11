@@ -1,26 +1,5 @@
-%p#notice= notice
+/%p#notice= notice
 
-
--# %table
--#   %thead
--#     %th IP Address
--#     %th Host FQDN
--#     %th Netbios
--#     %th MAC Address
--#     %th Operating System
--#     %th Scan Start
--#     %th Scan End
--#   %tbody
--#     - @affected_hosts.each do |host|
--#       %tr
--#         %td= link_to host.host_ip, show_vulnerability_path(host.id)
--#         %td= host.host_fqdn
--#         %td= host.netbios_name
--#         %td= host.mac_address
--#         %td
--#           %pre= host.os
--#         %td= host.scan_start
--#         %td= host.scan_end
 .panel.panel-default
   .panel-heading
   .panel-body
@@ -45,12 +24,7 @@
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 3').count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
-          / %td= source.filename
-          / %td= link_to .count, affected_hosts_path(source_id: source.id)
-
-    / = link_to 'Edit', edit_source_file_path(@source_file)
-    / \|
-
     .panel-footer
       = link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-default"
+      = link_to 'Add New Vulnerability', new_vulnerability_path(@source_file), class: "btn btn-default"
       = link_to 'Back', source_files_path, class: "btn btn-default"

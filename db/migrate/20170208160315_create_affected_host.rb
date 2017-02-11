@@ -6,8 +6,8 @@ class CreateAffectedHost < ActiveRecord::Migration[5.0]
       t.string  :netbios_name
       t.string  :mac_address
       t.string  :os
-      t.datetime  :scan_start
-      t.datetime  :scan_end
+      # t.datetime  :scan_start
+      # t.datetime  :scan_end
 
       t.timestamps
     end

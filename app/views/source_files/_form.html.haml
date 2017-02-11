@@ -8,9 +8,13 @@
 
   .field
     = f.label :title
-    = f.text_field :title, class: "form-control", style: "width: 300px"
-  .field
-    = f.label :data
-    = f.file_field :data
-  .actions
-    = f.submit 'Upload', class: "btn btn-primary"
+    = f.text_field :title, class: "form-control input-sm", style: "width: 300px"
+  - if (controller.action_name == 'edit')
+    .actions
+      = f.submit 'Update', class: "btn btn-primary"
+  - else
+    .field
+      = f.label :data
+      = f.file_field :data
+    .actions
+      = f.submit 'Upload', class: "btn btn-primary"

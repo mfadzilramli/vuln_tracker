@@ -97,9 +97,9 @@ class SourceFilesController < ApplicationController
             elsif tag.attributes['name'].value == 'operating-system'
               @host.os = tag.text
             elsif tag.attributes['name'].value == 'HOST_START'
-              @host.scan_start = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
-            elsif tag.attributes['name'].value == 'HOST_END'
-              @host.scan_end = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
+              @last_seen = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
+            # elsif tag.attributes['name'].value == 'HOST_END'
+            #   @host.scan_end = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
             end
           end
           @host.source_file_id = source_file_id
@@ -126,9 +126,16 @@ class SourceFilesController < ApplicationController
               @vuln.exploit_available = (item.xpath('./exploit_available').text == "true")? true : false
               @vuln.vuln_date = item.xpath('./vulnerability_publication_date').text
               @vuln.patch_date = item.xpath('./patch_publication_date').text
+              @vuln.last_seen = @last_seen
 
               @vuln.affected_host_id = @host.id
+
               @vuln.save
+
+              @remedy = RemedyAction.new
+              @remedy.status = 1
+              @remedy.vulnerability_id = @vuln.id
+              @remedy.save
             end
           end
         end

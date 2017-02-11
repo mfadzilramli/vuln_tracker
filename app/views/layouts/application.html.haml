@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %title Test1App
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body{:bgcolor => "#E6E6FA"}
+    .container
+      = render partial: 'layouts/navtopbar'
+      = yield

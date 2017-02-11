@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208172243) do
+ActiveRecord::Schema.define(version: 20170210030205) do
 
   create_table "affected_hosts", force: :cascade do |t|
     t.string   "host_ip"
@@ -18,12 +18,20 @@ ActiveRecord::Schema.define(version: 20170208172243) do
     t.string   "netbios_name"
     t.string   "mac_address"
     t.string   "os"
-    t.datetime "scan_start"
-    t.datetime "scan_end"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "source_file_id"
     t.index ["source_file_id"], name: "index_affected_hosts_on_source_file_id"
+  end
+
+  create_table "remedy_actions", force: :cascade do |t|
+    t.integer  "status"
+    t.string   "assigned_to"
+    t.text     "remarks"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "vulnerability_id"
+    t.index ["vulnerability_id"], name: "index_remedy_actions_on_vulnerability_id"
   end
 
   create_table "source_files", force: :cascade do |t|
@@ -53,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170208172243) do
     t.text     "synopsis"
     t.text     "solution"
     t.text     "output"
+    t.datetime "last_seen"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "affected_host_id"

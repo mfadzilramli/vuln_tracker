@@ -1,6 +1,6 @@
 .panel.panel-default
   .panel-heading
-    %h3 Source Files
+    %h3 Listing Source Files
   .panel-body
     %table.table
       %thead
@@ -14,14 +14,14 @@
             %td= source_file.title
             %td= source_file.filename
             %td{ align: 'right' }
-              = link_to  source_file, class: "btn btn-xs" do
+              = link_to  source_file, data: { toggle: "popover", trigger: "hover", placement: "top", content: "Show details" } do
                 %span.glyphicon.glyphicon-eye-open{aria_hidden: "true"}
               &nbsp;&nbsp;
-              = link_to edit_source_file_path(source_file), class: "btn btn-xs" do
+              = link_to edit_source_file_path(source_file), data: { toggle: "popover", trigger: "hover", placement: "top", content: "Edit source title" } do
                 %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
               &nbsp;&nbsp;
-              = link_to source_file, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-xs" do
+              = link_to source_file, :method => :delete, data: { toggle: "popover", trigger: "hover", content: "Delete this source", placement: "top", confirm: 'Are you sure?' } do
                 %i.glyphicon.glyphicon-trash{aria_hidden: "true"}
 
-    .panel-footer
-      = link_to 'New Source File', new_source_file_path, class: "btn btn-default"
+/    .panel-footer
+/      = link_to 'New Source File', new_source_file_path, class: "btn btn-default"
