@@ -16,15 +16,14 @@
           %th Vulnerability Name
           %th.center Services
           %th.center Severity
-          %th.center Last Seen
-          -# %th.center Output
           %th.center Status
+          %th.center Options
       %tbody
         - @vulns.each do |vuln|
           %tr
             %td.center= vuln.id
-            %td.col-md-5= vuln.plugin_name
-            %td.center= "#{vuln.port} / #{vuln.svc_name} / #{vuln.protocol}"
+            %td.col-md-5= vuln.vulnerability_name
+            %td.center= "#{vuln.port} / #{vuln.service_name} / #{vuln.protocol}"
             - case vuln.severity
               - when 1
                 %td.center{ bgcolor: '#c8e6c9' } Low
@@ -34,10 +33,8 @@
                 %td.center{ bgcolor: '#ffe0b2' } High
               - when 4
                 %td.center{ bgcolor: '#ffcdd2' } Critical
-            %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
-            -# %td.col-md-5.center
-            -#   - if vuln.output?
-            -#     %pre= vuln.output
+              - else
+                %td.center
             %td.center
               - case vuln.remedy_action.status
                 - when 1
@@ -46,3 +43,14 @@
                   IN-PROGRESS
                 - when 3
                   CLOSED
+            -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
+            %td.center
+              = link_to edit_vulnerability_path(vuln),
+                data: { toggle: "popover", trigger: "hover", content: "Edit",
+                placement: "top" } do
+                %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              &nbsp;
+              = link_to vulnerability_path(vuln), :method => :delete,
+                data: { toggle: "popover", trigger: "hover", content: "Delete this item",
+                placement: "top", confirm: 'Are you sure?' } do
+                %i.glyphicon.glyphicon-trash{aria_hidden: "true"}

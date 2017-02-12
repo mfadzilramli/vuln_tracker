@@ -95,7 +95,7 @@ class SourceFilesController < ApplicationController
             elsif tag.attributes['name'].value == 'mac-address'
               @host.mac_address = tag.text
             elsif tag.attributes['name'].value == 'operating-system'
-              @host.os = tag.text
+              @host.operating_system = tag.text
             elsif tag.attributes['name'].value == 'HOST_START'
               @last_seen = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
             # elsif tag.attributes['name'].value == 'HOST_END'
@@ -108,11 +108,11 @@ class SourceFilesController < ApplicationController
             if item.attributes['severity'].value.to_i > 0
               @vuln = Vulnerability.new
               @vuln.port = item.attributes['port'].value.to_i
-              @vuln.svc_name = item.attributes['svc_name'].value
+              @vuln.service_name = item.attributes['svc_name'].value
               @vuln.protocol = item.attributes['protocol'].value
               @vuln.severity = item.attributes['severity'].value.to_i
               @vuln.plugin_id = item.attributes['pluginID'].value.to_i
-              @vuln.plugin_name = item.attributes['pluginName'].value
+              @vuln.vulnerability_name = item.attributes['pluginName'].value
               @vuln.plugin_family = item.attributes['pluginFamily'].value
 
               @vuln.cvss_score = item.xpath('./cvss_base_score').text
@@ -124,7 +124,7 @@ class SourceFilesController < ApplicationController
               @vuln.solution = item.xpath('./solution').text
               @vuln.output = item.xpath('./plugin_output').text
               @vuln.exploit_available = (item.xpath('./exploit_available').text == "true")? true : false
-              @vuln.vuln_date = item.xpath('./vulnerability_publication_date').text
+              @vuln.vulnerability_date = item.xpath('./vulnerability_publication_date').text
               @vuln.patch_date = item.xpath('./patch_publication_date').text
               @vuln.last_seen = @last_seen
 

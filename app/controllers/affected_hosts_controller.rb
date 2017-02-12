@@ -1,10 +1,12 @@
 class AffectedHostsController < ApplicationController
-  before_action :set_affected_host, only: [:edit, :update]
-  before_action :set_source_file_id, only: [:index]
+  before_action :set_affected_host, only: [:edit, :update, :destroy]
 
   def index
+    @source_file = SourceFile.find(params[:source_id])
     if params[:search]
-      @affected_hosts = AffectedHost.where(source_file_id: params[:source_id]).where('host_ip LIKE ?', "%#{params[:search]}%")
+      @affected_hosts = AffectedHost.where(source_file_id: params[:source_id]).where(
+      'host_ip LIKE ?', "%#{params[:search]}%"
+      )
     else
       @affected_hosts = AffectedHost.where(source_file_id: params[:source_id])
     end
@@ -15,9 +17,25 @@ class AffectedHostsController < ApplicationController
   end
 
   def create
+    @affected_host = AffectedHost.new(affected_host_params)
+
+    respond_to do |format|
+      if @affected_host.save
+        format.html { redirect_to source_file_path(@affected_host.source_file_id),
+          notice: 'New affected host was successfully created.' }
+        format.json { render :show, status: :created, location: @affected_host }
+      else
+        format.html { render :new }
+        format.json { render json: @affected_host.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def edit
+  end
+
+  def new
+    @affected_host = AffectedHost.new
   end
 
   def update
@@ -36,6 +54,12 @@ class AffectedHostsController < ApplicationController
   end
 
   def destroy
+    @affected_host.destroy
+    respond_to do |format|
+      format.html { redirect_to search_affected_hosts_path(source_id: @affected_host.source_file_id),
+        notice: 'Affected host was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -49,11 +73,7 @@ class AffectedHostsController < ApplicationController
   # end
 
   def affected_host_params
-    params.fetch(:affected_host, {}).permit(:host_fqdn, :netbios_name, :mac_address, :os)
-  end
-
-  def set_source_file_id
-    @source_file = SourceFile.find(params[:source_id])
+    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :operating_system)
   end
 
 end

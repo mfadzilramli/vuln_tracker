@@ -3,7 +3,6 @@ class CreateRemedyActions < ActiveRecord::Migration[5.0]
     create_table :remedy_actions do |t|
       t.integer   :status
       t.string    :assigned_to
-      # t.datetime  :closed_at
       t.text      :remarks
 
       t.timestamps

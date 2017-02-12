@@ -1,0 +1,54 @@
+= form_for @vuln do |f|
+  .field
+    = f.hidden_field :affected_host_id, value: @vuln.affected_host_id
+  .row
+    .col-md-12
+      .field
+        = f.label "Vulnerability Name"
+        = f.text_field :vulnerability_name, class: "form-control"
+  .row
+    .col-md-3
+      .well
+        .field
+          = f.label :plugin_family
+          = f.text_field :plugin_family, class: "form-control"
+        .field
+          = f.label :cve
+          = f.text_field :cve, class: "form-control"
+        .field
+          = f.label :cvss_score
+          = f.text_field :cvss_score, class: "form-control"
+        .field
+          = f.label :port
+          = f.text_field :port, class: "form-control"
+        .field
+          = f.label "Service Name"
+          = f.text_field :service_name, class: "form-control"
+        .field
+          = f.label :protocol
+          = f.text_field :protocol, class: "form-control"
+        .field
+          = f.label :severity
+          = f.select :severity,
+            options_for_select([['Critical',4], ['High', 3], ['Medium', 2], ['Low', 1]], selected: @vuln.severity),
+            {},
+            { class: "form-control" }
+    .col-md-9
+
+      .field
+        = f.label :description
+        = f.text_area :description, class: "form-control", rows: 4
+      .field
+        = f.label :synopsis
+        = f.text_area :synopsis, class: "form-control", rows: 3
+      .field
+        = f.label :solution
+        = f.text_area :solution, class: "form-control", rows: 4
+      .field
+        = f.label :output
+        = f.text_area :output, class: "form-control", rows: 5
+  .row
+    .col-md-12{ align: "right"}
+      .action
+        = f.submit 'Update', class: "btn btn-default"
+        = link_to "Back", :back, { class: "btn btn-default" }

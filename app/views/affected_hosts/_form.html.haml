@@ -14,6 +14,7 @@
           %td= f.text_field :netbios_name, class: "form-control"
           %td= f.text_field :mac_address, class: "form-control"
           %td.col-sm-6
-            = f.text_field :os, class: "form-control"
+            = f.text_field :operating_system, class: "form-control"
     .panel-footer
-      = f.submit :update, class: "btn btn-primary"
+      = f.submit :update, class: "btn btn-default"
+      = link_to "Back", :back, { class: "btn btn-default" }

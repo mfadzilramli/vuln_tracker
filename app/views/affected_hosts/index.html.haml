@@ -15,14 +15,14 @@
         %p.navbar-text.navbar-right
           Search Host
 
-    %table.table.table-striped
+    %table.table
       %thead
         %tr{ bgcolor: '#ce93d8' }
           %th.center{ rowspan: 2 } No.
           %th.center{ rowspan: 2 } IP Address
           /%th.center{ rowspan: 2 } Scan Date
-          %th.center{ rowspan: 2 } More Details
           %th.center{ colspan: 4 } Severity
+          %th.center{ rowspan: 2 } Options
         %tr
           %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
           %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
@@ -31,16 +31,19 @@
       %tbody
         - @affected_hosts.each_with_index do |host, index|
           %tr
-            %td.center= index + 1
+            %td.center= host.id
             %td.center= link_to host.host_ip, show_vulnerability_path(host.id)
             /%td.center= host.scan_start
-            %td.center
-              = link_to "#index_#{host.id}", class: "btn btn-xs", data: { toggle: 'collapse' } do
-                %span.glyphicon.glyphicon-triangle-bottom{aria_hidden: "true"}
+
             %td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
             %td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
             %td.center{ bgcolor: '#fff9c4' }= host.vulnerabilities.where(severity: 2).count
             %td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
+            %td.center
+              .btn-group.btn-group-sm{ role: 'group', aria: false}
+                = link_to 'Edit',"#index_#{host.id}", class: "btn btn-default", data: { toggle: 'collapse' }
+                = link_to 'Add', new_vulnerability_path(host), class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Add Vulnerability" }
+                = link_to 'Remove', host, method: :delete, class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Delete", confirm: 'Are you sure?' }
           %tr.collapse{ id: "index_#{host.id}" }
             %td{ colspan: '100%'}
               = render partial: 'details', locals: { host: host }

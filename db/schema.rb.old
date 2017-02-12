@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20170210030205) do
     t.string   "netbios_name"
     t.string   "mac_address"
     t.string   "operating_system"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "source_file_id"
     t.index ["source_file_id"], name: "index_affected_hosts_on_source_file_id"
   end
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 20170210030205) do
     t.text     "solution"
     t.text     "output"
     t.datetime "last_seen"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "affected_host_id"
     t.index ["affected_host_id"], name: "index_vulnerabilities_on_affected_host_id"
   end
