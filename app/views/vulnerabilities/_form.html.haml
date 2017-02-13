@@ -13,10 +13,10 @@
           = f.label :plugin_family
           = f.text_field :plugin_family, class: "form-control"
         .field
-          = f.label :cve
+          = f.label :cve, 'CVE'
           = f.text_field :cve, class: "form-control"
         .field
-          = f.label :cvss_score
+          = f.label :cvss_score, 'CVSS score'
           = f.text_field :cvss_score, class: "form-control"
         .field
           = f.label :port
@@ -51,4 +51,4 @@
     .col-md-12{ align: "right"}
       .action
         = f.submit 'Update', class: "btn btn-default"
-        = link_to "Back", :back, { class: "btn btn-default" }
+        = link_to "Back", :back, { class: "btn btn-primary" }

@@ -1,8 +1,42 @@
 /%p#notice= notice
 
 .panel.panel-default
-  .panel-heading
+  /.panel-heading
   .panel-body
+    .well
+      .row
+        .col-md-6
+          %table
+            %thead
+              %th.center
+                %h4 Vulnerabilities by Severity
+            %tbody
+              %td.center
+                - options = { height: '250px' }
+                = pie_chart @pie_data, options
+        .col-md-6
+          %table
+            %thead
+              %th.center
+                %h4 Vulnerabilities by Group
+            %tbody
+              %td.center
+                - options = { height: '250px' }
+                = radar_chart @radar_data, options
+
+        /%table
+        /  %thead
+        /    %th.center
+        /      %h4 Vulnerabilities by Severity
+        /    %th.center
+        /      %h4 Vulnerabilities by Group
+        /  %tbody
+        /    %td.center
+        /      - options = { height: '250px' }
+        /      = pie_chart @pie_data, options
+        /    %td.center
+        /      - options = { height: '250px'}
+        /      = radar_chart @radar_data, options
     %table.table
       %thead
         %tr{ bgcolor: '#ce93d8' }
