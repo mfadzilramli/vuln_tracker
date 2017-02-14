@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :vulnerabilities
   resources :affected_hosts
   resources :source_files
+  resources :groups
+
   root 'source_files#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

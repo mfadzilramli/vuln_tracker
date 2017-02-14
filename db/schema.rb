@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210030205) do
+ActiveRecord::Schema.define(version: 20170214012211) do
 
   create_table "affected_hosts", force: :cascade do |t|
     t.string   "host_ip"
@@ -22,6 +22,22 @@ ActiveRecord::Schema.define(version: 20170210030205) do
     t.datetime "updated_at",       null: false
     t.integer  "source_file_id"
     t.index ["source_file_id"], name: "index_affected_hosts_on_source_file_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "monitor_groups", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "source_files_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["group_id"], name: "index_monitor_groups_on_group_id"
+    t.index ["source_files_id"], name: "index_monitor_groups_on_source_files_id"
   end
 
   create_table "remedy_actions", force: :cascade do |t|
