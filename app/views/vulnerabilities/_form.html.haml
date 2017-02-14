@@ -4,13 +4,13 @@
   .row
     .col-md-12
       .field
-        = f.label "Vulnerability Name"
+        = f.label :vulnerability_name, "Vulnerability Name"
         = f.text_field :vulnerability_name, class: "form-control"
   .row
     .col-md-3
       .well
         .field
-          = f.label :plugin_family
+          = f.label :plugin_family, 'Group'
           = f.text_field :plugin_family, class: "form-control"
         .field
           = f.label :cve, 'CVE'
@@ -18,11 +18,12 @@
         .field
           = f.label :cvss_score, 'CVSS score'
           = f.text_field :cvss_score, class: "form-control"
+      .well
         .field
           = f.label :port
           = f.text_field :port, class: "form-control"
         .field
-          = f.label "Service Name"
+          = f.label :service_name
           = f.text_field :service_name, class: "form-control"
         .field
           = f.label :protocol
@@ -37,10 +38,10 @@
 
       .field
         = f.label :description
-        = f.text_area :description, class: "form-control", rows: 4
+        = f.text_area :description, class: "form-control", rows: 6
       .field
         = f.label :synopsis
-        = f.text_area :synopsis, class: "form-control", rows: 3
+        = f.text_area :synopsis, class: "form-control", rows: 4
       .field
         = f.label :solution
         = f.text_area :solution, class: "form-control", rows: 4

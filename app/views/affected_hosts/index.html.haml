@@ -32,8 +32,13 @@
         - @affected_hosts.each_with_index do |host, index|
           %tr
             %td.center= host.id
-            %td.center= link_to host.host_ip, show_vulnerability_path(host.id)
-            /%td.center= host.scan_start
+            %td.center
+              / = link_to show_vulnerability_path(host.id) do
+              = link_to "#index_#{host.id}", data: { toggle: 'collapse' } do
+                #{host.host_ip}
+                %span.caret
+
+            /%td.center= host.scan_start "#index_#{host.id}"
 
             %td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
             %td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
@@ -41,7 +46,7 @@
             %td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
             %td.center
               .btn-group.btn-group-sm{ role: 'group', aria: false}
-                = link_to 'Edit',"#index_#{host.id}", class: "btn btn-default", data: { toggle: 'collapse' }
+                = link_to 'View', show_vulnerability_path(host.id), class: "btn btn-default"
                 = link_to 'Add', new_vulnerability_path(host), class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Add Vulnerability" }
                 = link_to 'Remove', host, method: :delete, class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Delete", confirm: 'Are you sure?' }
           %tr.collapse{ id: "index_#{host.id}" }

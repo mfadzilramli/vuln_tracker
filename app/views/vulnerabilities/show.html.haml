@@ -15,6 +15,7 @@
           %th.center VID
           %th Vulnerability Name
           %th.center Services
+          %th.center Group
           %th.center Severity
           %th.center Status
           %th.center Options
@@ -24,6 +25,7 @@
             %td.center= vuln.id
             %td.col-md-5= vuln.vulnerability_name
             %td.center= "#{vuln.port} / #{vuln.service_name} / #{vuln.protocol}"
+            %td.center= vuln.plugin_family
             - case vuln.severity
               - when 1
                 %td.center{ bgcolor: '#c8e6c9' } Low
