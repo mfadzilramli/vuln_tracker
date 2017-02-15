@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-body
+    .well
+      %strong Listing Project Groups
+
+    %table.table
+      %thead
+        %tr
+          %th
+          %th
+          %th
+
+      %tbody
+        - @project_groups.each do |project_group|
+          %tr
+            %td= project_group.name
+            %td= link_to 'Show', project_group
+            %td= link_to 'Edit', edit_project_group_path(project_group)
+            %td= link_to 'Destroy', project_group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+    .panel-footer
+      = link_to 'New Project group', new_project_group_path, class: "btn btn-primary"

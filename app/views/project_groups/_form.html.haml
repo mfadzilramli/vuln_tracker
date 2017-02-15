@@ -1,0 +1,18 @@
+= form_for @project_group do |f|
+  - if @project_group.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project_group.errors.count, "error")} prohibited this project_group from being saved:"
+      %ul
+        - @project_group.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    = f.text_field :name, class: "form-control", style: "width: 300px"
+
+  .panel-footer
+    - if (controller.action_name == 'edit')
+      = f.submit 'Update', class: "btn btn-primary"
+      = link_to 'Back', project_groups_path, class: "btn btn-primary"
+    - else
+      = f.submit 'Save', class: "btn btn-primary"
+      = link_to 'Back', project_groups_path, class: "btn btn-primary"

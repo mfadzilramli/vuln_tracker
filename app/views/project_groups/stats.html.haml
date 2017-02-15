@@ -1,3 +1,7 @@
+%h3 STATS
+/# AffectedHost.where(source_file_id: pg.source_file_ids)
+- @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
+
 %p#notice= notice
 
 .panel.panel-default
@@ -26,7 +30,7 @@
     %table.table
       %thead
         %tr{ bgcolor: '#ce93d8' }
-          %th{ rowspan: 2 } Title
+          /%th{ rowspan: 2 } Title
           %th.center{ rowspan: 2 } Total Host
           %th.center{ colspan: 5, bgcolor: '#ce93d8' } Severity
         %tr
@@ -37,7 +41,7 @@
           %th.center{ bgcolor: '#d9ffcc' } Low
       %tbody
         %tr
-          %td= @source_file.title
+          /%td= @source_file.title
           %td.col-sm-1.center= @affected_hosts.count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 4').count
@@ -45,6 +49,6 @@
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
     .panel-footer
-      = link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-default"
-      = link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-default"
+      /= link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-default"
+      /= link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-default"
       = link_to 'Back', source_files_path, class: "btn btn-default"

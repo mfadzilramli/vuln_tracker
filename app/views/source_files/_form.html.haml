@@ -10,11 +10,11 @@
     = f.label :title
     = f.text_field :title, class: "form-control input-sm", style: "width: 300px"
   - if (controller.action_name == 'edit')
-    .actions
+    .panel-footer
       = f.submit 'Update', class: "btn btn-primary"
   - else
-    .field
+    .form-group
       = f.label :data
       = f.file_field :data
-    .actions
-      = f.submit 'Upload', data: { disable_with: "in-progress ..." }, class: "btn btn-primary"
+    .panel-footer
+      = f.submit 'Upload', data: { disable_with: "Please wait ..." }, class: "btn btn-primary"

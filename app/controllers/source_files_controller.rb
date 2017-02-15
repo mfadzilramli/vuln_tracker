@@ -37,7 +37,7 @@ class SourceFilesController < ApplicationController
 
     respond_to do |format|
       if @source_file.save
-        write_to_db(@source_file.data, @source_file.id)
+        write_to_db(@source_file)
         format.html { redirect_to @source_file, notice: 'Source file was successfully created.' }
         format.json { render :show, status: :created, location: @source_file }
       else
@@ -82,11 +82,11 @@ class SourceFilesController < ApplicationController
       params.fetch(:source_file, {}).permit(:title, :data)
     end
 
-    def write_to_db(nessus_data, source_file_id)
-      doc = Nokogiri::XML(nessus_data)
+    def write_to_db(source_file)
+      doc = Nokogiri::XML(source_file.data)
       doc.xpath('/NessusClientData_v2/Report').each do |report|
         report.xpath('./ReportHost').each do |host|
-          @host = AffectedHost.new
+          @host = source_file.affected_hosts.new
           host.xpath('./HostProperties/tag').each do |tag|
             if tag.attributes['name'].value == 'host-ip'
               @host.host_ip = tag.text
@@ -104,11 +104,11 @@ class SourceFilesController < ApplicationController
             #   @host.scan_end = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
             end
           end
-          @host.source_file_id = source_file_id
+          # @host.source_file_id = source_file_id
           @host.save
           host.xpath('./ReportItem').each do |item|
             if item.attributes['severity'].value.to_i > 0
-              @vuln = Vulnerability.new
+              @vuln = @host.vulnerabilities.new
               @vuln.port = item.attributes['port'].value.to_i
               @vuln.service_name = item.attributes['svc_name'].value
               @vuln.protocol = item.attributes['protocol'].value
@@ -130,14 +130,11 @@ class SourceFilesController < ApplicationController
               @vuln.patch_date = item.xpath('./patch_publication_date').text
               @vuln.last_seen = @last_seen
 
-              @vuln.affected_host_id = @host.id
-
+              # @vuln.affected_host_id = @host.id
               @vuln.save
 
-              @remedy = RemedyAction.new
-              @remedy.status = 1
-              @remedy.vulnerability_id = @vuln.id
-              @remedy.save
+              @remedy = @vuln.create_remedy_action!
+              # @remedy.save
             end
           end
         end

@@ -12,8 +12,10 @@ Rails.application.routes.draw do
   resources :vulnerabilities
   resources :affected_hosts
   resources :source_files
-  resources :groups
+  resources :project_groups
 
-  root 'source_files#index'
+  get 'project_groups/:id/stats', to: 'project_groups#stats', as: 'stats_project_group'
+
+  root 'project_groups#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

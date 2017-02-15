@@ -1,0 +1,31 @@
+/%p#notice= notice
+
+.panel.panel-default
+  .panel-body
+    .well
+      = @project_group.name
+
+    = form_for @project_group, method: :put do |f|
+      %table.table
+        %thead
+          %tr
+            %th.col-md-1
+            %th Source Name
+            %th Filename
+        %tbody
+          - @source_files.each do |source_file|
+            %tr
+              %td= f.check_box :source_file_ids, { multiple: true }, source_file.id, false
+              %td= source_file.title
+              %td= source_file.filename
+      .panel-footer
+        .actions
+          = f.submit 'Update', class: "btn btn-primary"
+          = link_to 'Delete', project_group_path(@project_group), method: :delete, class: "btn btn-primary"
+          = link_to 'Back', project_groups_path, class: "btn btn-primary"
+          = link_to 'Statistic',  stats_project_group_path(@project_group)
+
+/= console
+/= link_to 'Edit', edit_project_group_path(@project_group)
+/\|
+/= link_to 'Back', project_groups_path
