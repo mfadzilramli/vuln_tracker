@@ -1,0 +1,23 @@
+.panel.panel-default
+  .panel-body
+    %table.table
+      %thead
+        %tr.info
+          /%th{ rowspan: 2 } Title
+          %th.center{ rowspan: 2 } Total Host
+          %th.center{ colspan: 5, bgcolor: '#ce93d8' } Vulnerabilities by Severity
+        %tr
+          %th.center{ bgcolor: '#ffeeff' } Total
+          %th.center{ bgcolor: '#ff8080' } Critical
+          %th.center{ bgcolor: '#ffd9cc' } High
+          %th.center{ bgcolor: '#ffffcc' } Medium
+          %th.center{ bgcolor: '#d9ffcc' } Low
+      %tbody
+        %tr
+          /%td= @source_file.title
+          %td.col-sm-1.center= obj.count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 4').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 3').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 2').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 1').count

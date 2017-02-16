@@ -1,0 +1,1 @@
+json.partial! "remedy_actions/remedy_action", remedy_action: @remedy_action

@@ -49,6 +49,7 @@ class ProjectGroupsController < ApplicationController
       if @project_group.update(project_group_params)
         format.html { redirect_to @project_group, notice: 'Project group was successfully updated.' }
         format.json { render :show, status: :ok, location: @project_group }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @project_group.errors, status: :unprocessable_entity }
@@ -74,9 +75,9 @@ class ProjectGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_group_params
-      if params.empty?
-        params[:source_file_ids => ["0","0","0"]]
-      end
+      # if params.empty?
+      #   params[:source_file_ids => ["0","0","0"]]
+      # end
 
       params.fetch(:project_group, {}).permit(:name, :source_file_ids => [])
     end

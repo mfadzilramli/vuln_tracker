@@ -1,0 +1,18 @@
+.panel.panel-danger
+  .panel-heading.center
+    %strong Top 5 Critical Hosts
+  .panel-body
+    %table.table
+      %thead
+        %th IP Address
+        %th.center Count
+      %tbody
+        / helper get_top_ten_critical
+        - top_ten = get_top_hosts_critical(obj)
+        - top_ten.each do |k,v|
+          - host = obj.where(host_ip: k).first
+          %tr
+            %td= link_to k, show_vulnerability_path(host)
+            %td.center= v
+    %span.badge.pull-right
+      more

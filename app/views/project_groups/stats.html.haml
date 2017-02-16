@@ -1,54 +1,22 @@
-%h3 STATS
 /# AffectedHost.where(source_file_id: pg.source_file_ids)
 - @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
 
-%p#notice= notice
-
 .panel.panel-default
   .panel-body
-    .well
-      .row
-        .col-md-6
-          %table
-            %thead
-              %th.center
-                %h4 Vulnerabilities by Severity
-            %tbody
-              %td.center
-                - options = { height: '250px' }
-                = pie_chart get_pie_data(@affected_hosts), options
-        .col-md-6
-          %table
-            %thead
-              %th.center
-                %h4 Vulnerabilities by Group
-            %tbody
-              %td.center
-                - options = { height: '250px' }
-                = radar_chart get_radar_data(@affected_hosts), options
+    = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
+    .row
+      .col-xs-6
+        = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
 
-    %table.table
-      %thead
-        %tr{ bgcolor: '#ce93d8' }
-          /%th{ rowspan: 2 } Title
-          %th.center{ rowspan: 2 } Total Host
-          %th.center{ colspan: 5, bgcolor: '#ce93d8' } Severity
-        %tr
-          %th.center{ bgcolor: '#ffeeff' } Total
-          %th.center{ bgcolor: '#ff8080' } Critical
-          %th.center{ bgcolor: '#ffd9cc' } High
-          %th.center{ bgcolor: '#ffffcc' } Medium
-          %th.center{ bgcolor: '#d9ffcc' } Low
-      %tbody
-        %tr
-          /%td= @source_file.title
-          %td.col-sm-1.center= @affected_hosts.count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 4').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 3').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
-    .panel-footer
-      /= link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-default"
-      /= link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-default"
-      = link_to 'Back', source_files_path, class: "btn btn-default"
+      .col-xs-6
+        = render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
+
+    .row
+      .col-xs-6
+        = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
+
+      .col-xs-3
+        = render partial: 'widgets/top_hosts', locals: { obj: @affected_hosts }
+
+      .col-xs-3
+        = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }

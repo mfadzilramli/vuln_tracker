@@ -16,3 +16,38 @@ pre {
 a:hover {
   text-decoration: none;
 }
+
+.circle_green {
+  background: green;
+  color: white;
+}
+
+.circle_yellow {
+  background: yellow;
+  color: black;
+}
+
+.circle_red {
+  background: red;
+  color: white;
+}
+
+.circle {
+	// background: green;
+	border-radius:50%;
+	// color: white;
+	display:table;
+	height: 120px;
+	font-weight: bold;
+	font-size: 4.2em;
+	width: auto;
+	margin:0 auto;
+}
+.circle span {
+	display:table-cell;
+	vertical-align:middle;
+	height:120px;
+	width:120px;
+	text-align:center;
+	padding: 0 15px;
+}

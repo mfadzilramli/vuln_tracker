@@ -1,0 +1,2 @@
+module RemedyActionsHelper
+end

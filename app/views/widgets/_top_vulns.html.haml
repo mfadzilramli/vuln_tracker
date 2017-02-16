@@ -1,0 +1,17 @@
+.panel.panel-danger
+  .panel-heading.center
+    %strong Top 5 Critical Vulnerability
+  .panel-body
+    %table.table
+      %thead
+        %th Vulnerability name
+        %th.center Count
+      %tbody
+        / helper get_top_ten_critical
+        - top_ten = get_top_vulns_critical(obj)
+        - top_ten.each do |k,v|
+          %tr
+            %td= k
+            %td.center= v
+    %span.badge.pull-right
+      more

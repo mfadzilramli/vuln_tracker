@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :affected_hosts
   resources :source_files
   resources :project_groups
+  resources :remedy_actions
 
   get 'project_groups/:id/stats', to: 'project_groups#stats', as: 'stats_project_group'
 

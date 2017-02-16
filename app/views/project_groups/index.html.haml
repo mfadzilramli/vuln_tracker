@@ -14,9 +14,19 @@
         - @project_groups.each do |project_group|
           %tr
             %td= project_group.name
-            %td= link_to 'Show', project_group
-            %td= link_to 'Edit', edit_project_group_path(project_group)
-            %td= link_to 'Destroy', project_group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+            %td
+              = link_to project_group,
+                data: { toggle: "popover", trigger: "hover",
+                placement: "top", content: "Show List" } do
+                %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              = link_to edit_project_group_path(project_group),
+                data: { toggle: "popover", trigger: "hover",
+                placement: "top", content: "Edit Project Name" } do
+                %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
+                data: { toggle: "popover", trigger: "hover",
+                placement: "top", content: "Remove Project" } do
+                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
     .panel-footer
       = link_to 'New Project group', new_project_group_path, class: "btn btn-primary"

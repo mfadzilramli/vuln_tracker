@@ -1,0 +1,19 @@
+%h1 Listing remedy_actions
+
+-# %table
+-#   %thead
+-#     %tr
+-#       %th
+-#       %th
+-#       %th
+-#
+-#   %tbody
+-#     - @remedy_actions.each do |remedy_action|
+-#       %tr
+-#         %td= link_to 'Show', remedy_action
+-#         %td= link_to 'Edit', edit_remedy_action_path(remedy_action)
+-#         %td= link_to 'Destroy', remedy_action, :method => :delete, :data => { :confirm => 'Are you sure?' }
+-#
+-# %br
+
+= link_to 'New Remedy action', new_remedy_action_path

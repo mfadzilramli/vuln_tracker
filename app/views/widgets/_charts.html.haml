@@ -1,0 +1,36 @@
+.well
+  .row
+    .col-md-5
+      %table
+
+        %tbody
+          %td.center
+            - options = { height: '240px',
+              title: { display: true, fontSize: 18, text: "Vulnerabilities by Severity" },
+              legend: { position: 'right', fullWidth: false, labels: { boxWidth: 10 } }}
+            = doughnut_chart get_pie_data(obj), options
+    .col-md-5
+      %table
+
+        %tbody
+          %td.center
+            - options = { height: '280px',
+              title: { display: true, fontSize: 18, text: "Vulnerabilities by Severity" },
+              legend: { position: 'right', fullWidth: false, labels: { boxWidth: 10 } }}
+            = radar_chart get_radar_data(obj), options
+    .col-md-2
+      .panel.panel-info
+        .panel-heading.center
+          %strong Overall Score
+        .panel-body
+          - @score = get_score_card(obj)
+          - case @score.to_i
+            - when 0..3
+              %p.circle.circle_green
+                %span= get_score_card(obj)
+            - when 4..7
+              %p.circle.circle_yellow
+                %span= get_score_card(obj)
+            - when 8..10
+              %p.circle.circle_red
+                %span= get_score_card(obj)

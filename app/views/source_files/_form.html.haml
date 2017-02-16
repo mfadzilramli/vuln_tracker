@@ -16,5 +16,7 @@
     .form-group
       = f.label :data
       = f.file_field :data
+
     .panel-footer
       = f.submit 'Upload', data: { disable_with: "Please wait ..." }, class: "btn btn-primary"
+      = link_to 'Back', source_files_path, class: "btn btn-primary"

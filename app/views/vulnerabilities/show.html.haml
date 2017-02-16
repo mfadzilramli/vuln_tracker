@@ -37,16 +37,21 @@
                 %td.center{ bgcolor: '#ffcdd2' } Critical
               - else
                 %td.center
-            %td.center
-              - case vuln.remedy_action.status
-                - when 1
-                  OPEN
-                - when 2
-                  IN-PROGRESS
-                - when 3
-                  CLOSED
+            /%td.center
+            - case vuln.remedy_action.status
+              - when 1
+                %td.center{ bgcolor: 'red' } Open
+              - when 2
+                %td.center{ bgcolor: 'yellow' } In-progress
+              - when 3
+                %td.center{ bgcolor: 'green' } Closed
             -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
             %td.center
+              = link_to edit_remedy_action_path(vuln),
+                data: { toggle: "popover", trigger: "hover", content: "Remedy Action",
+                placement: "top" } do
+                %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
+              &nbsp;
               = link_to edit_vulnerability_path(vuln),
                 data: { toggle: "popover", trigger: "hover", content: "Edit",
                 placement: "top" } do

@@ -1,15 +1,17 @@
+$font_size: 12px;
+
 body {
   background-color: #fff;
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: $font_size;
   line-height: 18px;
-  margin: 33px;
+  margin: 10px;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: $font_size;
   line-height: 18px;
   margin: 33px;
 }
@@ -17,10 +19,11 @@ p, ol, ul, td {
 pre {
   background-color: #eee;
   padding: 10px;
-  font-size: 11px;
+  font-size: $font_size;
 }
 
 a {
+  font-size: $font_size;
   color: #000;
 
   &:visited {
