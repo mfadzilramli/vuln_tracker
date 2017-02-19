@@ -1,27 +1,30 @@
-.panel.panel-default
-  .panel-body
-    .row
-      .col-xs-5
-        = form_for @remedy_action do |f|
-          - if @remedy_action.errors.any?
-            #error_explanation
-              %h2= "#{pluralize(@remedy_action.errors.count, "error")} prohibited this remedy_action from being saved:"
-              %ul
-                - @remedy_action.errors.full_messages.each do |msg|
-                  %li= msg
+= form_for @remedy_action do |f|
+  .panel.panel-default
+    .panel-heading
+      %h3
+        %span.glyphicon.glyphicon-tags
+        &nbsp;Set Remedy Action
+    .panel-body
+      - if @remedy_action.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@remedy_action.errors.count, "error")} prohibited this remedy_action from being saved:"
+          %ul
+            - @remedy_action.errors.full_messages.each do |msg|
+              %li= msg
 
-          .field
-            = f.label :status
-            = f.select :status,
-              options_for_select([["Open",1],['In-progress',2],['Closed',3]], @remedy_action.status),
-              {}, { class: "form-control", style: "width: 200px" }
+      .field
+        = f.label :status
+        = f.select :status,
+          options_for_select([["Open",1],['In-progress',2],['Closed',3]], @remedy_action.status),
+          {}, { class: "form-control", style: "width: 200px" }
 
-          .field
-            = f.label :assigned_to
-            = f.text_field :assigned_to, class: "form-control"
+      .field
+        = f.label :assigned_to
+        = f.text_field :assigned_to, class: "form-control", style: "width: 500px"
 
-          .field
-            = f.label :remarks
-            = f.text_area :remarks, rows: 4, class: "form-control"
-          .actions
-            = f.submit 'Save', class: "btn btn-primary"
+      .field
+        = f.label :remarks
+        = f.text_area :remarks, rows: 4, class: "form-control", style: "width: 500px"
+    .panel-footer
+      .actions
+        = f.submit 'Save', class: "btn btn-primary"

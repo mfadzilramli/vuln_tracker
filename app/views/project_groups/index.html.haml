@@ -1,32 +1,41 @@
 .panel.panel-default
+  .panel-heading
+    %h3
+      %span.glyphicon.glyphicon-list
+      &nbsp;Listing Project Groups
   .panel-body
-    .well
-      %strong Listing Project Groups
-
     %table.table
       %thead
         %tr
           %th
+            %h4 Project Name
           %th
-          %th
-
+            %h4 Date Created
       %tbody
         - @project_groups.each do |project_group|
           %tr
             %td= project_group.name
-            %td
-              = link_to project_group,
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Show List" } do
-                %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+            %td= project_group.created_at
+            %td{ align: 'right'}
+              /= link_to project_group,
+              /  data: { toggle: "popover", trigger: "hover",
+              /  placement: "top", content: "Show List" } do
+              /  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              /&nbsp;
               = link_to edit_project_group_path(project_group),
                 data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Edit Project Name" } do
+                placement: "top", content: "Edit Project" } do
                 %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              &nbsp;
+              = link_to stats_project_group_path(project_group),
+                data: { toggle: "popover", trigger: "hover",
+                placement: "top", content: "Show Stats" } do
+                %span.glyphicon.glyphicon-stats{aria_hidden: "true"}
+              &nbsp;
               = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Remove Project" } do
                 %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
-    .panel-footer
-      = link_to 'New Project group', new_project_group_path, class: "btn btn-primary"
+  .panel-footer
+    = link_to 'New Project group', new_project_group_path, class: "btn btn-primary"

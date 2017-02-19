@@ -1,22 +1,26 @@
 = form_for @source_file, html: { multipart: true } do |f|
-  - if @source_file.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@source_file.errors.count, "error")} prohibited this source_file from being saved:"
-      %ul
-        - @source_file.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :title
-    = f.text_field :title, class: "form-control input-sm", style: "width: 300px"
-  - if (controller.action_name == 'edit')
-    .panel-footer
-      = f.submit 'Update', class: "btn btn-primary"
-  - else
-    .form-group
-      = f.label :data
-      = f.file_field :data
-
+  .panel.panel-default
+    .panel-heading
+      %h3
+        %span.glyphicon.glyphicon-upload
+        &nbsp;Upload Source File
+    .panel-body
+      - if @source_file.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@source_file.errors.count, "error")} prohibited this source_file from being saved:"
+          %ul
+            - @source_file.errors.full_messages.each do |msg|
+              %li= msg
+      .field
+        = f.label :title
+        = f.text_field :title, class: "form-control input-sm", style: "width: 300px"
+      - if (controller.action_name == 'edit')
+        .panel-footer
+          = f.submit 'Update', class: "btn btn-primary"
+      - else
+        .form-group
+          = f.label :data
+          = f.file_field :data
     .panel-footer
       = f.submit 'Upload', data: { disable_with: "Please wait ..." }, class: "btn btn-primary"
       = link_to 'Back', source_files_path, class: "btn btn-primary"

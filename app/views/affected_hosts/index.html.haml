@@ -21,17 +21,18 @@
           %th.center{ rowspan: 2 } No.
           %th.center{ rowspan: 2 } IP Address
           /%th.center{ rowspan: 2 } Scan Date
-          %th.center{ colspan: 4 } Severity
-          %th.center{ rowspan: 2 } Options
+          %th.center{ colspan: 5 } Severity
+          %th.center{ rowspan: 2 }
         %tr
           %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
           %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
           %th.center.col-sm-1{ bgcolor: '#fff176' } Medium
           %th.center.col-sm-1{ bgcolor: '#81c784' } Low
+          %th.center.col-sm-1{ bgcolor: '#c1c1c1' } Total
       %tbody
         - @affected_hosts.each_with_index do |host, index|
           %tr
-            %td.center= host.id
+            %td.center= index + 1
             %td.center
               / = link_to show_vulnerability_path(host.id) do
               = link_to "#index_#{host.id}", data: { toggle: 'collapse' } do
@@ -39,11 +40,23 @@
                 %span.caret
 
             /%td.center= host.scan_start "#index_#{host.id}"
+            / AffectedHost.joins(:vulnerabilities).group(:host_ip).group(:severity).where(host_ip: '192.168.18.27').count
+            /- severity = @affected_hosts.joins(:vulnerabilities).group(:host_ip).group(:severity).order('count_all DESC').where(host_ip: host.host_ip).count
+            /- severity = @affected_hosts.joins(:vulnerabilities).group(:host_ip, :severity).where(host_ip: host.host_ip).count
+            - severity = host.vulnerabilities.group(:severity).count
+            - vuln_count = host.vulnerabilities.count
+            /%td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
+            /%td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
+            /%td.center{ bgcolor: '#fff9c4' }= host.vulnerabilities.where(severity: 2).c@affected_hosts
+            /%td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
 
-            %td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
-            %td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
-            %td.center{ bgcolor: '#fff9c4' }= host.vulnerabilities.where(severity: 2).count
-            %td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
+            %td.center{ bgcolor: '#ffcdd2' }= severity[4] ||= 0
+            %td.center{ bgcolor: '#ffe0b2' }= severity[3] ||= 0
+            %td.center{ bgcolor: '#fff9c4' }= severity[2] ||= 0
+            %td.center{ bgcolor: '#c8e6c9' }= severity[1] ||= 0
+            %td.center{ bgcolor: '#F6F1F0' }
+              %strong= vuln_count
+
             %td.center
               .btn-group.btn-group-sm{ role: 'group', aria: false}
                 = link_to 'View', show_vulnerability_path(host.id), class: "btn btn-default"
@@ -52,3 +65,6 @@
           %tr.collapse{ id: "index_#{host.id}" }
             %td{ colspan: '100%'}
               = render partial: 'details', locals: { host: host }
+
+  .panel-footer
+    = link_to 'Back', source_files_path, class: "btn btn-primary"

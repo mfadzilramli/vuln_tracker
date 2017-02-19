@@ -2,6 +2,8 @@
 - @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
 
 .panel.panel-default
+  .panel-heading
+    %h4.center= @project_group.name
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row

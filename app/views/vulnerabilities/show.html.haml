@@ -6,8 +6,10 @@
   - affected_host << " (#{@host.netbios_name})"
 
 .panel.panel-default
-  .panel-heading.center
-    %h3= affected_host
+  .panel-heading
+    %h3
+      %span.glyphicon.glyphicon-triangle-right
+      = affected_host
   .panel-body
     %table.table.table-bordered
       %thead
@@ -18,9 +20,10 @@
           %th.center Group
           %th.center Severity
           %th.center Status
-          %th.center Options
+          %th
       %tbody
         - @vulns.each do |vuln|
+          - @source_id = vuln.affected_host.source_file_id
           %tr
             %td.center= vuln.id
             %td.col-md-5= vuln.vulnerability_name
@@ -60,4 +63,6 @@
               = link_to vulnerability_path(vuln), :method => :delete,
                 data: { toggle: "popover", trigger: "hover", content: "Delete this item",
                 placement: "top", confirm: 'Are you sure?' } do
-                %i.glyphicon.glyphicon-trash{aria_hidden: "true"}
+                %i.glyphicon.glyphicon-remove{aria_hidden: "true"}
+  .panel-footer
+    = link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"

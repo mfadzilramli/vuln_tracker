@@ -1,6 +1,8 @@
 .panel.panel-default
   .panel-heading
-    %h3 Listing Source Files
+    %h3
+      %span.glyphicon.glyphicon-list
+      &nbsp;Listing Source Files
   .panel-body
     %table.table
       %thead
@@ -14,10 +16,10 @@
             %td= source_file.title
             %td= source_file.filename
             %td{ align: 'right' }
-              = link_to  source_file,
+              = link_to  affected_hosts_path(source_id: source_file.id),
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Show details" } do
-                %span.glyphicon.glyphicon-eye-open{aria_hidden: "true"}
+                %span.glyphicon.glyphicon-list-alt{aria_hidden: "true"}
               &nbsp;&nbsp;
               = link_to edit_source_file_path(source_file),
                 data: { toggle: "popover", trigger: "hover",

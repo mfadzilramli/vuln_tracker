@@ -51,6 +51,7 @@ class RemedyActionsController < ApplicationController
         # format.html { redirect_to @remedy_action, notice: 'Remedy action was successfully updated.' }
         format.html { redirect_to show_vulnerability_path(host), notice: 'Remedy action was successfully updated.' }
         format.json { render :show, status: :ok, location: @remedy_action }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @remedy_action.errors, status: :unprocessable_entity }

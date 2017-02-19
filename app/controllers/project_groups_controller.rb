@@ -24,6 +24,7 @@ class ProjectGroupsController < ApplicationController
 
   # GET /project_groups/1/edit
   def edit
+    @source_files = SourceFile.all
   end
 
   # POST /project_groups

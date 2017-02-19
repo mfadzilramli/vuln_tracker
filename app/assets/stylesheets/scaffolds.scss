@@ -1,4 +1,4 @@
-$font_size: 12px;
+$font_size: 13px;
 
 body {
   background-color: #fff;
@@ -16,9 +16,15 @@ p, ol, ul, td {
   margin: 33px;
 }
 
+// pre {
+//   background-color: #eee;
+//   // padding: 10px;
+//   font-size: $font_size;
+// }
+
 pre {
-  background-color: #eee;
-  padding: 10px;
+  border: 0;
+  background-color: transparent;
   font-size: $font_size;
 }
 
