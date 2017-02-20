@@ -11,8 +11,9 @@
         - top_ten = get_top_hosts_critical(obj)
         - top_ten.each do |k,v|
           - host = obj.where(host_ip: k).first
-          %tr
-            %td= link_to k, show_vulnerability_path(host)
-            %td.center= v
+          - if !host.nil?
+            %tr
+              %td= link_to k, show_vulnerability_path(host)
+              %td.center= v
     %span.badge.pull-right
       more

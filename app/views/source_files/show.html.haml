@@ -2,27 +2,6 @@
 
 .panel.panel-default
   .panel-body
-    .well
-      .row
-        .col-md-6
-          %table
-            %thead
-              %th.center
-                %h4 Vulnerabilities by Severity
-            %tbody
-              %td.center
-                - options = { height: '250px' }
-                = pie_chart get_pie_data(@affected_hosts), options
-        .col-md-6
-          %table
-            %thead
-              %th.center
-                %h4 Vulnerabilities by Group
-            %tbody
-              %td.center
-                - options = { height: '250px' }
-                = radar_chart get_radar_data(@affected_hosts), options
-
     %table.table
       %thead
         %tr{ bgcolor: '#ce93d8' }

@@ -15,11 +15,12 @@
         %p.navbar-text.navbar-right
           Search Host
 
-    %table.table
+    %table.table.table-bordered.table-hover
       %thead
         %tr{ bgcolor: '#ce93d8' }
           %th.center{ rowspan: 2 } No.
           %th.center{ rowspan: 2 } IP Address
+          %th.center{ rowspan: 2 } Hostname
           /%th.center{ rowspan: 2 } Scan Date
           %th.center{ colspan: 5 } Severity
           %th.center{ rowspan: 2 }
@@ -37,31 +38,31 @@
               / = link_to show_vulnerability_path(host.id) do
               = link_to "#index_#{host.id}", data: { toggle: 'collapse' } do
                 #{host.host_ip}
-                %span.caret
+                /%span.caret
+            %td.center= host.host_fqdn ||= host.netbios_name
 
-            /%td.center= host.scan_start "#index_#{host.id}"
-            / AffectedHost.joins(:vulnerabilities).group(:host_ip).group(:severity).where(host_ip: '192.168.18.27').count
-            /- severity = @affected_hosts.joins(:vulnerabilities).group(:host_ip).group(:severity).order('count_all DESC').where(host_ip: host.host_ip).count
-            /- severity = @affected_hosts.joins(:vulnerabilities).group(:host_ip, :severity).where(host_ip: host.host_ip).count
             - severity = host.vulnerabilities.group(:severity).count
-            - vuln_count = host.vulnerabilities.count
-            /%td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
-            /%td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
-            /%td.center{ bgcolor: '#fff9c4' }= host.vulnerabilities.where(severity: 2).c@affected_hosts
-            /%td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
-
+            /- vuln_count = host.vulnerabilities.count
             %td.center{ bgcolor: '#ffcdd2' }= severity[4] ||= 0
             %td.center{ bgcolor: '#ffe0b2' }= severity[3] ||= 0
             %td.center{ bgcolor: '#fff9c4' }= severity[2] ||= 0
             %td.center{ bgcolor: '#c8e6c9' }= severity[1] ||= 0
             %td.center{ bgcolor: '#F6F1F0' }
-              %strong= vuln_count
+              %strong= host.vulnerabilities.count
 
             %td.center
-              .btn-group.btn-group-sm{ role: 'group', aria: false}
-                = link_to 'View', show_vulnerability_path(host.id), class: "btn btn-default"
-                = link_to 'Add', new_vulnerability_path(host), class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Add Vulnerability" }
-                = link_to 'Remove', host, method: :delete, class: "btn btn-default", data: { toggle: "popover", trigger: "hover", placement: "top", content: "Delete", confirm: 'Are you sure?' }
+              -# .btn-group.btn-group-sm{ role: 'group', aria: false}
+              - if host.vulnerabilities.count != 0
+                = link_to show_vulnerability_path(host.id) do
+                  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              - else
+                %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              &nbsp;
+              = link_to new_vulnerability_path(host) do
+                %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+                &nbsp;
+              = link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
+                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
           %tr.collapse{ id: "index_#{host.id}" }
             %td{ colspan: '100%'}
               = render partial: 'details', locals: { host: host }

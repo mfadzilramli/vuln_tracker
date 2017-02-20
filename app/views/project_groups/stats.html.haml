@@ -11,7 +11,8 @@
         = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
 
       .col-xs-6
-        = render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
+        /= render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
+        = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
 
     .row
       .col-xs-6

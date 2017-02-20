@@ -1,0 +1,47 @@
+- severity_count = Vulnerability.where(affected_host_id: obj).group(:severity).count
+- remedy_actions = Vulnerability.where(affected_host_id: obj).joins(:remedy_action).group('status', :severity).count
+.panel.panel-default
+  .panel-body
+    %table.table.table-striped
+      %thead
+        %tr.info
+          /%th{ rowspan: 2 } Title
+          %th.center{ rowspan: 2 } Status
+          %th.center{ colspan: 4, bgcolor: '#ce93d8' } Remedy Status by Vulnerability Severity
+        %tr
+          %th.center{ bgcolor: '#ff8080' } Critical
+          %th.center{ bgcolor: '#ffd9cc' } High
+          %th.center{ bgcolor: '#ffffcc' } Medium
+          %th.center{ bgcolor: '#d9ffcc' } Low
+      %tbody
+        %tr
+          /%td= @source_file.title
+          %td.col-sm-1.center Open
+          %td.col-sm-1.center= (remedy_actions[[1, 4]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[1, 3]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[1, 2]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[1, 1]] ||= 0)
+        %tr
+          /%td= @source_file.title
+          %td.col-sm-1.center In-progress
+          %td.col-sm-1.center= (remedy_actions[[2, 4]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[2, 3]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[2, 2]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[2, 1]] ||= 0)
+        %tr
+          /%td= @source_file.title
+          %td.col-sm-1.center Closed
+          %td.col-sm-1.center= (remedy_actions[[3, 4]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[3, 3]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[3, 2]] ||= 0)
+          %td.col-sm-1.center= (remedy_actions[[3, 1]] ||= 0)
+        %tr.success
+          /%td= @source_file.title
+          %th.col-sm-1.center Total
+          %th.col-sm-1.center= (severity_count[4] ||= 0)
+          %th.col-sm-1.center= (severity_count[3] ||= 0)
+          %th.col-sm-1.center= (severity_count[2] ||= 0)
+          %th.col-sm-1.center= (severity_count[1] ||= 0)
+
+
+/vra = v.joins(:remedy_action).group('status',:severity).count

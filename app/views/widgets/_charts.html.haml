@@ -21,7 +21,7 @@
     .col-md-2
       .panel.panel-info
         .panel-heading.center
-          %strong Overall Score
+          %strong Security Health
         .panel-body
           - @score = get_score_card(obj)
           - case @score.to_i
@@ -34,3 +34,7 @@
             - when 8..10
               %p.circle.circle_red
                 %span= get_score_card(obj)
+        .panel-footer
+          %li 0-3  : Good
+          %li 4-7  : Moderate
+          %li 7-10 : Poor

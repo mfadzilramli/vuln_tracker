@@ -1,7 +1,8 @@
 module SourceFilesHelper
 
   def get_pie_data(hosts)
-    severity_data =  hosts.joins(:vulnerabilities).group(:severity).count.values
+    #severity_data =  hosts.joins(:vulnerabilities).group(:severity).count.values
+    severity_data = Vulnerability.where(affected_host_id: hosts).joins(:remedy_action).where('status != 3').group(:severity).count.values
     data = {
       labels: ["Low", "Medium", "High", "Critical"],
       datasets: [
@@ -20,7 +21,8 @@ module SourceFilesHelper
   end
 
   def get_radar_data(hosts)
-    vuln_groups = hosts.joins(:vulnerabilities).group(:plugin_family)
+    #vuln_groups = hosts.joins(:vulnerabilities).group(:plugin_family)
+    vuln_groups = Vulnerability.where(affected_host_id: hosts).joins(:remedy_action).where('status != 3').group(:plugin_family)
     groups = vuln_groups.count
     groups.each do |k,v|
       groups[k] = 0

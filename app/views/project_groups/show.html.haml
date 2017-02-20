@@ -23,12 +23,4 @@
               %td= source_file.filename
       .panel-footer
         .actions
-          /= f.submit 'Update', class: "btn btn-primary"
-          /= link_to 'Delete', project_group_path(@project_group), method: :delete, class: "btn btn-primary"
-          /= link_to 'Summary',  stats_project_group_path(@project_group), class: "btn btn-primary"
           = link_to 'Back', project_groups_path, class: "btn btn-primary"
-
-/= console
-/= link_to 'Edit', edit_project_group_path(@project_group)
-/\|
-/= link_to 'Back', project_groups_path

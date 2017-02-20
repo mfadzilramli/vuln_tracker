@@ -6,11 +6,12 @@
   .panel-body
     %table.table
       %thead
-        %tr
+        %tr{ bgcolor: '#ce93d8' }
           %th
-            %h4 Project Name
+            Project Name
           %th
-            %h4 Date Created
+            Date Created
+          %th
       %tbody
         - @project_groups.each do |project_group|
           %tr
