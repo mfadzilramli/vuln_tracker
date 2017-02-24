@@ -1,9 +1,12 @@
 = form_for @source_file, multipart: true do |f|
-  .panel.panel-default
+  .panel.panel-info
     .panel-heading
-      %h3
+      %h4
         %span.glyphicon.glyphicon-upload
-        &nbsp;Upload Source File
+        - if (controller.action_name != 'edit')
+          &nbsp;Upload Source File
+        - else
+          &nbsp;Update Source Title
     .panel-body
       - if @source_file.errors.any?
         #error_explanation
@@ -18,6 +21,15 @@
         .form-group
           = f.label :data, "Browse", class: "btn btn-primary"
           = f.file_field :data, class: "form-control", style: "display:none"
+  - if (controller.action_name != 'edit')
     .panel-footer
-      = f.submit  data: { disable_with: "Please wait ..." }, class: "btn btn-primary"
+      = button_tag data: { disable_with: "Please wait ..." }, class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        Upload New Source
+      = link_to 'Back', source_files_path, class: "btn btn-primary"
+  - else
+    .panel-footer
+      = button_tag data: { disable_with: "Please wait ..." }, class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-ok{aria_hidden: "true"}
+        Update
       = link_to 'Back', source_files_path, class: "btn btn-primary"

@@ -1,9 +1,15 @@
-.panel.panel-default
+.panel.panel-info
   /.panel-heading
   /  %h3 Affected Hosts
-  .panel-body
 
-    %nav.navbar
+  .panel-heading
+    %h4
+      %span.glyphicon.glyphicon-option-vertical
+      = @source_file.title
+  .panel-body
+    /%div{ align: "center"}
+    /  = will_paginate
+    %nav.navbar-inverse
       .container-fluid
         = form_tag search_affected_hosts_path(source_id: @source_file.id), method: :get, action: :index, class: "navbar-form navbar-right", role: "search" do
           .input-group
@@ -13,8 +19,7 @@
                 %span.glyphicon.glyphicon-search{aria_hidden: true}
         /.nav.navbar-nav.navbar-right
         %p.navbar-text.navbar-right
-          Search Host
-
+          %b Search Host
     %table.table.table-bordered.table-hover
       %thead
         %tr{ bgcolor: '#ce93d8' }
@@ -66,6 +71,9 @@
           %tr.collapse{ id: "index_#{host.id}" }
             %td{ colspan: '100%'}
               = render partial: 'details', locals: { host: host }
+
+    %div{ align: "center"}
+      = will_paginate
 
   .panel-footer
     = link_to 'Back', source_files_path, class: "btn btn-primary"

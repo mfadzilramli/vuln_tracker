@@ -1,4 +1,4 @@
-# $ ->
-#   $(document).on 'turbolinks:load', ->
-#     $(this).ready ->
-#       $('[data-toggle="popover"]').popover()
+$ ->
+  $(document).on 'turbolinks:load', ->
+    $(this).ready ->
+      $('[data-toggle="popover"]').popover()

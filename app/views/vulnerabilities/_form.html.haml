@@ -1,6 +1,6 @@
-= form_for @vuln do |f|
+= form_for @vulnerability do |f|
   .field
-    = f.hidden_field :affected_host_id, value: @vuln.affected_host_id
+    = f.hidden_field :affected_host_id, value: @vulnerability.affected_host_id
   .row
     .col-md-12
       .field
@@ -31,7 +31,7 @@
         .field
           = f.label :severity
           = f.select :severity,
-            options_for_select([['Critical',4], ['High', 3], ['Medium', 2], ['Low', 1]], selected: @vuln.severity),
+            options_for_select([['Critical',4], ['High', 3], ['Medium', 2], ['Low', 1]], selected: @vulnerability.severity),
             {},
             { class: "form-control" }
     .col-md-9

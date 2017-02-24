@@ -1,6 +1,6 @@
 .panel.panel-danger
   .panel-heading.center
-    %strong Top 5 Critical Vulnerability
+    %strong Top 5 Vulnerability
   .panel-body
     %table.table
       %thead
@@ -9,9 +9,10 @@
       %tbody
         / helper get_top_ten_critical
         - top_ten = get_top_vulns_critical(obj)
-        - top_ten.each do |k,v|
+        - top_ten.each do |key,value|
           %tr
-            %td= k
-            %td.center= v
+            %td
+              = link_to key, list_affected_hosts_path(plugin_id: get_plugin_id_by_name(obj, key),project_group_id: @project_group)
+            %td.center= value
     %span.badge.pull-right
       more

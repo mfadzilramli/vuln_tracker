@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170214013419) do
     t.string   "host_fqdn"
     t.string   "netbios_name"
     t.string   "mac_address"
+    t.string   "platform"
     t.string   "operating_system"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false

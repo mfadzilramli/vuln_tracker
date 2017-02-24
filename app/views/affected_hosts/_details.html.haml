@@ -7,12 +7,14 @@
         %th Host FQDN
         %th Netbios Name
         %th MAC Address
+        %th Platform
         %th Operating System
       %tbody
         %td= host.host_fqdn
         %td= host.netbios_name
         %td= host.mac_address
-        %td.col-sm-6
+        %td= host.platform
+        %td.col-sm-4
           - if host.operating_system?
             %pre= host.operating_system
   .panel-footer

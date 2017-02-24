@@ -1,46 +1,42 @@
-= console
--#
--# .panel.panel-default
--#   .panel-heading
--#     %h3 Affected Hosts
--#   .panel-body
--#     .nav.navbar-inverse
--#       .container-fluid
--#         = form_tag affected_hosts_path(@source_file), action: :index, class: "navbar-form navbar-left", role: "search" do
--#           .form-group
--#             = text_field_tag :search, params[:search], class: "form-control", placeholder: "e.g. 172.16"
--#             = button_tag 'Search', class: "btn btn-default", type: "submit" do
--#               %span.glyphicon.glyphicon-search{aria_hidden: true}
--#               Search
--#
--#     %table.table.table-striped
--#       %thead
--#         %tr{ bgcolor: '#ce93d8' }
--#           %th.center{ rowspan: 2 } No.
--#           %th.center{ rowspan: 2 } IP Address
--#           /%th.center{ rowspan: 2 } Scan Date
--#           %th.center{ rowspan: 2 } More Details
--#           %th.center{ colspan: 4 } Severity
--#         %tr
--#           %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
--#           %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
--#           %th.center.col-sm-1{ bgcolor: '#fff176' } Medium
--#           %th.center.col-sm-1{ bgcolor: '#81c784' } Low
--#       %tbody
--#         - @affected_hosts.each_with_index do |host, index|
--#           %tr
--#             %td.center= index + 1
--#             %td.center= link_to host.host_ip, show_vulnerability_path(host.id)
--#             /%td.center= host.scan_start
--#             %td.center
--#               = link_to "#index_#{host.id}", class: "btn btn-xs", data: { toggle: 'collapse' } do
--#                 %span.glyphicon.glyphicon-triangle-bottom{aria_hidden: "true"}
--#             %td.center{ bgcolor: '#ffcdd2' }= host.vulnerabilities.where(severity: 4).count
--#             %td.center{ bgcolor: '#ffe0b2' }= host.vulnerabilities.where(severity: 3).count
--#             %td.center{ bgcolor: '#fff9c4' }= host.vulnerabilities.where(severity: 2).count
--#             %td.center{ bgcolor: '#c8e6c9' }= host.vulnerabilities.where(severity: 1).count
--#           %tr.collapse{ id: "index_#{host.id}" }
--#             %td{ colspan: '100%'}
--#               = render partial: 'details', locals: { host: host }
--#
--# = console
+.panel.panel-info
+  .panel-heading
+    %h4
+      %span.glyphicon.glyphicon-option-vertical
+      #{@vulnerability_name}
+  .panel-body
+    /%div{ align: "center"}
+    /  = will_paginate
+    .nav.navbar-inverse
+      .container-fluid
+        = form_tag list_affected_hosts_path(plugin_id: params[:plugin_id]),
+          method: :get, action: :show, class: "navbar-form navbar-right", role: "search" do
+          .input-group
+            = hidden_field_tag :project_group_id, params[:project_group_id]
+            = text_field_tag :search, params[:search], class: "form-control", placeholder: "e.g. 172.16"
+            .input-group-btn
+              = button_tag 'Search', class: "btn btn-default", type: "submit" do
+                %span.glyphicon.glyphicon-search{aria_hidden: true}
+        %p.navbar-text.navbar-right
+          %b Search Host
+
+    %table.table.table-striped
+      %thead
+        %tr{ bgcolor: '#ce93d8' }
+          %th.center No.
+          %th.center IP Address
+          %th.center Hostname
+          %th.center Platform
+          %th.center Operating System
+          %th.center Count
+      %tbody
+        /- @affected_hosts = @affected_hosts.joins(:vulnerabilities).where("plugin_id == #{params[:plugin_id]}").uniq(:host_ip)
+        - @affected_hosts.each_with_index do |host, index|
+          %tr
+            %td.center= index + 1
+            %td.center= host.host_ip
+            %td.center= host.host_fqdn ||= host.netbios_name
+            %td.center= host.platform
+            %td.center= host.operating_system
+            %td.center= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
+    %div{ align: "center"}
+      = will_paginate

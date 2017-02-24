@@ -4,7 +4,7 @@
       %thead
         %tr.info
           /%th{ rowspan: 2 } Title
-          %th.center{ rowspan: 2 } Total Host
+          -# %th.center{ rowspan: 2 } Total Host
           %th.center{ colspan: 5, bgcolor: '#ce93d8' } Vulnerabilities by Severity
         %tr
           %th.center{ bgcolor: '#ffeeff' } Total
@@ -15,7 +15,7 @@
       %tbody
         %tr
           /%td= @source_file.title
-          %td.col-sm-1.center= obj.count
+          -# %td.col-sm-1.center= obj.count
           %td.col-sm-1.center= obj.joins(:vulnerabilities).count
           %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 4').count
           %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 3').count

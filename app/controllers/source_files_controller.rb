@@ -98,6 +98,8 @@ class SourceFilesController < ApplicationController
               @host.mac_address = tag.text
             elsif tag.attributes['name'].value == 'operating-system'
               @host.operating_system = tag.text
+            elsif tag.attributes['name'].value == 'os'
+              @host.platform = tag.text
             elsif tag.attributes['name'].value == 'HOST_START'
               @last_seen = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
             # elsif tag.attributes['name'].value == 'HOST_END'

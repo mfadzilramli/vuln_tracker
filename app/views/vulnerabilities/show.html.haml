@@ -5,12 +5,14 @@
 - elsif @host.netbios_name?
   - affected_host << " (#{@host.netbios_name})"
 
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h3
-      %span.glyphicon.glyphicon-triangle-right
-      = affected_host
+    %h4
+      %span.glyphicon.glyphicon-option-vertical
+      #{affected_host}
   .panel-body
+    /%div{ align: "center" }
+    /  = will_paginate
     %table.table.table-bordered
       %thead
         %tr{ bgcolor: '#ce93d8' }
@@ -22,14 +24,14 @@
           %th.center Remedy Action
           %th
       %tbody
-        - @vulns.each do |vuln|
-          - @source_id = vuln.affected_host.source_file_id
+        - @vulnerabilities.each do |vulnerability|
+          - @source_id = vulnerability.affected_host.source_file_id
           %tr
-            %td.center= vuln.id
-            %td.col-md-5= vuln.vulnerability_name
-            %td.center= "#{vuln.port} / #{vuln.service_name} / #{vuln.protocol}"
-            %td.center= vuln.plugin_family
-            - case vuln.severity
+            %td.center= vulnerability.id
+            %td.col-md-5= vulnerability.vulnerability_name
+            %td.center= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+            %td.center= vulnerability.plugin_family
+            - case vulnerability.severity
               - when 1
                 %td.center{ bgcolor: '#c8e6c9' } Low
               - when 2
@@ -41,7 +43,7 @@
               - else
                 %td.center
             /%td.center
-            - case vuln.remedy_action.status
+            - case vulnerability.remedy_action.status
               - when 1
                 %td.center{ bgcolor: 'red' } Open
               - when 2
@@ -50,19 +52,23 @@
                 %td.center{ bgcolor: 'green' } Closed
             -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
             %td.center
-              = link_to edit_remedy_action_path(vuln),
+              = link_to edit_remedy_action_path(vulnerability),
                 data: { toggle: "popover", trigger: "hover", content: "Remedy Action",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
               &nbsp;
-              = link_to edit_vulnerability_path(vuln),
+              = link_to edit_vulnerability_path(vulnerability),
                 data: { toggle: "popover", trigger: "hover", content: "Edit",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
               &nbsp;
-              = link_to vulnerability_path(vuln), :method => :delete,
+              = link_to vulnerability_path(vulnerability), :method => :delete,
                 data: { toggle: "popover", trigger: "hover", content: "Delete this item",
                 placement: "top", confirm: 'Are you sure?' } do
                 %i.glyphicon.glyphicon-remove{aria_hidden: "true"}
+    %div{ align: "center" }
+      = will_paginate
   .panel-footer
     = link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"
+
+/= console

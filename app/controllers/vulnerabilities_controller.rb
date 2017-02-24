@@ -5,50 +5,51 @@ class VulnerabilitiesController < ApplicationController
   end
 
   def show
-    @vulns = Vulnerability.where(affected_host_id: params[:id]).order(severity: :desc)
+    # @vulns = Vulnerability.where(affected_host_id: params[:id]).order(severity: :desc).paginate(page: params[:page], per_page: 15)
+    @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
     @host = AffectedHost.find(params[:id])
   end
 
   def new
-    @vuln = Vulnerability.new(affected_host_id: params[:host_id])
+    @vulnerability = Vulnerability.new(affected_host_id: params[:host_id])
   end
 
   def create
-    @vuln = Vulnerability.new(vuln_params)
-    @vuln.last_seen = Time.now
+    @vulnerability = Vulnerability.new(vuln_params)
+    @vulnerability.last_seen = Time.now
 
     respond_to do |format|
       if @vuln.save
         @remedy = RemedyAction.new
         @remedy.status = 1
-        @remedy.vulnerability_id = @vuln.id
+        @remedy.vulnerability_id = @vulnerability.id
         @remedy.save
-        format.html { redirect_to show_vulnerability_path(@vuln.affected_host_id),
+        format.html { redirect_to show_vulnerability_path(@vulnerability.affected_host_id),
           notice: 'Vulnerability was successfully created.' }
-        format.json { render :show, status: :created, location: @vuln }
+        format.json { render :show, status: :created, location: @vulnerability }
       else
         format.html { render :new }
-        format.json { render json: @vuln.errors, status: :unprocessable_entity }
+        format.json { render json: @vulnerability.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @vuln.update(vuln_params)
-        format.html { redirect_to show_vulnerability_path(@vuln.affected_host_id), notice: 'Vulnerability was successfully updated.' }
-        format.json { render :show, status: :ok, location: @vuln }
+      if @vulnerability.update(vuln_params)
+        format.html { redirect_to show_vulnerability_path(@vulnerability.affected_host_id), notice: 'Vulnerability was successfully updated.' }
+        format.json { render :show, status: :ok, location: @vulnerability }
       else
         format.html { render :edit }
-        format.json { render json: @vuln.errors, status: :unprocessable_entity }
+        format.json { render json: @vulnerability.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @vuln.destroy
+    @vulnerability.destroy
     respond_to do |format|
-      format.html { redirect_to show_vulnerability_path(@vuln.affected_host_id), notice: 'Vulnerability was successfully destroyed.' }
+      format.html { redirect_to show_vulnerability_path(@vulnerability.affected_host_id), notice: 'Vulnerability was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -63,7 +64,7 @@ class VulnerabilitiesController < ApplicationController
   end
 
   def set_vulnerability
-    @vuln = Vulnerability.find(params[:id])
+    @vulnerability = Vulnerability.find(params[:id])
   end
 
 end

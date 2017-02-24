@@ -6,7 +6,7 @@
         %tbody
           %td.center
             - options = { height: '240px',
-              title: { display: true, fontSize: 18, text: "Vulnerabilities by Severity" },
+              title: { display: true, fontSize: 14, text: "Vulnerabilities by Severity" },
               legend: { position: 'right', fullWidth: false, labels: { boxWidth: 10 } }}
             = doughnut_chart get_pie_data(obj), options
     .col-md-5
@@ -15,8 +15,9 @@
         %tbody
           %td.center
             - options = { height: '280px',
-              title: { display: true, fontSize: 18, text: "Vulnerabilities by Severity" },
-              legend: { position: 'right', fullWidth: false, labels: { boxWidth: 10 } }}
+              title: { display: true, fontSize: 14, text: "Severity by Vulnerability Group" },
+              legend: { position: 'right', fullWidth: false, labels: { boxWidth: 10 } },
+              scale: { ticks: { beginAtZero: true } } }
             = radar_chart get_radar_data(obj), options
     .col-md-2
       .panel.panel-info

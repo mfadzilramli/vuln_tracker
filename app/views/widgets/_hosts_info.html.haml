@@ -1,0 +1,14 @@
+.row
+  .col-md-6
+    .panel.panel-info
+      .panel-heading.center
+        %strong Hosts Scanned
+      .panel-body
+        %span= @affected_hosts.count
+
+  .col-md-6
+    .panel.panel-danger
+      .panel-heading.center
+        %strong Vulnerabilities
+      .panel-body
+        %span= Vulnerability.where(affected_host_id: @affected_hosts).count

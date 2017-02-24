@@ -27,4 +27,17 @@ module ProjectGroupsHelper
     top_ports = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).where('port != 0').joins(:remedy_action).where('status != 3').group(:port).order('count_all DESC').limit(5).count
   end
 
+  def get_affected_platforms(affected_hosts)
+    affected_platforms = affected_hosts.group(:platform).count
+    return affected_platforms
+  end
+
+  def get_low_hanging_fruits(affected_hosts)
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ? or vulnerability_name LIKE ? or vulnerability_name LIKE ?',"%password%","%default credentials%", "%unauthenticated%").group(:vulnerability_name).count
+  end
+
+  def get_unsupported_systems(affected_hosts)
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?', "%unsupported%").group(:vulnerability_name).count
+  end
+
 end

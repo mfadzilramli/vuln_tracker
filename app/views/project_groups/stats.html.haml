@@ -1,25 +1,71 @@
 /# AffectedHost.where(source_file_id: pg.source_file_ids)
-- @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
+/- @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
 
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h4.center= @project_group.name
+    .badge
+      %h4.center= @project_group.name
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row
-      .col-xs-6
-        = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
+      %ul.nav.nav-tabs
+        %li.active
+          %a{"data-toggle" => "tab", :href => "#home"} Home
+        %li
+          %a{"data-toggle" => "tab", :href => "#menu1"} Remedy Action
+        %li
+          %a{"data-toggle" => "tab", :href => "#menu2"} Top 5 Critical
+        %li
+          %a{"data-toggle" => "tab", :href => "#menu3"} Low Hanging Fruit
+        %li
+          %a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
+      .tab-content
+        #home.tab-pane.fade.in.active
+          .panel-body
+            .well
+              .row
+                .col-md-3
+                  = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
+                /  = render partial: 'widgets/total_hosts', locals: { obj: @affected_hosts }
+                .col-md-6
+                  .row
+                    = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
+                  .row
+                    = render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
+                .col-md-3
+                  /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
+                  = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
+        #menu1.tab-pane.fade
+          .panel-body
+            .well
+              .row
+                .col-md-6
+                  /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
+                  = render partial: 'widgets/remedy_chart', locals: { obj: @affected_hosts }
 
-      .col-xs-6
-        /= render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
-        = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
+                .col-md-6
+                  /= render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
+                  = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
 
-    .row
-      .col-xs-6
-        = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
+        #menu2.tab-pane.fade
+          .panel-body
+            .well
+              .row
+                .col-md-6
+                  = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
 
-      .col-xs-3
-        = render partial: 'widgets/top_hosts', locals: { obj: @affected_hosts }
+                .col-md-3
+                  = render partial: 'widgets/top_hosts', locals: { obj: @affected_hosts }
 
-      .col-xs-3
-        = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }
+                .col-md-3
+                  = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }
+
+        #menu3.tab-pane.fade
+          .panel-body
+            .well
+              = render partial: 'widgets/low_hanging_fruits', locals: { obj: @affected_hosts }
+
+        #menu4.tab-pane.fade
+          .panel-body
+            .well
+              = render partial: 'widgets/unsupported_systems', locals: { obj: @affected_hosts }

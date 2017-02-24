@@ -1,9 +1,10 @@
 /%p#notice= notice
 
-.panel.panel-default
+.panel.panel-info
   .panel-body
     .well
-      = @project_group.name
+      %span.glyphicon.glyphicon-option-vertica
+      = project_group.name
 
     /= form_for @project_group, remote: true, method: :put, html: { id: 'edit_form' } do |f|
     = form_for @project_group, remote: true, html: {id: 'project_group_items'} do |f|

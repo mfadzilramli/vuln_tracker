@@ -5,6 +5,7 @@ class ProjectGroupsController < ApplicationController
   # GET /project_groups.json
 
   def stats
+     @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
   end
 
   def index

@@ -1,0 +1,9 @@
+.panel.panel-default
+  .panel-body
+    %table.table
+
+      - options = { height: '176px',
+        title: { display: true, fontSize: 14, text: "Vulnerability Remedy Status" },
+        legend: { position: 'right', labels: { boxWidth: 10 } },
+        scale: { ticks: { beginAtZero: true } } }
+      = bar_chart get_remedy_data(obj), options

@@ -1,6 +1,6 @@
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h3
+    %h4
       %span.glyphicon.glyphicon-list
       &nbsp;Listing Project Groups
   .panel-body
@@ -39,4 +39,6 @@
                 %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
   .panel-footer
-    = link_to 'New Project group', new_project_group_path, class: "btn btn-primary"
+    = link_to new_project_group_path, class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+      New Project

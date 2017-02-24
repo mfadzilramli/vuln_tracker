@@ -1,0 +1,18 @@
+.panel.panel-info
+  .panel-heading.center
+    %strong Hosts Scanned by Platforms
+  .panel-body
+    %table.table
+      %thead
+        %th Platform
+        %th.center Count
+      %tbody
+        / helper get_top_ten_critical
+        - affected_platforms = get_affected_platforms(obj)
+        - affected_platforms.each do |k,v|
+          %tr
+            %td= k.capitalize
+            %td.center= v
+        %tr.success
+          %th Total Host
+          %th.center= obj.count
