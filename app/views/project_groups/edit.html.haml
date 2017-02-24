@@ -24,4 +24,5 @@
                   %span.glyphicon.glyphicon-list{aria_hidden: "true"}
     .panel-footer
       .actions
+        = link_to 'Show Stats', stats_project_group_path(@project_group), class: "btn btn-primary"
         = link_to 'Back', project_groups_path, class: "btn btn-primary"
