@@ -5,8 +5,11 @@ module ProjectGroupsHelper
     cvss_count = Vulnerability.where(affected_host_id: affected_hosts).joins(:remedy_action).where('status != 3').pluck(:cvss_score).map(&:to_f).sum
     vuln_count = affected_hosts.joins(:vulnerabilities).count
     # hosts_count = affected_hosts.count
-
-    return (cvss_count/vuln_count).round(1)
+    if vuln_count != 0
+      return (cvss_count/vuln_count).round(1)
+    else
+      return 0
+    end
   end
 
   def get_top_vulns_critical(affected_hosts)

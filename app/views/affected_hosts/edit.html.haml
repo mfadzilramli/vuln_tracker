@@ -1,1 +1,7 @@
-= render 'form'
+.panel.panel-info
+  .panel-heading
+    %h4= "Host Details: #{@affected_host.host_ip}"
+  .panel-body
+    = render 'form'
+/  .panel-footer
+/    = link_to "Back", :back, { class: "btn btn-primary" }

@@ -1,3 +1,10 @@
-= render 'form'
-
-/= link_to 'Back', source_files_path
+.panel.panel-info
+  .panel-heading
+    %h4
+      %span.glyphicon.glyphicon-upload
+      - if (controller.action_name != 'edit')
+        &nbsp;Upload Source
+      - else
+        &nbsp;Update Source
+  .panel-body
+    = render 'form'

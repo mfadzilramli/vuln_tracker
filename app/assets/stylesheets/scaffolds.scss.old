@@ -1,23 +1,29 @@
-$font_size: 13px;
-$line-height: 15px;
+$font_size: 1.1em;
+// $line-height: 15px;
+$line-height: 1.42857143 !important;
 
 body {
   background-color: #000;
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: $font_size;
-  line-height: 18px;
-  margin: 10px;
+  line-height: $line-height;
+  margin: 0px;
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: $font_size;
-  line-height: 18px;
-  margin: 33px;
+  line-height: $line-height;
+  margin: 10px;
   // margin: 33px;
 }
 
+li {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: $font_size;
+  // line-height: $line-height;
+}
 // pre {
 //   background-color: #eee;
 //   // padding: 10px;
@@ -93,11 +99,33 @@ div {
   }
 
   ul li {
-    font-size: 12px;
+    font-size: $font-size;
     list-style: square;
   }
 }
 
 label {
   display: block;
+}
+
+h3 {
+  font-size: 16px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+h4 {
+  font-size: 14px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+h5 {
+  font-size: 12px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+.glyphicon {
+  margin-right: 6px;
 }

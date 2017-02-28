@@ -22,6 +22,7 @@
               %td= f.check_box :source_file_ids, { multiple: true }, source_file.id, false
               %td= source_file.title
               %td= source_file.filename
+              
       .panel-footer
         .actions
           = link_to 'Back', project_groups_path, class: "btn btn-primary"

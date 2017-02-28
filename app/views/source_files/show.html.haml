@@ -4,10 +4,10 @@
   .panel-body
     %table.table
       %thead
-        %tr{ bgcolor: '#ce93d8' }
+        %tr{ bgcolor: '#e2e2e2' }
           %th{ rowspan: 2 } Title
           %th.center{ rowspan: 2 } Total Host
-          %th.center{ colspan: 5, bgcolor: '#ce93d8' } Severity
+          %th.center{ colspan: 5, bgcolor: '#e2e2e2' } Severity
         %tr
           %th.center{ bgcolor: '#ffeeff' } Total
           %th.center{ bgcolor: '#ff8080' } Critical
@@ -24,6 +24,6 @@
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
     .panel-footer
-      = link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-default"
-      = link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-default"
-      = link_to 'Back', source_files_path, class: "btn btn-default"
+      = link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-primary"
+      = link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-primary"
+      = link_to 'Back', source_files_path, class: "btn btn-primary"

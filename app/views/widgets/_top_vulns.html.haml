@@ -12,7 +12,8 @@
         - top_ten.each do |key,value|
           %tr
             %td
-              = link_to key, list_affected_hosts_path(plugin_id: get_plugin_id_by_name(obj, key),project_group_id: @project_group)
+              /= link_to key, list_affected_hosts_path(plugin_id: get_plugin_id_by_name(obj, key),project_group_id: @project_group)
+              = link_to key, list_affected_hosts_path(v_name: key, project_group_id: @project_group), method: :post
             %td.center= value
-    %span.badge.pull-right
-      more
+    /%span.badge.pull-right
+    /  more
