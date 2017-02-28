@@ -21,22 +21,25 @@
 
     %table.table.table-striped
       %thead
-        %tr{ bgcolor: '#ce93d8' }
-          %th.center No.
-          %th.center IP Address
-          %th.center Hostname
-          %th.center Platform
-          %th.center Operating System
+        %tr{ bgcolor: '#e2e2e2' }
+          /%th.center No.
+          %th IP Address
+          %th Hostname
+          %th Platform
+          %th Operating System
           %th.center Count
       %tbody
         /- @affected_hosts = @affected_hosts.joins(:vulnerabilities).where("plugin_id == #{params[:plugin_id]}").uniq(:host_ip)
         - @affected_hosts.each_with_index do |host, index|
           %tr
-            %td.center= index + 1
-            %td.center= host.host_ip
-            %td.center= host.host_fqdn ||= host.netbios_name
-            %td.center= host.platform
-            %td.center= host.operating_system
-            %td.center= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
+            /%td.center= index + 1
+            %td
+              = link_to host.host_ip, show_vulnerability_path(host)
+            %td= host.host_fqdn ||= host.netbios_name
+            %td= host.platform
+            %td= host.operating_system
+            %td= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
     %div{ align: "center"}
       = will_paginate
+
+    = link_to 'Back', root_path, class: "btn btn-primary"

@@ -1,8 +1,18 @@
 class ProjectGroupsController < ApplicationController
-  before_action :set_project_group, only: [:stats, :show, :edit, :update, :destroy]
+  before_action :set_project_group, only: [:search, :stats, :show, :edit, :update, :destroy]
 
   # GET /project_groups
   # GET /project_groups.json
+
+  def search
+    if params[:search]
+      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).where(
+      'host_ip LIKE ?', "%#{params[:search]}%"
+      ).paginate(page: params[:page], per_page: 10)
+    else
+      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).paginate(page: params[:page], per_page: 10)
+    end
+  end
 
   def stats
      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)

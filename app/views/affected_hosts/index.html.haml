@@ -9,26 +9,25 @@
   .panel-body
     /%div{ align: "center"}
     /  = will_paginate
-    %nav.navbar-inverse
+    %nav.navbar.grey-bgcolor
       .container-fluid
         = form_tag search_affected_hosts_path(source_id: @source_file.id), method: :get, action: :index, class: "navbar-form navbar-right", role: "search" do
           .input-group
-            = text_field_tag :search, "", class: "form-control", placeholder: "e.g. 172.1"
+            = text_field_tag :search, "", class: "form-control", placeholder: "e.g. 172.16"
             .input-group-btn
               = button_tag 'Search', class: "btn btn-default", type: "submit" do
                 %span.glyphicon.glyphicon-search{aria_hidden: true}
-        /.nav.navbar-nav.navbar-right
         %p.navbar-text.navbar-right
           %b Search Host
-    %table.table.table-bordered.table-hover
+    %table.table.table-hover
       %thead
-        %tr{ bgcolor: '#ce93d8' }
-          %th.center{ rowspan: 2 } No.
-          %th.center{ rowspan: 2 } IP Address
-          %th.center{ rowspan: 2 } Hostname
+        %tr{ bgcolor: '#efefef' }
+          /%th.center{ rowspan: 2 } No.
+          %th{ rowspan: 2 } IP Address
+          %th{ rowspan: 2 } Hostname
           /%th.center{ rowspan: 2 } Scan Date
           %th.center{ colspan: 5 } Severity
-          %th.center{ rowspan: 2 }
+          %th{ rowspan: 2 }
         %tr
           %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
           %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
@@ -38,13 +37,13 @@
       %tbody
         - @affected_hosts.each_with_index do |host, index|
           %tr
-            %td.center= index + 1
-            %td.center
+            /%td.center= index + 1
+            %td
               / = link_to show_vulnerability_path(host.id) do
               = link_to "#index_#{host.id}", data: { toggle: 'collapse' } do
                 #{host.host_ip}
                 /%span.caret
-            %td.center= host.host_fqdn ||= host.netbios_name
+            %td= host.host_fqdn ||= host.netbios_name
 
             - severity = host.vulnerabilities.group(:severity).count
             /- vuln_count = host.vulnerabilities.count
@@ -72,8 +71,9 @@
             %td{ colspan: '100%'}
               = render partial: 'details', locals: { host: host }
 
-    %div{ align: "center"}
+    %div{ align: "center" }
       = will_paginate
 
-  .panel-footer
+  .panel-footer{ padding: 0 }
+    = link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-danger"
     = link_to 'Back', source_files_path, class: "btn btn-primary"

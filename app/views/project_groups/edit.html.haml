@@ -1,5 +1,5 @@
 = form_for @project_group, remote: true, html: {id: 'project_group_items'} do |f|
-  .panel.panel-default
+  .panel.panel-info
     .panel-heading
       = f.label :name, 'Project Name'
       = f.text_field :name, class: "form-control"
@@ -23,6 +23,5 @@
                   placement: "top", content: "Show List" } do
                   %span.glyphicon.glyphicon-list{aria_hidden: "true"}
     .panel-footer
-      .actions
-        = link_to 'Show Stats', stats_project_group_path(@project_group), class: "btn btn-primary"
-        = link_to 'Back', project_groups_path, class: "btn btn-primary"
+      = link_to 'Show Stats', stats_project_group_path(@project_group), class: "btn btn-primary"
+      = link_to 'Back', project_groups_path, class: "btn btn-primary"

@@ -11,10 +11,10 @@
           %ul
             - @project_group.errors.full_messages.each do |msg|
               %li= msg
-      .field
+      .form-group
         = f.label :name
         = f.text_field :name, class: "form-control", style: "width: 300px"
-    .panel-footer
+      .form-group
       - if (controller.action_name == 'edit')
         = f.submit 'Update', class: "btn btn-primary"
         = link_to 'Back', project_groups_path, class: "btn btn-primary"

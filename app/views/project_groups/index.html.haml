@@ -6,7 +6,7 @@
   .panel-body
     %table.table
       %thead
-        %tr{ bgcolor: '#ce93d8' }
+        %tr
           %th
             Project Name
           %th
@@ -23,16 +23,21 @@
               /  placement: "top", content: "Show List" } do
               /  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
               /&nbsp;
+              = link_to search_project_group_path(project_group),
+                data: { toggle: "popover", trigger: "hover",
+                placement: "top", content: "Search Host Project" } do
+                %span.glyphicon.glyphicon-search{aria_hidden: "true"}
+
               = link_to edit_project_group_path(project_group),
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Edit Project" } do
                 %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              &nbsp;
+
               = link_to stats_project_group_path(project_group),
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Show Stats" } do
                 %span.glyphicon.glyphicon-stats{aria_hidden: "true"}
-              &nbsp;
+
               = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Remove Project" } do
@@ -42,3 +47,4 @@
     = link_to new_project_group_path, class: "btn btn-primary" do
       %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
       New Project
+/{ bgcolor: '#ce93d8' }

@@ -1,5 +1,7 @@
 .panel.panel-info
   .panel-heading
-    %h3 Edit
+    %h4 Edit
   .panel-body
     = render 'form'
+  .panel-footer
+    = link_to 'Back', source_files_path, class: "btn btn-primary"

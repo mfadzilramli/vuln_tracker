@@ -52,7 +52,8 @@ class SourceFilesController < ApplicationController
   def update
     respond_to do |format|
       if @source_file.update(source_file_params)
-        format.html { redirect_to @source_file, notice: 'Source file was successfully updated.' }
+        # format.html { redirect_to @source_file, notice: 'Source file was successfully updated.' }
+        format.html { redirect_to source_files_path, notice: 'Source file was successfully updated.' }
         format.json { render :show, status: :ok, location: @source_file }
       else
         format.html { render :edit }
@@ -66,7 +67,7 @@ class SourceFilesController < ApplicationController
   def destroy
     @source_file.destroy
     respond_to do |format|
-      format.html { redirect_to source_files_url, notice: 'Source file was successfully destroyed.' }
+      format.html { redirect_to source_files_path, notice: 'Source file was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

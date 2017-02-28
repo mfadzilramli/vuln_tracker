@@ -19,9 +19,9 @@ class VulnerabilitiesController < ApplicationController
     @vulnerability.last_seen = Time.now
 
     respond_to do |format|
-      if @vuln.save
+      if @vulnerability.save
         @remedy = RemedyAction.new
-        @remedy.status = 1
+        # @remedy.status = 1
         @remedy.vulnerability_id = @vulnerability.id
         @remedy.save
         format.html { redirect_to show_vulnerability_path(@vulnerability.affected_host_id),

@@ -88,7 +88,7 @@ class AffectedHostsController < ApplicationController
   # end
 
   def affected_host_params
-    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :operating_system, :plugin_id)
+    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :platform, :operating_system, :plugin_id)
   end
 
 end

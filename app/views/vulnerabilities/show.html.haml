@@ -13,15 +13,15 @@
   .panel-body
     /%div{ align: "center" }
     /  = will_paginate
-    %table.table.table-bordered
+    %table.table.table-hover
       %thead
-        %tr{ bgcolor: '#ce93d8' }
+        %tr{ bgcolor: '#efefef' }
           %th.center VID
           %th Vulnerability Name
-          %th.center Services
-          %th.center Group
+          %th Services
+          %th Group
           %th.center Severity
-          %th.center Remedy Action
+          %th.center Status
           %th
       %tbody
         - @vulnerabilities.each do |vulnerability|
@@ -29,8 +29,8 @@
           %tr
             %td.center= vulnerability.id
             %td.col-md-5= vulnerability.vulnerability_name
-            %td.center= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
-            %td.center= vulnerability.plugin_family
+            %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+            %td= vulnerability.plugin_family
             - case vulnerability.severity
               - when 1
                 %td.center{ bgcolor: '#c8e6c9' } Low
@@ -69,6 +69,7 @@
     %div{ align: "center" }
       = will_paginate
   .panel-footer
-    = link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"
+    /= link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"
+    = link_to 'Back', :back, class: "btn btn-primary"
 
 /= console
