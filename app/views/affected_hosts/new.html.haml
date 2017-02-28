@@ -19,8 +19,12 @@
         = f.text_field :mac_address, class: "form-control", style: "width: 300px"
 
       .form-group
+        = f.label :platform
+        = f.text_field :platform, class: "form-control", style: "width: 300px"
+
+      .form-group
         = f.label 'Operating system'
-        = f.text_field :operating_system, class: "form-control", style: "width: 300px"
+        = f.text_area :operating_system, class: "form-control", style: "width: 300px", rows: 3
 
       .form-group
         = f.submit 'Add Host', class: "btn btn-primary"

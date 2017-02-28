@@ -38,7 +38,7 @@
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
             %td= host.operating_system
-            %td= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
+            %td.center= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
     %div{ align: "center"}
       = will_paginate
 

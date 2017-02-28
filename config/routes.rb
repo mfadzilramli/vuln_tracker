@@ -7,11 +7,15 @@ Rails.application.routes.draw do
 
 
   get "affected_hosts/:source_id", to: "affected_hosts#index", as: "search_affected_hosts"
-  get "affected_hosts/:plugin_id/show", to: "affected_hosts#show", as: "list_affected_hosts"
+  #get "affected_hosts/:plugin_id/show", to: "affected_hosts#show", as: "list_affected_hosts"
   get 'affected_hosts/:source_id/new', to: 'affected_hosts#new', as: 'new_affected_host'
 
   resources :vulnerabilities
-  resources :affected_hosts
+  resources :affected_hosts do
+    collection do
+      post 'list', to: "affected_hosts#show"
+    end
+  end
   resources :source_files
   resources :project_groups do
     member do

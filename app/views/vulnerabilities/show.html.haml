@@ -28,7 +28,7 @@
           - @source_id = vulnerability.affected_host.source_file_id
           %tr
             %td.center= vulnerability.id
-            %td.col-md-5= vulnerability.vulnerability_name
+            %td.col-md-4= vulnerability.vulnerability_name
             %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
             %td= vulnerability.plugin_family
             - case vulnerability.severity
@@ -56,12 +56,10 @@
                 data: { toggle: "popover", trigger: "hover", content: "Remedy Action",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
-              &nbsp;
               = link_to edit_vulnerability_path(vulnerability),
                 data: { toggle: "popover", trigger: "hover", content: "Edit",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              &nbsp;
               = link_to vulnerability_path(vulnerability), :method => :delete,
                 data: { toggle: "popover", trigger: "hover", content: "Delete this item",
                 placement: "top", confirm: 'Are you sure?' } do

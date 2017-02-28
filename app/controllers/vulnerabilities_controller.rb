@@ -17,7 +17,7 @@ class VulnerabilitiesController < ApplicationController
   def create
     @vulnerability = Vulnerability.new(vuln_params)
     @vulnerability.last_seen = Time.now
-
+57582
     respond_to do |format|
       if @vulnerability.save
         @remedy = RemedyAction.new

@@ -15,19 +15,26 @@ class AffectedHostsController < ApplicationController
   def show
     #@affected_hosts = @affected_hosts.joins(:vulnerabilities).where("plugin_id == #{params[:plugin_id]}").uniq(:host_ip)
     @project_group = ProjectGroup.find(params[:project_group_id])
-    @vulnerability_name = Vulnerability.where('plugin_id == ?', params[:plugin_id]).pluck(:vulnerability_name).first
+    #@vulnerability_name = Vulnerability.where('plugin_id == ?', params[:plugin_id]).pluck(:vulnerability_name).first
+    @vulnerability_name = Vulnerability.where('vulnerability_name == ?', params[:v_name]).pluck(:vulnerability_name).first
     if params[:search]
       # @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).where(
       # 'host_ip LIKE ?', "%#{params[:search]}%"
       # ).paginate(page: params[:page], per_page: 15)
+      # @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
+      # "plugin_id == #{params[:plugin_id]}").where(
+      # 'host_ip LIKE ?', "%#{params[:search]}%"
+      # ).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
-      "plugin_id == #{params[:plugin_id]}").where(
+      "vulnerability_name == ?", params[:v_name]).where(
       'host_ip LIKE ?', "%#{params[:search]}%"
       ).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
     else
       #@affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).paginate(page: params[:page], per_page: 15)
+      #@affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
+      #{}"plugin_id == #{params[:plugin_id]}").uniq(:host_ip).paginate(page: params[:page], per_page: 10)
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
-      "plugin_id == #{params[:plugin_id]}").uniq(:host_ip).paginate(page: params[:page], per_page: 10)
+      "vulnerability_name == ?", params[:v_name]).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -54,16 +61,13 @@ class AffectedHostsController < ApplicationController
   end
 
   def update
-    def update
-      respond_to do |format|
-        if @affected_host.update(affected_host_params)
-          format.html { redirect_to @affected_host, notice: 'Affected host was successfully updated.' }
-          format.json { render :show, status: :ok, location: @affected_host }
-          format.js
-        else
-          format.html { render :edit }
-          format.json { render json: @affected_host.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @affected_host.update(affected_host_params)
+        format.html { redirect_to source_files_path, notice: 'Affected host was successfully updated.' }
+        format.json { render :show, status: :ok, location: @affected_host }
+      else
+        format.html { render :edit }
+        format.json { render json: @affected_host.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -88,7 +92,7 @@ class AffectedHostsController < ApplicationController
   # end
 
   def affected_host_params
-    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :platform, :operating_system, :plugin_id)
+    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :platform, :operating_system, :v_name, :project_group_id)
   end
 
 end

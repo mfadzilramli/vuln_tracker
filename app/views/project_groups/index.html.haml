@@ -7,16 +7,16 @@
     %table.table
       %thead
         %tr
-          %th
-            Project Name
-          %th
-            Date Created
+          %th Project Name
+          %th Date Created
+          %th Date Updated
           %th
       %tbody
         - @project_groups.each do |project_group|
           %tr
             %td= project_group.name
             %td= project_group.created_at
+            %td= project_group.updated_at
             %td{ align: 'right'}
               /= link_to project_group,
               /  data: { toggle: "popover", trigger: "hover",

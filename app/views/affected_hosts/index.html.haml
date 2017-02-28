@@ -38,11 +38,7 @@
         - @affected_hosts.each_with_index do |host, index|
           %tr
             /%td.center= index + 1
-            %td
-              / = link_to show_vulnerability_path(host.id) do
-              = link_to "#index_#{host.id}", data: { toggle: 'collapse' } do
-                #{host.host_ip}
-                /%span.caret
+            %td= link_to host.host_ip, edit_affected_host_path(host)
             %td= host.host_fqdn ||= host.netbios_name
 
             - severity = host.vulnerabilities.group(:severity).count
@@ -67,9 +63,6 @@
                 &nbsp;
               = link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
                 %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
-          %tr.collapse{ id: "index_#{host.id}" }
-            %td{ colspan: '100%'}
-              = render partial: 'details', locals: { host: host }
 
     %div{ align: "center" }
       = will_paginate

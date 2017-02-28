@@ -1,6 +1,8 @@
 .panel.panel-info
   .panel-heading
-    %h4 Search Host
+    %h4
+      %span.glyphicon.glyphicon-search
+      Search Host
   .panel-body
     %nav.navbar.grey-bgcolor
       .container-fluid
@@ -19,11 +21,11 @@
           %th Hostname
           %th Platform
           %th Operating System
-          %th 
+          %th
       %tbody
         - @affected_hosts.each do |host|
           %tr
-            %td= host.host_ip
+            %td= link_to host.host_ip, edit_affected_host_path(host)
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
             %td= host.operating_system
@@ -37,4 +39,3 @@
 
   .panel-footer
     = link_to 'Back to Main Menu', root_path, class: "btn btn-primary"
-= console
