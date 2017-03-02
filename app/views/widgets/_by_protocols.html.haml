@@ -1,0 +1,19 @@
+.panel.panel-warning
+  .panel-heading.center
+    %strong Protocol Distribution
+  .panel-body
+    - options = { height: '200px',
+      legend: { position: 'right', fullWidth: true, labels: { boxWidth: 10 } }}
+    = pie_chart get_protocol_pie_data(obj), options
+
+  %table.table.table-bordered.table-striped.table-condensed
+    /%thead
+    /  %tr{ bgcolor: '#c2c2c2' }
+    /    %th Protocol
+    /    %th.center Count
+    %tbody
+      - proto_data = Vulnerability.where(affected_host_id: obj).group(:protocol).order('count_all DESC').count
+      - proto_data.each do |key,value|
+        %tr
+          %td.center= key.upcase
+          %td.center= value
