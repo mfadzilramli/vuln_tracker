@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # post 'vulnerabilities/:host_id', to: 'vulnerabilities#create', as: 'create_vulnerability'
   get 'vulnerabilities/:id', to: 'vulnerabilities#show', as: 'show_vulnerability'
   get 'vulnerabilities/:host_id/new', to: 'vulnerabilities#new', as: 'new_vulnerability'
