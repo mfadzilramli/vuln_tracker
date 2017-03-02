@@ -28,6 +28,7 @@ module ProjectGroupsHelper
   def get_top_ports_critical(affected_hosts)
     #top_ports = affected_hosts.joins(:vulnerabilities).where('port != 0').group(:port).order('count_all DESC').limit(5).count
     top_ports = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).where('port != 0').joins(:remedy_action).where('status != 3').group(:port).order('count_all DESC').limit(5).count
+    return top_ports
   end
 
   def get_affected_platforms(affected_hosts)

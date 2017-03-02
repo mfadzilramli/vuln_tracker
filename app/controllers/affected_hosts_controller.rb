@@ -25,16 +25,14 @@ class AffectedHostsController < ApplicationController
       # "plugin_id == #{params[:plugin_id]}").where(
       # 'host_ip LIKE ?', "%#{params[:search]}%"
       # ).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
-      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
-      "vulnerability_name == ?", params[:v_name]).where(
-      'host_ip LIKE ?', "%#{params[:search]}%"
-      ).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
+      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where('vulnerability_name == ?', params[:v_name]).where(
+'host_ip LIKE ?', "%#{params[:search]}%").distinct(:host_ip).paginate(page: params[:page], per_page: 10)
     else
       #@affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).paginate(page: params[:page], per_page: 15)
       #@affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
       #{}"plugin_id == #{params[:plugin_id]}").uniq(:host_ip).paginate(page: params[:page], per_page: 10)
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
-      "vulnerability_name == ?", params[:v_name]).uniq(:host_ip).paginate(page: params[:page], per_page: 10)
+      "vulnerability_name == ?", params[:v_name]).distinct(:host_ip).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -43,7 +41,9 @@ class AffectedHostsController < ApplicationController
 
     respond_to do |format|
       if @affected_host.save
-        format.html { redirect_to source_file_path(@affected_host.source_file_id),
+        # format.html { redirect_to source_file_path(@affected_host.source_file_id),
+        #   notice: 'New affected host was successfully created.' }
+        format.html { redirect_to affected_hosts_path(source_id: @affected_host.source_file_id),
           notice: 'New affected host was successfully created.' }
         format.json { render :show, status: :created, location: @affected_host }
       else
@@ -61,9 +61,12 @@ class AffectedHostsController < ApplicationController
   end
 
   def update
+    p params
     respond_to do |format|
       if @affected_host.update(affected_host_params)
-        format.html { redirect_to source_files_path, notice: 'Affected host was successfully updated.' }
+        # format.html { redirect_to source_files_path, notice: 'Affected host was successfully updated.' }
+        format.html { redirect_to affected_hosts_path(source_id: @affected_host.source_file_id),
+          notice: 'Affected host was successfully updated.' }
         format.json { render :show, status: :ok, location: @affected_host }
       else
         format.html { render :edit }
@@ -92,7 +95,7 @@ class AffectedHostsController < ApplicationController
   # end
 
   def affected_host_params
-    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :platform, :operating_system, :v_name, :project_group_id)
+    params.fetch(:affected_host, {}).permit(:source_file_id, :host_ip, :host_fqdn, :netbios_name, :mac_address, :platform, :operating_system, :v_name, :project_group_id, :source_id)
   end
 
 end

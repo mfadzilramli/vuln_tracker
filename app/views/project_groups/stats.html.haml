@@ -4,7 +4,7 @@
 .panel.panel-info
   .panel-heading
     .badge
-      %h4.center= @project_group.name
+      %h5.center= @project_group.name
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
@@ -28,17 +28,16 @@
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
           .row{ style: "padding:15px" }
-            .col-md-3
+            .col-md-4
               = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
             /  = render partial: 'widgets/total_hosts', locals: { obj: @affected_hosts }
-            .col-md-6
+            .col-md-5
               .row
                 = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
               .row
                 = render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
             .col-md-3
-              /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
-              = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/by_protocols', locals: { obj: @affected_hosts }
 
         #menu1.tab-pane.fade
           .row{ style: "padding:15px" }
@@ -70,3 +69,5 @@
           .row{ style: "padding:15px" }
             .col-md-12
               = render partial: 'widgets/unsupported_systems', locals: { obj: @affected_hosts }
+
+= console

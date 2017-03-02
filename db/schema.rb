@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20170214013419) do
     t.string   "vulnerability_name"
     t.string   "plugin_family"
     t.string   "cve"
-    t.string   "cvss_score"
+    t.integer  "cvss_score"
     t.string   "cpe"
     t.datetime "vulnerability_date"
     t.datetime "patch_date"
