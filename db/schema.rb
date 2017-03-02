@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214013419) do
+ActiveRecord::Schema.define(version: 20170302004556) do
 
   create_table "affected_hosts", force: :cascade do |t|
     t.string   "host_ip"
@@ -60,6 +60,23 @@ ActiveRecord::Schema.define(version: 20170214013419) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   create_table "vulnerabilities", force: :cascade do |t|
     t.integer  "port"
     t.string   "service_name"
@@ -69,7 +86,7 @@ ActiveRecord::Schema.define(version: 20170214013419) do
     t.string   "vulnerability_name"
     t.string   "plugin_family"
     t.string   "cve"
-    t.string   "cvss_score"
+    t.integer  "cvss_score"
     t.string   "cpe"
     t.datetime "vulnerability_date"
     t.datetime "patch_date"

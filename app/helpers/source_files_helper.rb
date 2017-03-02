@@ -150,4 +150,24 @@ module SourceFilesHelper
     return data
   end
 
+  def get_protocol_pie_data(hosts)
+    #severity_data =  hosts.joins(:vulnerabilities).group(:severity).count.values
+    pie_data = Vulnerability.where(affected_host_id: hosts).group(:protocol).count
+    data = {
+      labels: pie_data.keys,
+      datasets: [
+        {
+          data: pie_data.values,
+          backgroundColor: [
+            '#0d47a1',
+            '#00695c',
+            '#e91e63',
+            '#9933CC'
+          ]
+        }
+      ]
+    }
+    return data
+  end
+
 end

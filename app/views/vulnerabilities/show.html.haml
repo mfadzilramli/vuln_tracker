@@ -33,23 +33,23 @@
             %td= vulnerability.plugin_family
             - case vulnerability.severity
               - when 1
-                %td.center{ bgcolor: '#c8e6c9' } Low
+                %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle" } Low
               - when 2
-                %td.center{ bgcolor: '#fff9c4' } Medium
+                %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle" } Medium
               - when 3
-                %td.center{ bgcolor: '#ffe0b2' } High
+                %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle" } High
               - when 4
-                %td.center{ bgcolor: '#ffcdd2' } Critical
+                %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle" } Critical
               - else
                 %td.center
             /%td.center
             - case vulnerability.remedy_action.status
               - when 1
-                %td.center{ bgcolor: 'red' } Open
+                %td.center{ bgcolor: 'red', style: "vertical-align:middle" } Open
               - when 2
-                %td.center{ bgcolor: 'yellow' } In-progress
+                %td.center{ bgcolor: 'yellow', style: "vertical-align:middle" } In-progress
               - when 3
-                %td.center{ bgcolor: 'green' } Closed
+                %td.center{ bgcolor: 'green', style: "vertical-align:middle" } Closed
             -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
             %td.center
               = link_to edit_remedy_action_path(vulnerability),
@@ -57,17 +57,17 @@
                 placement: "top" } do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
               = link_to edit_vulnerability_path(vulnerability),
-                data: { toggle: "popover", trigger: "hover", content: "Edit",
+                data: { toggle: "popover", trigger: "hover", content: "Update",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
               = link_to vulnerability_path(vulnerability), :method => :delete,
-                data: { toggle: "popover", trigger: "hover", content: "Delete this item",
+                data: { toggle: "popover", trigger: "hover", content: "Delete Item",
                 placement: "top", confirm: 'Are you sure?' } do
                 %i.glyphicon.glyphicon-remove{aria_hidden: "true"}
     %div{ align: "center" }
       = will_paginate
   .panel-footer
     /= link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"
-    = link_to 'Back', :back, class: "btn btn-primary"
+    = link_to 'Back', affected_hosts_path(source_id: @host.source_file_id), class: "btn btn-primary"
 
-/= console
+= console

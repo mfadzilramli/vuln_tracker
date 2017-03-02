@@ -4,20 +4,6 @@
       %span.glyphicon.glyphicon-option-vertical
       #{@vulnerability_name}
   .panel-body
-    /%div{ align: "center"}
-    /  = will_paginate
-    .nav.navbar-inverse
-      .container-fluid
-        = form_tag list_affected_hosts_path(plugin_id: params[:plugin_id]),
-          method: :get, action: :show, class: "navbar-form navbar-right", role: "search" do
-          .input-group
-            = hidden_field_tag :project_group_id, params[:project_group_id]
-            = text_field_tag :search, params[:search], class: "form-control", placeholder: "e.g. 172.16"
-            .input-group-btn
-              = button_tag 'Search', class: "btn btn-default", type: "submit" do
-                %span.glyphicon.glyphicon-search{aria_hidden: true}
-        %p.navbar-text.navbar-right
-          %b Search Host
 
     %table.table.table-striped
       %thead
@@ -34,12 +20,14 @@
           %tr
             /%td.center= index + 1
             %td
-              = link_to host.host_ip, show_vulnerability_path(host)
+              = link_to host.host_ip, show_vulnerability_path(host, v_name: params[:v_name])
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
             %td= host.operating_system
-            %td.center= host.vulnerabilities.where('vulnerability_name LIKE ?', @vulnerability_name).count
+            %td.center= host.vulnerabilities.where('vulnerability_name == ?', @vulnerability_name).count
     %div{ align: "center"}
-      = will_paginate
+      = will_paginate @affected_hosts
 
-    = link_to 'Back', root_path, class: "btn btn-primary"
+    = link_to 'Back', stats_project_group_path(id: params[:project_group_id]), class: "btn btn-primary"
+
+= console

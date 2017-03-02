@@ -6,7 +6,13 @@ class VulnerabilitiesController < ApplicationController
 
   def show
     # @vulns = Vulnerability.where(affected_host_id: params[:id]).order(severity: :desc).paginate(page: params[:page], per_page: 15)
-    @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+    #@vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+    if params[:v_name].present?
+      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).where('vulnerability_name == ?', params[:v_name]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+    else
+      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+    end
+    
     @host = AffectedHost.find(params[:id])
   end
 
@@ -17,7 +23,7 @@ class VulnerabilitiesController < ApplicationController
   def create
     @vulnerability = Vulnerability.new(vuln_params)
     @vulnerability.last_seen = Time.now
-57582
+
     respond_to do |format|
       if @vulnerability.save
         @remedy = RemedyAction.new
@@ -26,6 +32,8 @@ class VulnerabilitiesController < ApplicationController
         @remedy.save
         format.html { redirect_to show_vulnerability_path(@vulnerability.affected_host_id),
           notice: 'Vulnerability was successfully created.' }
+        # format.html { redirect_to affected_hosts_path(source_id: @affected_host.source_file_id),
+        #   notice: 'New affected host was successfully created.' }
         format.json { render :show, status: :created, location: @vulnerability }
       else
         format.html { render :new }
