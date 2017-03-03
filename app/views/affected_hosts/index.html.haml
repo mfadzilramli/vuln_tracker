@@ -21,13 +21,13 @@
           %b Search Host
     %table.table.table-hover
       %thead
-        %tr{ bgcolor: '#efefef' }
+        %tr{ bgcolor: '#e3e3e3' }
           /%th.center{ rowspan: 2 } No.
           %th{ rowspan: 2 } IP Address
           %th{ rowspan: 2 } Hostname
+          %th{ rowspan: 2 } Operating System
           /%th.center{ rowspan: 2 } Scan Date
-          %th.center{ colspan: 5 } Severity
-          %th{ rowspan: 2 }
+          %th.center{ colspan: 5, bgcolor: '#d2d2d2' } Severity
         %tr
           %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
           %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
@@ -38,8 +38,10 @@
         - @affected_hosts.each_with_index do |host, index|
           %tr
             /%td.center= index + 1
-            %td= link_to host.host_ip, edit_affected_host_path(host, source_id: @source_file.id)
+            /%td= link_to host.host_ip, edit_affected_host_path(host, source_id: @source_file.id)
+            %td= host.host_ip
             %td= host.host_fqdn ||= host.netbios_name
+            %td= host.operating_system ||= 'Unidentified'
 
             - severity = host.vulnerabilities.group(:severity).count
             /- vuln_count = host.vulnerabilities.count
@@ -51,18 +53,18 @@
               %strong= host.vulnerabilities.count
 
             %td.center
-              -# .btn-group.btn-group-sm{ role: 'group', aria: false}
-              - if host.vulnerabilities.count != 0
-                = link_to show_vulnerability_path(host.id) do
-                  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-              - else
-                %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-              &nbsp;
-              = link_to new_vulnerability_path(host) do
-                %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
-                &nbsp;
-              = link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
-                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+              / .btn-group.btn-group-sm{ role: 'group', aria: false}
+              /- if host.vulnerabilities.count != 0
+              /  = link_to show_vulnerability_path(host.id) do
+              /    %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              /- else
+              /  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              /&nbsp;
+              /= link_to new_vulnerability_path(host) do
+              /  %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+              /  &nbsp;
+              /= link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
+              /  %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
     %div{ align: "center" }
       = will_paginate

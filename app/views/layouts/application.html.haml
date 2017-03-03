@@ -9,3 +9,6 @@
     .container
       = render partial: 'layouts/navtopbar'
       = yield
+
+- if Rails.env.development?
+  = console

@@ -54,5 +54,6 @@
 
       .form-group
         .col-md-12{ align: "right"}
+          = hidden_field_tag :project_group_id, params[:project_group_id]
           = f.submit 'Update', class: "btn btn-primary"
           = link_to "Back", :back, { class: "btn btn-primary" }

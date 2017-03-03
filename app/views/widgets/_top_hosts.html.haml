@@ -13,7 +13,7 @@
           - host = obj.where(host_ip: k).first
           - if !host.nil?
             %tr
-              %td= link_to k, show_vulnerability_path(host)
+              %td= link_to k, show_vulnerability_path(host, project_group_id: params[:id])
               %td.center= v
     /%span.badge.pull-right
     /  more
