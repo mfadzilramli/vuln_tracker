@@ -9,23 +9,23 @@
         %tr
           %th Title
           %th Filename
+          %th Create Date
           %th
       %tbody
         - @source_files.each do |source_file|
           %tr
             %td= source_file.title
             %td= source_file.filename
+            %td= source_file.created_at
             %td{ align: 'right' }
-              = link_to  affected_hosts_path(source_id: source_file.id),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Show details" } do
-                %span.glyphicon.glyphicon-list-alt{aria_hidden: "true"}
-              &nbsp;&nbsp;
-              = link_to edit_source_file_path(source_file),
+              /= link_to  affected_hosts_path(source_id: source_file.id),
+              /  data: { toggle: "popover", trigger: "hover",
+              /  placement: "top", content: "Show details" } do
+              /  %span.glyphicon.glyphicon-list-alt{aria_hidden: "true"}
+              = link_to edit_source_file_path(source_file.id),
                 data: { toggle: "popover", trigger: "hover",
                 placement: "top", content: "Edit source title" } do
                 %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              &nbsp;&nbsp;
               = link_to source_file, :method => :delete,
                 data: { toggle: "popover", trigger: "hover", content: "Delete this source",
                 placement: "top", confirm: 'Are you sure?' } do

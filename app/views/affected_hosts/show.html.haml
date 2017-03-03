@@ -28,4 +28,6 @@
     %div{ align: "center"}
       = will_paginate @affected_hosts
 
-    = link_to 'Back', stats_project_group_path(id: params[:project_group_id]), class: "btn btn-primary"
+    = link_to stats_project_group_path(id: params[:project_group_id]), class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+      Back

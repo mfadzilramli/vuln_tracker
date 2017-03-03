@@ -20,4 +20,6 @@
       = button_tag class: "btn btn-primary" do
         %span.glyphicon.glyphicon-ok{aria_hidden: "true"}
         Update
-      = link_to 'Back', source_files_path, class: "btn btn-primary"
+      = link_to source_files_path, class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+        Back
