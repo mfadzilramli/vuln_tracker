@@ -21,4 +21,5 @@
     = f.text_area :remarks, rows: 4, class: "form-control", style: "width: 500px"
 
   .form-group
+    = hidden_field_tag :project_group_id, params[:project_group_id]
     = f.submit 'Save', class: "btn btn-primary"

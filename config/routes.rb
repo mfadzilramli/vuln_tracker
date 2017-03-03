@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
+
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    patch 'users' => 'registrations#update', :as => 'user_registration'
+  end
   # post 'vulnerabilities/:host_id', to: 'vulnerabilities#create', as: 'create_vulnerability'
   get 'vulnerabilities/:id', to: 'vulnerabilities#show', as: 'show_vulnerability'
   get 'vulnerabilities/:host_id/new', to: 'vulnerabilities#new', as: 'new_vulnerability'

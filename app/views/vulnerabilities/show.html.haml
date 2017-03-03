@@ -1,15 +1,14 @@
-
-- affected_host = @host.host_ip
-- if @host.host_fqdn?
-  - affected_host << " (#{@host.host_fqdn})"
-- elsif @host.netbios_name?
-  - affected_host << " (#{@host.netbios_name})"
+- host = @affected_host.host_ip
+- if @affected_host.host_fqdn?
+  - host << " (#{@affected_host.host_fqdn})"
+- elsif @affected_host.netbios_name?
+  - host << " (#{@affected_host.netbios_name})"
 
 .panel.panel-info
   .panel-heading
     %h4
       %span.glyphicon.glyphicon-option-vertical
-      #{affected_host}
+      #{host}
   .panel-body
     /%div{ align: "center" }
     /  = will_paginate
@@ -52,20 +51,21 @@
                 %td.center{ bgcolor: 'green', style: "vertical-align:middle" } Closed
             -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
             %td.center
-              = link_to edit_remedy_action_path(vulnerability),
+              = link_to edit_remedy_action_path(vulnerability, project_group_id: params[:project_group_id]),
                 data: { toggle: "popover", trigger: "hover", content: "Remedy Action",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
-              = link_to edit_vulnerability_path(vulnerability),
+              = link_to edit_vulnerability_path(vulnerability, project_group_id: params[:project_group_id]),
                 data: { toggle: "popover", trigger: "hover", content: "Update",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              = link_to vulnerability_path(vulnerability), :method => :delete,
+              = link_to vulnerability_path(vulnerability, project_group_id: params[:project_group_id]),
+                :method => :delete,
                 data: { toggle: "popover", trigger: "hover", content: "Delete Item",
                 placement: "top", confirm: 'Are you sure?' } do
                 %i.glyphicon.glyphicon-remove{aria_hidden: "true"}
     %div{ align: "center" }
       = will_paginate
   .panel-footer
-    /= link_to 'Back', affected_hosts_path(source_id: @source_id), class: "btn btn-primary"
-    = link_to 'Back', affected_hosts_path(source_id: @host.source_file_id), class: "btn btn-primary"
+    = link_to 'Add New Vulnerability', new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary"
+    = link_to 'Back', search_project_group_path(params[:project_group_id]), class: "btn btn-primary"

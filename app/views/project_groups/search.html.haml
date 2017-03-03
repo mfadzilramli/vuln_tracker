@@ -25,13 +25,13 @@
       %tbody
         - @affected_hosts.each do |host|
           %tr
-            %td= link_to host.host_ip, edit_affected_host_path(host)
+            %td= link_to host.host_ip, edit_affected_host_path(host,project_group_id: params[:id])
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
             %td= host.operating_system
             %td
               - if host.vulnerabilities.count != 0
-                = link_to show_vulnerability_path(host.id) do
+                = link_to show_vulnerability_path(host.id, project_group_id: params[:id]) do
                   %span.glyphicon.glyphicon-list{aria_hidden: "true"}
 
     %div{ align: "center" }

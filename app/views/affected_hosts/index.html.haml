@@ -38,7 +38,8 @@
         - @affected_hosts.each_with_index do |host, index|
           %tr
             /%td.center= index + 1
-            %td= link_to host.host_ip, edit_affected_host_path(host, source_id: @source_file.id)
+            /%td= link_to host.host_ip, edit_affected_host_path(host, source_id: @source_file.id)
+            %td= host.host_ip
             %td= host.host_fqdn ||= host.netbios_name
 
             - severity = host.vulnerabilities.group(:severity).count
@@ -69,4 +70,4 @@
 
   .panel-footer{ padding: 0 }
     = link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-danger"
-    = link_to 'Back', source_files_path, class: "btn btn-primary"
+    = link_to 'Back', root_path, class: "btn btn-primary"
