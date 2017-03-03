@@ -29,11 +29,10 @@
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform.capitalize
             %td= host.operating_system ||= 'Unidentified'
-            %td
+            %td{ align: "right" }
               /- if host.vulnerabilities.count != 0
               = link_to show_vulnerability_path(host.id, project_group_id: params[:id]) do
                 %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-            %td
               = link_to affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' } do
                 %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
@@ -41,4 +40,6 @@
       = will_paginate @affected_hosts
 
   .panel-footer
-    = link_to 'Back to Main Menu', root_path, class: "btn btn-primary"
+    = link_to root_path, class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+      Back
