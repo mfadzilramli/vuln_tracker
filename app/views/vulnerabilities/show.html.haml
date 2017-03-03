@@ -1,14 +1,23 @@
-- host = @affected_host.host_ip
-- if @affected_host.host_fqdn?
-  - host << " (#{@affected_host.host_fqdn})"
-- elsif @affected_host.netbios_name?
-  - host << " (#{@affected_host.netbios_name})"
-
 .panel.panel-info
   .panel-heading
-    %h4
-      %span.glyphicon.glyphicon-option-vertical
-      #{host}
+    %table.table
+      %thead
+        %th IP Address / Hostname
+        %th Operating System
+        %th.center{ bgcolor: '#ffcdd2' } Critical
+        %th.center{ bgcolor: '#ffe0b2' } High
+        %th.center{ bgcolor: '#fff9c4' } Medium
+        %th.center{ bgcolor: '#c8e6c9' } Low
+        %th.center{ bgcolor: '#d2d2d2' } Total
+      %tbody
+        - vuln_by_host = @vulnerabilities.group(:severity).count
+        %td= @affected_host.host_ip + " - #{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
+        %td= @affected_host.operating_system
+        %td.center= vuln_by_host[4] ||= 0
+        %td.center= vuln_by_host[3] ||= 0
+        %td.center= vuln_by_host[2] ||= 0
+        %td.center= vuln_by_host[1] ||= 0
+        %td.center= vuln_by_host.values.sum ||= 0
   .panel-body
     /%div{ align: "center" }
     /  = will_paginate

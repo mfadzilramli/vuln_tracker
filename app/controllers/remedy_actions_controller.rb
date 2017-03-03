@@ -1,5 +1,5 @@
 class RemedyActionsController < ApplicationController
-  before_action :set_remedy_action, only: [:show, :edit, :update, :destroy]
+  before_action :set_remedy_action, only: [:show, :update, :destroy]
 
   # GET /remedy_actions
   # GET /remedy_actions.json
@@ -19,6 +19,7 @@ class RemedyActionsController < ApplicationController
 
   # GET /remedy_actions/1/edit
   def edit
+    @remedy_action = RemedyAction.find_by_vulnerability_id(params[:id])
   end
 
   # POST /remedy_actions
@@ -47,7 +48,7 @@ class RemedyActionsController < ApplicationController
         # host = AffectedHost.find(vuln.affected_host_id)
         # done
 
-        host_id =  Vulnerability.find(@remedy_action).affected_host_id
+        host_id =  Vulnerability.find(@remedy_action.id).affected_host_id
         # format.html { redirect_to @remedy_action, notice: 'Remedy action was successfully updated.' }
         format.html { redirect_to show_vulnerability_path(host_id, project_group_id: params[:project_group_id]), notice: 'Remedy action was successfully updated.' }
         format.json { render :show, status: :ok, location: @remedy_action }

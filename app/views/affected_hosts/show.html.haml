@@ -20,10 +20,10 @@
           %tr
             /%td.center= index + 1
             %td
-              = link_to host.host_ip, show_vulnerability_path(host, v_name: params[:v_name])
+              = link_to host.host_ip, show_vulnerability_path(host, v_name: params[:v_name], project_group_id: params[:project_group_id])
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
-            %td= host.operating_system
+            %td= host.operating_system ||= 'Unidentified'
             %td.center= host.vulnerabilities.where('vulnerability_name == ?', @vulnerability_name).count
     %div{ align: "center"}
       = will_paginate @affected_hosts

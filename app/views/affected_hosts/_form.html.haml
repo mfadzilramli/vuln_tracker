@@ -22,3 +22,4 @@
   .form-group
     = hidden_field_tag :project_group_id, params[:project_group_id]
     = f.submit 'Update', class: "btn btn-primary"
+    = link_to 'Back', search_project_group_path(params[:project_group_id]), class: "btn btn-primary"
