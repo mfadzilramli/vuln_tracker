@@ -48,7 +48,7 @@ class RemedyActionsController < ApplicationController
         # host = AffectedHost.find(vuln.affected_host_id)
         # done
 
-        host_id =  Vulnerability.find(@remedy_action.id).affected_host_id
+        host_id =  Vulnerability.find(@remedy_action.vulnerability_id).affected_host_id
         # format.html { redirect_to @remedy_action, notice: 'Remedy action was successfully updated.' }
         format.html { redirect_to show_vulnerability_path(host_id, project_group_id: params[:project_group_id]), notice: 'Remedy action was successfully updated.' }
         format.json { render :show, status: :ok, location: @remedy_action }

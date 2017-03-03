@@ -30,9 +30,9 @@
             %td= host.platform.capitalize
             %td= host.operating_system ||= 'Unidentified'
             %td
-              - if host.vulnerabilities.count != 0
-                = link_to show_vulnerability_path(host.id, project_group_id: params[:id]) do
-                  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+              /- if host.vulnerabilities.count != 0
+              = link_to show_vulnerability_path(host.id, project_group_id: params[:id]) do
+                %span.glyphicon.glyphicon-list{aria_hidden: "true"}
             %td
               = link_to affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' } do
                 %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
