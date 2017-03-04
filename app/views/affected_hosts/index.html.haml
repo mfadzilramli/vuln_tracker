@@ -70,9 +70,10 @@
       = will_paginate
 
   .panel-footer{ padding: 0 }
-    = link_to new_affected_host_path(source_id: @source_file.id), class: "btn btn-success" do
-      %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
-      New Host
-    = link_to source_files_path, class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
-      Back
+    .form-group
+      = link_to new_affected_host_path(source_id: @source_file.id), class: "btn btn-success" do
+        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        New Host
+      = link_to source_files_path, class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+        Back
