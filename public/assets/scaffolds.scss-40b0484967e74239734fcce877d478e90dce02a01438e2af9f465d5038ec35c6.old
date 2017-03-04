@@ -1,0 +1,131 @@
+$font_size: 1.1em;
+// $line-height: 15px;
+$line-height: 1.42857143 !important;
+
+body {
+  background-color: #0e0e0e;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: $font_size;
+  line-height: $line-height;
+  margin: 0px;
+}
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: $font_size;
+  line-height: $line-height;
+  margin: 10px;
+  // margin: 33px;
+}
+
+li {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: $font_size;
+  // line-height: $line-height;
+}
+// pre {
+//   background-color: #eee;
+//   // padding: 10px;
+//   font-size: $font_size;
+// }
+
+pre {
+  border: 0;
+  background-color: transparent;
+  font-size: $font_size;
+}
+
+a {
+  font-size: $font_size;
+  color: #000;
+
+  &:visited {
+    text-decoration: none;
+    // color: #666;
+  }
+
+  &:hover {
+    text-decoration: none;
+    // color: #fff;
+    // background-color: #000;
+  }
+}
+
+th {
+  padding-bottom: 5px;
+}
+
+td {
+  // padding-bottom: 7px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div {
+  &.field, &.actions {
+    margin-bottom: 10px;
+  }
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0;
+    background-color: #c00;
+    color: #fff;
+  }
+
+  ul li {
+    font-size: $font-size;
+    list-style: square;
+  }
+}
+
+label {
+  display: block;
+}
+
+h3 {
+  font-size: 16px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+h4 {
+  font-size: 14px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+h5 {
+  font-size: 12px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 3px;
+}
+
+.glyphicon {
+  margin-right: 6px;
+}
