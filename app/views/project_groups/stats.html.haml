@@ -4,7 +4,7 @@
 .panel.panel-info
   .panel-heading
     .badge
-      %h5.center= @project_group.name
+      %h5.center= @project_group.name.split.map(&:capitalize).join(' ')
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
