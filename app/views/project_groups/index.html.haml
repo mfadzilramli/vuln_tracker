@@ -14,7 +14,7 @@
       %tbody
         - @project_groups.each do |project_group|
           %tr
-            %td= project_group.name
+            %td= project_group.name.split.map(&:capitalize).join(' ')
             %td= project_group.created_at
             %td= project_group.updated_at
             %td{ align: 'right'}
