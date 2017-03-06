@@ -37,7 +37,8 @@ class SourceFilesController < ApplicationController
 
     respond_to do |format|
       if @source_file.save
-        write_to_db(@source_file)
+        #write_to_db(@source_file)
+        @source_file.to_csv
         format.html { redirect_to @source_file, notice: 'Source file was successfully created.' }
         format.json { render :show, status: :created, location: @source_file }
       else
