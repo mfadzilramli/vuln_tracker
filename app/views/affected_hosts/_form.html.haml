@@ -1,3 +1,5 @@
+= render 'shared/errors_alert', obj: @affected_host
+
 = form_for (@affected_host) do |f|
   .form-group
     = f.label :host_fqdn

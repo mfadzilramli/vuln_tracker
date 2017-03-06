@@ -1,3 +1,5 @@
+= render 'shared/errors_alert', obj: @project_group
+
 = form_for @project_group do |f|
   .panel.panel-default
     .panel-heading
@@ -16,8 +18,16 @@
         = f.text_field :name, class: "form-control", style: "width: 300px"
       .form-group
       - if (controller.action_name == 'edit')
-        = f.submit 'Update', class: "btn btn-primary"
-        = link_to 'Back', project_groups_path, class: "btn btn-primary"
+        = button_tag class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-save{aria_hidden: "true"}
+          Update
+        = link_to project_groups_path, class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+          Back
       - else
-        = f.submit 'Save', class: "btn btn-primary"
-        = link_to 'Back', project_groups_path, class: "btn btn-primary"
+        = button_tag class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-save{aria_hidden: "true"}
+          Save
+        = link_to project_groups_path, class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+          Back

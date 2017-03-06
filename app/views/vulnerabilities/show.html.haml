@@ -11,7 +11,7 @@
         %th.center{ bgcolor: '#d2d2d2' } Total
       %tbody
         - vuln_by_host = @vulnerabilities.group(:severity).count
-        %td= @affected_host.host_ip + " - #{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
+        %td= @affected_host.host_ip + " #{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
         %td= @affected_host.operating_system
         %td.center= vuln_by_host[4] ||= 0
         %td.center= vuln_by_host[3] ||= 0
@@ -61,11 +61,11 @@
             -# %td.center= "#{time_ago_in_words(vuln.last_seen)} ago"
             %td.center
               = link_to edit_remedy_action_path(vulnerability, project_group_id: params[:project_group_id]),
-                data: { toggle: "popover", trigger: "hover", content: "Remedy Action",
+                data: { toggle: "popover", trigger: "hover", content: "Remedy Status",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
               = link_to edit_vulnerability_path(vulnerability, project_group_id: params[:project_group_id]),
-                data: { toggle: "popover", trigger: "hover", content: "Update",
+                data: { toggle: "popover", trigger: "hover", content: "View Details",
                 placement: "top" } do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
               = link_to vulnerability_path(vulnerability, project_group_id: params[:project_group_id]),
