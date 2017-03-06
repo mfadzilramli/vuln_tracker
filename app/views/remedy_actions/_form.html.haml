@@ -1,3 +1,5 @@
+= render 'shared/errors_alert', obj: @remedy_action
+
 = form_for @remedy_action do |f|
   - if @remedy_action.errors.any?
     #error_explanation

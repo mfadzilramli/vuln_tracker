@@ -1,3 +1,5 @@
+= render 'shared/errors_alert', obj: @vulnerability
+
 = form_for @vulnerability do |f|
   .form-group
     = f.hidden_field :affected_host_id, value: @vulnerability.affected_host_id
