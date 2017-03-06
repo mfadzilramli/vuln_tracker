@@ -24,4 +24,6 @@
 
   .form-group
     = hidden_field_tag :project_group_id, params[:project_group_id]
-    = f.submit 'Save', class: "btn btn-primary"
+    = button_tag class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-save{aria_hidden: "true"}
+      Save
