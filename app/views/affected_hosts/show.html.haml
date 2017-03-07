@@ -14,6 +14,7 @@
           %th Platform
           %th Operating System
           %th.center Count
+          %th
       %tbody
         /- @affected_hosts = @affected_hosts.joins(:vulnerabilities).where("plugin_id == #{params[:plugin_id]}").uniq(:host_ip)
         - @affected_hosts.each_with_index do |host, index|
@@ -25,6 +26,12 @@
             %td= host.platform
             %td= host.operating_system ||= 'Unidentified'
             %td.center= host.vulnerabilities.where('vulnerability_name == ?', @vulnerability_name).count
+            %td
+              -# = link_to affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
+              -#   data: { toggle: "popover", trigger: "hover",
+              -#   placement: "top", content: "Delete Host" } do
+              -#   %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+
     %div{ align: "center"}
       = will_paginate @affected_hosts
 

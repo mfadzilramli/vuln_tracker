@@ -55,7 +55,8 @@ class AffectedHostsController < ApplicationController
     respond_to do |format|
       if @affected_host.update(affected_host_params)
         # format.html { redirect_to source_files_path, notice: 'Affected host was successfully updated.' }
-        format.html { redirect_to search_project_group_path(@project_group),
+        # format.html { redirect_to search_project_group_path(@project_group),
+        format.html { redirect_to :back,
           notice: 'Affected host was successfully updated.' }
         format.json { render :show, status: :ok, location: @affected_host }
       else

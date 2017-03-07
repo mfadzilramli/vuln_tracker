@@ -160,9 +160,10 @@ module SourceFilesHelper
           data: pie_data.values,
           backgroundColor: [
             '#0d47a1',
+            '#CC0000',
+            '#9933CC',
             '#00695c',
             '#e91e63',
-            '#9933CC'
           ]
         }
       ]

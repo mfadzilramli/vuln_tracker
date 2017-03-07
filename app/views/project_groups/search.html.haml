@@ -17,11 +17,11 @@
     %table.table.table-hover
       %thead{ bgcolor: '#efefef' }
         %tr
-          %th IP Address
-          %th Hostname
-          %th Platform
-          %th Operating System
-          %th{colspan: 2}
+          %th.col-md-2 IP Address
+          %th.col-md-2 Hostname
+          %th.col-md-2 Platform
+          %th.col-md-5 Operating System
+          %th.col-md-1
       %tbody
         - @affected_hosts.each do |host|
           %tr
