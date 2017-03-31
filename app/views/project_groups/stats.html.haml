@@ -3,8 +3,7 @@
 
 .panel.panel-info
   .panel-heading
-    .badge
-      %h5.center= @project_group.name.split.map(&:capitalize).join(' ')
+    %h3.center= @project_group.name.upcase
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
@@ -24,10 +23,13 @@
         %li
           /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
           = link_to 'Unsupported Systems', '#menu4', data: { toggle: 'tab' }
+        %li
+          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
+          = link_to 'Search Host', '#menu5', data: { toggle: 'tab' }
 
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-4
               = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
             /  = render partial: 'widgets/total_hosts', locals: { obj: @affected_hosts }
@@ -40,7 +42,7 @@
               = render partial: 'widgets/by_protocols', locals: { obj: @affected_hosts }
 
         #menu1.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-6
               /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
               = render partial: 'widgets/remedy_chart', locals: { obj: @affected_hosts }
@@ -50,7 +52,7 @@
               = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
 
         #menu2.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-6
               = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
 
@@ -61,11 +63,29 @@
               = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }
 
         #menu3.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-12
               = render partial: 'widgets/low_hanging_fruits', locals: { obj: @affected_hosts }
 
         #menu4.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-12
               = render partial: 'widgets/unsupported_systems', locals: { obj: @affected_hosts }
+
+        #menu5.tab-pane.fade
+          .row{ style: "padding:5px" }
+            .col-md-12
+              .container-fluid
+                = form_tag search_project_group_path(params[:id]),
+                  id: 'search_host_form',
+                  method: :get, action: :search,
+                  class: "navbar-form navbar-right",
+                  role: "search", remote: true do
+                  .input-group
+                    = text_field_tag :search, "",
+                      class: "form-control",
+                      placeholder: "e.g. 172.16"
+                    .input-group-btn
+                      = button_tag 'Search', class: "btn btn-default", type: "submit" do
+                        %span.glyphicon.glyphicon-search{aria_hidden: true}
+              #search_box_results

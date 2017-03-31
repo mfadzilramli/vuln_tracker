@@ -7,3 +7,6 @@ $ ->
     $('.edit_project_group input[type=checkbox]').click ->
       # $('.edit_project_group').submit()
       $(this).submit()
+
+    $('#search_host_form input[type=text]').on 'change keydown paste input', ->
+      $(this).submit()

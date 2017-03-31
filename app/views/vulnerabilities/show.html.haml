@@ -77,11 +77,15 @@
       = will_paginate
   .panel-footer
     .form-group
-      = link_to search_project_group_path(params[:project_group_id]), class: "btn btn-primary" do
-        %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
-        Back
+      -# = link_to search_project_group_path(params[:project_group_id]), class: "btn btn-primary" do
+      -#   %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+      -#   Back
       = link_to new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Add New Vulnerability
+      = link_to report_generate_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :pdf), target: '_blank',
+        class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        Export PDF Report
       /= link_to 'Add New Vulnerability', new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary"
       /= link_to 'Back', search_project_group_path(params[:project_group_id]), class: "btn btn-primary"

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'report/generate'
+
   devise_for :users, controllers: { registrations: 'registrations' }
 
   as :user do

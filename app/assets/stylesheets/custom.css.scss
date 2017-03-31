@@ -2,7 +2,7 @@
 @import "bootstrap";
 
 body {
-  background-color: #0e0e0e;
+  // background-color: #4e4e4e;
   // color: #333;
   // font-family: verdana, arial, helvetica, sans-serif;
   // font-size: $font_size;
@@ -25,6 +25,40 @@ li {
 }
 
 pre {
+  word-break: normal;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+pre {
+  // display: block;
+  // padding: 9.5px;
+  // margin: 0 0 10px;
+  // font-size: 13px;
+  // line-height: 1.42857143;
+  // color: #333;
+  // // word-break: break-all;
+  // word-wrap: break-word;
+  // background-color: #f5f5f5;
+  // border: 1px solid #ccc;
+  // border-radius: 4px;
+
+  display: block;
+  padding: 0;
+  margin: 0 0 0px;
+  font-size: 11px;
+  // line-height: 1.42857143;
+  // color: #000;
+  // word-break: break-all;
+  word-wrap: break-word;
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+
+  word-break: normal;
   white-space: pre-wrap;       /* css-3 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */
@@ -108,3 +142,14 @@ table {
 .font-small {
   font-size: 0.80em;
 }
+
+// for wicked_pdf formating
+div.alwaysbreak { page-break-before: always; }
+div.nobreak:before { clear:both; }
+div.nobreak { page-break-inside: avoid; }
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
+.page-break { display:block; clear:both; page-break-after:always; }

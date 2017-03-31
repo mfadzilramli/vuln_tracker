@@ -14,34 +14,37 @@
       %tbody
         - @project_groups.each do |project_group|
           %tr
-            %td= project_group.name.split.map(&:capitalize).join(' ')
+            -# %td= project_group.name.split.map(&:capitalize).join(' ')
+            %td= link_to project_group.name,
+              stats_project_group_path(project_group)
             %td= project_group.created_at
             %td= project_group.updated_at
             %td{ align: 'right'}
-              /= link_to project_group,
-              /  data: { toggle: "popover", trigger: "hover",
-              /  placement: "top", content: "Show List" } do
-              /  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-              /&nbsp;
-              = link_to search_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Search Host Project" } do
-                %span.glyphicon.glyphicon-search{aria_hidden: "true"}
-
-              = link_to edit_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Edit Project" } do
-                %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
-
-              = link_to stats_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Show Stats" } do
-                %span.glyphicon.glyphicon-stats{aria_hidden: "true"}
-
-              = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Remove Project" } do
-                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+              = link_to 'Edit Source', edit_project_group_path(project_group),
+                class: "btn btn-primary"
+              = link_to 'Delete', project_group,
+                :method => :delete,
+                :data => { :confirm => 'Are you sure?' },
+                class: "btn btn-danger"
+              -# = link_to search_project_group_path(project_group),
+              -#   data: { toggle: "popover", trigger: "hover",
+              -#   placement: "top", content: "Search Host Project" } do
+              -#   %span.glyphicon.glyphicon-search{aria_hidden: "true"}
+              -#
+              -# = link_to edit_project_group_path(project_group),
+              -#   data: { toggle: "popover", trigger: "hover",
+              -#   placement: "top", content: "Edit Project" } do
+              -#   %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              -#
+              -# = link_to stats_project_group_path(project_group),
+              -#   data: { toggle: "popover", trigger: "hover",
+              -#   placement: "top", content: "Show Stats" } do
+              -#   %span.glyphicon.glyphicon-stats{aria_hidden: "true"}
+              -#
+              -# = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
+              -#   data: { toggle: "popover", trigger: "hover",
+              -#   placement: "top", content: "Remove Project" } do
+              -#   %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
   .panel-footer
     = link_to new_project_group_path, class: "btn btn-primary" do

@@ -1,0 +1,101 @@
+= wicked_pdf_stylesheet_link_tag 'custom.css.scss'
+- vulnerabilities = obj.vulnerabilities.order('severity DESC')
+%table.table.table-bordered.font-small
+  %thead
+    %tr{ bgcolor: '#FF8800' }
+      %th IP Address
+      %th Host Name
+      %th Operating System
+  %tbody
+    %tr
+      %td= obj.host_ip
+      %td= obj.host_fqdn ||= obj.netbios_name
+      %td= obj.operating_system
+
+%table.table.table-bordered.font-small
+  %thead
+    %th.center{ bgcolor: '#ffcdd2' } Critical
+    %th.center{ bgcolor: '#ffe0b2' } High
+    %th.center{ bgcolor: '#fff9c4' } Medium
+    %th.center{ bgcolor: '#c8e6c9' } Low
+    %th.center{ bgcolor: '#d2d2d2' } Total
+  %tbody
+    - vuln_by_host = vulnerabilities.group(:severity).count
+    %td.center= vuln_by_host[4] ||= 0
+    %td.center= vuln_by_host[3] ||= 0
+    %td.center= vuln_by_host[2] ||= 0
+    %td.center= vuln_by_host[1] ||= 0
+    %td.center= vuln_by_host.values.sum ||= 0
+
+%table.table.table-striped.font-small
+  %thead
+    %tr{ bgcolor: '#dfdfdf' }
+      %th No.
+      %th{ style: "width:300px" } Vulnerability Name
+      %th.col-md-3 Services
+      %th.center Severity
+      %th Status
+  %tbody
+    - vulnerabilities.each_with_index do |vulnerability, index|
+      %tr
+        %td= index + 1
+        %td.col-md-4= vulnerability.vulnerability_name
+        %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+        - case vulnerability.severity
+          - when 1
+            %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle" } Low
+          - when 2
+            %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle" } Medium
+          - when 3
+            %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle" } High
+          - when 4
+            %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle" } Critical
+          - else
+            %td.center
+        %td
+
+.page-break
+
+%h2 Vulnerability Details
+%br
+
+- vulnerabilities.each_with_index do |vulnerability, index|
+  %strong= "#{index + 1}. #{vulnerability.vulnerability_name}"
+  %table.table.table-bordered.font-small
+    %tbody
+      %tr
+        %td{ style: "width:100px"} Severity
+        - case vulnerability.severity
+          - when 1
+            %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle;width:700px" } Low
+          - when 2
+            %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle;width:700px" } Medium
+          - when 3
+            %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle;width:700px" } High
+          - when 4
+            %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle;width:700px" } Critical
+          - else
+        %td.center Risk Score
+        %td.center= vulnerability.cvss_score
+      %tr
+        %td Synopsis
+        %td{ colspan: 3 }= vulnerability.synopsis.strip
+      %tr
+        %td Output
+        %td{ colspan: 3 }
+          - if !vulnerability.output.empty?
+            %pre= vulnerability.output.strip
+          - else
+            None
+      %tr
+        %td Remediation
+        %td{ colspan: 3 }
+          %pre= vulnerability.solution.strip
+      %tr
+        %td Remarks
+        %td{ colspan: 3 }
+          %br
+          %br
+          %br
+
+%br
