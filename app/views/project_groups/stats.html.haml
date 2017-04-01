@@ -19,13 +19,16 @@
           = link_to 'Top 5 Critical', '#menu2', data: { toggle: 'tab' }
         %li
           /%a{"data-toggle" => "tab", :href => "#menu3"} Low Hanging Fruit
-          = link_to 'Low Hanging Fruit', '#menu3', data: { toggle: 'tab' }
+          = link_to 'Credential Issues', '#menu3', data: { toggle: 'tab' }
         %li
           /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
           = link_to 'Unsupported Systems', '#menu4', data: { toggle: 'tab' }
         %li
           /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-          = link_to 'Search Host', '#menu5', data: { toggle: 'tab' }
+          = link_to 'Writable Path', '#menu5', data: { toggle: 'tab' }
+        %li
+          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
+          = link_to 'Search Host', '#menu6', data: { toggle: 'tab' }
 
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
@@ -75,6 +78,11 @@
         #menu5.tab-pane.fade
           .row{ style: "padding:5px" }
             .col-md-12
+              = render partial: 'widgets/writable_path', locals: { obj: @affected_hosts }
+
+        #menu6.tab-pane.fade
+          .row{ style: "padding:5px" }
+            .col-md-12
               .container-fluid
                 = form_tag search_project_group_path(params[:id]),
                   id: 'search_host_form',
@@ -88,4 +96,4 @@
                     .input-group-btn
                       = button_tag 'Search', class: "btn btn-default", type: "submit" do
                         %span.glyphicon.glyphicon-search{aria_hidden: true}
-              #search_box_results
+            #search_box_results

@@ -44,4 +44,8 @@ module ProjectGroupsHelper
     return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?', "%unsupported%").group(:vulnerability_name).count
   end
 
+  def get_writable_path(affected_hosts)
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?',"%writable%").group(:vulnerability_name).count
+  end
+
 end

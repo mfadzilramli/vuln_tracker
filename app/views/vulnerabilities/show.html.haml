@@ -87,5 +87,10 @@
         class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Export PDF Report
-      /= link_to 'Add New Vulnerability', new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary"
-      /= link_to 'Back', search_project_group_path(params[:project_group_id]), class: "btn btn-primary"
+      = link_to report_generate_xlsx_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :xlsx), target: '_blank',
+        class: "btn btn-primary" do
+        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        Export Excel Report
+      -# report_generate_xlsx
+      -# = link_to 'Add New Vulnerability', new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary"
+      -# = link_to 'Back', search_project_group_path(params[:project_group_id]), class: "btn btn-primary"

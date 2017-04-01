@@ -1,0 +1,14 @@
+- writable_path = get_writable_path(obj)
+%table.table
+  %thead
+    %tr
+      %th Vulnerability Name
+      %th.center Count
+
+  %tbody
+    - writable_path.each do |key, value|
+      %tr
+        %td
+          /= link_to key, list_affected_hosts_path(plugin_id: get_plugin_id_by_name(obj, key),project_group_id: @project_group)
+          = link_to key, list_affected_hosts_path(@project_group, v_name: key), action: :show
+        %td.center= value

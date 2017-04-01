@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'report/generate'
+  get 'report/generate_xlsx'
 
   devise_for :users, controllers: { registrations: 'registrations' }
 

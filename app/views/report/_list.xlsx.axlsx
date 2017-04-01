@@ -1,0 +1,61 @@
+wb.add_worksheet(name: 'Host Details') do |sheet|
+
+  # cell style
+  text_center       = sheet.styles.add_style( alignment: { horizontal: :center } )
+  text_bold_center  = sheet.styles.add_style( b: true, bg_color: 'BEBEBE', alignment: { horizontal: :center } )
+  text_bold         = sheet.styles.add_style( b: true, bg_color: 'BEBEBE' )
+  text_bold_plain   = sheet.styles.add_style( b: true )
+  text_wrap         = sheet.styles.add_style( alignment: { wrap_text: true } )
+
+  # headers
+  sheet.add_row [ 'IP Address', host.host_ip ], style: [text_bold_plain, nil ]
+  sheet.add_row [ 'Host Name', host.host_fqdn ||= host.netbios_name ], style: [ text_bold_plain, nil ]
+  sheet.add_row [ 'Operating System', host.operating_system ], style: [ text_bold_plain, nil ]
+  sheet.add_row []
+
+  @headers_vuln = 'No.', 'Vulnerability Name', 'Service', 'Severity', 'Assigned To','Status', 'Remarks'
+
+  sheet.add_row @headers_vuln, style: [
+    text_bold_center, text_bold, text_bold_center,
+    text_bold_center, text_bold_center, text_bold_center, text_bold_center ]
+
+  host.vulnerabilities.order('severity DESC').each_with_index do |vuln, index|
+
+    case vuln.severity
+    when 1
+      cell_color = sheet.styles.add_style(bg_color: 'c8e6c9', alignment: { horizontal: :center, vertical: :center })
+      cell_data = 'Low'
+    when 2
+      cell_color = sheet.styles.add_style(bg_color: 'fff9c4', alignment: { horizontal: :center, vertical: :center })
+      cell_data = "Medium"
+    when 3
+      cell_color = sheet.styles.add_style(bg_color: 'ffe0b2', alignment: { horizontal: :center, vertical: :center })
+      cell_data = 'High'
+    when 4
+      cell_color = sheet.styles.add_style(bg_color: 'ffcdd2', alignment: { horizontal: :center, vertical: :center })
+      cell_data = 'Critical'
+    end
+
+    sheet.add_row [
+      index + 1, vuln.vulnerability_name,
+      "#{vuln.port.to_s + ' / ' + vuln.service_name + ' / ' + vuln.protocol}",
+      cell_data, nil, nil, nil ],
+      style: [ text_center, text_wrap, nil, cell_color, nil, nil, nil ]
+
+  end
+
+#  wb.add_worksheet(name: "dropdown") do |ws|
+#    ws.add_row ["rank_type"]
+#    ws.add_data_validation("A2:A1000", {
+#      :type => :list,
+#      :formula1 => 'lists!A2:A4',
+#      :showDropDown => false,
+#      :showErrorMessage => true,
+#      :errorTitle => '',
+#      :error => 'Please use the dropdown selector to choose a valid rank type',
+#      :errorStyle => :stop,
+#      :showInputMessage => true,
+#      :promptTitle => 'Rank type',
+#      :prompt => 'Please select a valid rank type'})
+#  end
+end

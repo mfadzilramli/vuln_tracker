@@ -1,25 +1,17 @@
 class ReportController < ApplicationController
 
-  before_action :set_host, only: [:generate]
+  before_action :set_host, only: [:generate, :generate_xlsx]
 
   def generate
-    # @vulnerabilities = @host.vulnerabilities
-
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: 'report_file',
           locals: { obj: @host },
-          # :print_media_type => true,
-          # orientation: 'Landscape',
-          # dpi: 500,
           page_size: "A4",
-          # :disable_smart_shrinking => true,
           footer: {
             font_size:  10,
             center:     '[page] of [topage]',
-            # line: false,
-            # spacing: 10,
           },
           margin: {
             top:    15,
@@ -28,6 +20,17 @@ class ReportController < ApplicationController
             right:  10
           }
       end
+    end
+  end
+
+  def generate_xlsx
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        render xlsx: 'xlstracker',
+        locals: { host: @host },
+        filename: "#{@host.host_ip}_report_tracker"
+      }
     end
   end
 
