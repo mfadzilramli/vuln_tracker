@@ -1,0 +1,19 @@
+%h1 Listing report_files
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @report_files.each do |report_file|
+      %tr
+        %td= link_to 'Show', report_file
+        %td= link_to 'Edit', edit_report_file_path(report_file)
+        %td= link_to 'Destroy', report_file, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Report file', new_report_file_path

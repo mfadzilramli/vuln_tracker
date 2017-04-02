@@ -83,11 +83,11 @@
       = link_to new_vulnerability_path(@affected_host, project_group_id: params[:project_group_id]), class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Add New Vulnerability
-      = link_to report_generate_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :pdf), target: '_blank',
+      = link_to generate_report_files_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :pdf), target: '_blank',
         class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Export PDF Report
-      = link_to report_generate_xlsx_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :xlsx), target: '_blank',
+      = link_to generate_report_files_path(host_id: @affected_host, project_group_id: params[:project_group_id], format: :xlsx), target: '_blank',
         class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Export Excel Report

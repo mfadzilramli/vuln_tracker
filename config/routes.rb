@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  get 'report/generate'
-  get 'report/generate_xlsx'
+
+  resources :report_files do
+    collection do
+      get 'generate'
+      post 'import'
+    end
+  end
 
   devise_for :users, controllers: { registrations: 'registrations' }
 

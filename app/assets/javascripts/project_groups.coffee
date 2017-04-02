@@ -9,6 +9,6 @@ $ ->
 
     $('#search_host_form input[type=text]').on 'change keydown paste input', ->
       $(this).submit()
-      
-    $('#print_host_ids input[type=checkbox]').click ->
-      alert(1)
+
+    # $('#print_host_ids input[type=checkbox]').click ->
+    #   alert(1)

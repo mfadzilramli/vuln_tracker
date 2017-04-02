@@ -13,10 +13,10 @@ wb.add_worksheet(name: 'Host Details') do |sheet|
   sheet.add_row [ 'Operating System', host.operating_system ], style: [ text_bold_plain, nil ]
   sheet.add_row []
 
-  @headers_vuln = 'No.', 'Vulnerability Name', 'Service', 'Severity', 'Assigned To','Status', 'Remarks'
+  @headers_vuln = 'No.', 'Vulnerability Name', 'VID', 'Service', 'Severity', 'Assigned To','Status', 'Remarks'
 
   sheet.add_row @headers_vuln, style: [
-    text_bold_center, text_bold, text_bold_center,
+    text_bold_center, text_bold, text_bold_center, text_bold_center,
     text_bold_center, text_bold_center, text_bold_center, text_bold_center ]
 
   host.vulnerabilities.order('severity DESC').each_with_index do |vuln, index|
@@ -36,11 +36,20 @@ wb.add_worksheet(name: 'Host Details') do |sheet|
       cell_data = 'Critical'
     end
 
+    case vuln.remedy_action.status
+    when 1
+      cell_status = 'Open'
+    when 2
+      cell_status = 'In-progress'
+    when 3
+      cell_status = 'Closed'
+    end
+
     sheet.add_row [
-      index + 1, vuln.vulnerability_name,
+      index + 1, vuln.vulnerability_name, vuln.id,
       "#{vuln.port.to_s + ' / ' + vuln.service_name + ' / ' + vuln.protocol}",
-      cell_data, nil, nil, nil ],
-      style: [ text_center, text_wrap, nil, cell_color, nil, nil, nil ]
+      cell_data, nil, cell_status, vuln.remedy_action.remarks ],
+      style: [ text_center, text_wrap, text_center, nil, cell_color, nil, nil, nil ]
 
   end
 

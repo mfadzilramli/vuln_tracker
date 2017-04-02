@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170401083133) do
+ActiveRecord::Schema.define(version: 20170401152705) do
 
   create_table "affected_hosts", force: :cascade do |t|
     t.string   "host_ip"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20170401083133) do
     t.datetime "updated_at",                   null: false
     t.integer  "vulnerability_id"
     t.index ["vulnerability_id"], name: "index_remedy_actions_on_vulnerability_id"
+  end
+
+  create_table "report_files", force: :cascade do |t|
+    t.binary   "data"
+    t.string   "filename"
+    t.string   "mime_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "source_files", force: :cascade do |t|

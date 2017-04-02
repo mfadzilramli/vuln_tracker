@@ -1,0 +1,1 @@
+json.partial! "report_files/report_file", report_file: @report_file

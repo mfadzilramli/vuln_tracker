@@ -24,14 +24,14 @@ li {
   text-align: center;
 }
 
-pre {
-  word-break: normal;
-  white-space: pre-wrap;       /* css-3 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
+// pre {
+//   word-break: normal;
+//   white-space: pre-wrap;       /* css-3 */
+//   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+//   white-space: -pre-wrap;      /* Opera 4-6 */
+//   white-space: -o-pre-wrap;    /* Opera 7 */
+//   word-wrap: break-word;       /* Internet Explorer 5.5+ */
+// }
 
 pre {
   // display: block;
@@ -70,6 +70,9 @@ a:hover {
   text-decoration: none;
 }
 
+a:visited {
+  text-decoration: none;
+}
 .circle_green {
   background: green;
   color: white;

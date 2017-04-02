@@ -1,0 +1,11 @@
+= form_for @report_file, url: import_report_files_path do |f|
+  .form-group
+    .well.well-sm
+      #selected_filename
+    = f.label :data, class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-folder-open{aria_hidden: "true"}
+      Browse...
+    = f.file_field :data, class: "form-control", multiple: true,style: "display:none"
+    = button_tag data: { disable_with: "Please wait ..." }, class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-upload{aria_hidden: "true"}
+      Upload

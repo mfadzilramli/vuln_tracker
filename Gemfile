@@ -42,6 +42,8 @@ gem 'haml'
 gem 'haml-rails'
 gem 'chartjs-ror'
 gem 'devise'
+gem 'roo'
+gem 'roo-xls'
 
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
