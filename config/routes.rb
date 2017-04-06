@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :report_files do
-    collection do
-      get 'generate'
-      post 'import'
-    end
-  end
+  get 'reports/generate'
+
+  get 'tracking/index'
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
@@ -20,21 +17,48 @@ Rails.application.routes.draw do
   # get 'vulnerabilities/:id', to: 'vulnerabilities#new', as: 'show_vulnerability'
 
 
-  get "affected_hosts/:source_id", to: "affected_hosts#index", as: "search_affected_hosts"
+  # get "affected_hosts/:source_id", to: "affected_hosts#index", as: "search_affected_hosts"
   get "affected_hosts/:project_group_id/show", to: "affected_hosts#show", as: "list_affected_hosts"
   get 'affected_hosts/:source_id/new', to: 'affected_hosts#new', as: 'new_affected_host'
 
   resources :vulnerabilities
   resources :affected_hosts
   resources :source_files
+  resources :remedy_actions
+
   resources :project_groups do
     member do
       get 'search'
+      get 'stats'
+    end
+
+    resources :affected_hosts do
+      resources :vulnerabilities
+      resources :reports do
+        collection do
+          get 'generate'
+        end
+      end
     end
   end
-  resources :remedy_actions
 
-  get 'project_groups/:id/stats', to: 'project_groups#stats', as: 'stats_project_group'
+  resources :source_files do
+    resources :affected_hosts
+  end
+
+  resources :reports do
+    member do
+      get 'search'
+    end
+    collection do
+      get 'generate'
+      get 'print_all'
+    end
+  end
+
+get 'tracking', to: 'tracking#index', as: 'tracking'
+post 'tracking/import', to: 'tracking#import', as: 'import_tracking'
+  # get 'project_groups/:id/stats', to: 'project_groups#stats', as: 'stats_project_group'
 
   root 'project_groups#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

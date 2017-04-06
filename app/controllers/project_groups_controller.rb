@@ -98,7 +98,7 @@ class ProjectGroupsController < ApplicationController
       #   params[:source_file_ids => ["0","0","0"]]
       # end
 
-      params.fetch(:project_group, {}).permit(:name, :source_file_ids => [])
+      params.fetch(:project_group, {}).permit(:name, :source_file_ids => [], :affected_host_ids => [])
     end
 
 end

@@ -5,8 +5,7 @@
     = f.label :title
     = f.text_field :title, class: "form-control", style: "width: 300px"
   .form-group
-    .well.well-sm
-      #selected_filename
+    #selected_filename
   - if (controller.action_name != 'edit')
     .form-group
       = f.label :data, class: "btn btn-primary" do

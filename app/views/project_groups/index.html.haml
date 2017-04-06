@@ -1,6 +1,6 @@
-.panel.panel-info
+.panel.panel-default
   .panel-heading
-    %h4
+    %h3
       %span.glyphicon.glyphicon-list
       &nbsp;Listing Project Groups
   .panel-body
@@ -21,11 +21,11 @@
             %td= project_group.updated_at
             %td{ align: 'right'}
               = link_to 'Edit Source', edit_project_group_path(project_group),
-                class: "btn btn-primary"
+                class: "btn btn-sm btn-primary"
               = link_to 'Delete', project_group,
                 :method => :delete,
                 :data => { :confirm => 'Are you sure?' },
-                class: "btn btn-danger"
+                class: "btn btn-sm btn-danger"
               -# = link_to search_project_group_path(project_group),
               -#   data: { toggle: "popover", trigger: "hover",
               -#   placement: "top", content: "Search Host Project" } do

@@ -14,13 +14,13 @@ module ProjectGroupsHelper
 
   def get_top_vulns_critical(affected_hosts)
     #Vulnerability.where(affected_host_id: h, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).
-    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity == 4').group(:vulnerability_name).order('count_all DESC').limit(5).count
+    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:vulnerability_name).order('count_all DESC').limit(5).count
     top_vulns = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).count
     return top_vulns
   end
 
   def get_top_hosts_critical(affected_hosts)
-    #top_hosts = affected_hosts.joins(:vulnerabilities).where('severity == 4').group(:host_ip).order('count_all DESC').limit(5).count
+    #top_hosts = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:host_ip).order('count_all DESC').limit(5).count
     top_hosts = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action,:affected_host).where('status != 3').group(:host_ip).order('count_all DESC').limit(5).count
     return top_hosts
   end

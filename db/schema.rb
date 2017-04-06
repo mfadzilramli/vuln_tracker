@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170401152705) do
+ActiveRecord::Schema.define(version: 20170404170332) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "affected_hosts", force: :cascade do |t|
     t.string   "host_ip"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170401152705) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "source_file_id"
-    t.index ["source_file_id"], name: "index_affected_hosts_on_source_file_id"
+    t.index ["source_file_id"], name: "index_affected_hosts_on_source_file_id", using: :btree
   end
 
   create_table "monitored_items", force: :cascade do |t|
@@ -30,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170401152705) do
     t.integer  "source_file_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.index ["project_group_id"], name: "index_monitored_items_on_project_group_id"
-    t.index ["source_file_id"], name: "index_monitored_items_on_source_file_id"
+    t.index ["project_group_id"], name: "index_monitored_items_on_project_group_id", using: :btree
+    t.index ["source_file_id"], name: "index_monitored_items_on_source_file_id", using: :btree
   end
 
   create_table "project_groups", force: :cascade do |t|
@@ -48,15 +51,16 @@ ActiveRecord::Schema.define(version: 20170401152705) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "vulnerability_id"
-    t.index ["vulnerability_id"], name: "index_remedy_actions_on_vulnerability_id"
+    t.index ["vulnerability_id"], name: "index_remedy_actions_on_vulnerability_id", using: :btree
   end
 
-  create_table "report_files", force: :cascade do |t|
-    t.binary   "data"
-    t.string   "filename"
-    t.string   "mime_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "reports", force: :cascade do |t|
+    t.integer  "project_group_id"
+    t.integer  "affected_host_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["affected_host_id"], name: "index_reports_on_affected_host_id", using: :btree
+    t.index ["project_group_id"], name: "index_reports_on_project_group_id", using: :btree
   end
 
   create_table "source_files", force: :cascade do |t|
@@ -81,8 +85,8 @@ ActiveRecord::Schema.define(version: 20170401152705) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
   create_table "vulnerabilities", force: :cascade do |t|
@@ -107,7 +111,10 @@ ActiveRecord::Schema.define(version: 20170401152705) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "affected_host_id"
-    t.index ["affected_host_id"], name: "index_vulnerabilities_on_affected_host_id"
+    t.index ["affected_host_id"], name: "index_vulnerabilities_on_affected_host_id", using: :btree
   end
 
+  add_foreign_key "affected_hosts", "source_files"
+  add_foreign_key "remedy_actions", "vulnerabilities"
+  add_foreign_key "vulnerabilities", "affected_hosts"
 end

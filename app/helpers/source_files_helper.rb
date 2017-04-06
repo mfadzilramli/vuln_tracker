@@ -41,7 +41,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(255,99,132,1)",
-            data: groups.merge(vuln_groups.where('severity == 4').count).values
+            data: groups.merge(vuln_groups.where('severity = 4').count).values
             # backgroundColor: [ '#CC0000' ]
           },
           {
@@ -53,7 +53,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 3').count).values
+            data: groups.merge(vuln_groups.where('severity = 3').count).values
             # backgroundColor: [ '#FF8800' ]
           },
           {
@@ -64,7 +64,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 2').count).values
+            data: groups.merge(vuln_groups.where('severity = 2').count).values
             # backgroundColor: [ '#FFFF00' ]
           },
           {
@@ -75,7 +75,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 1').count).values,
+            data: groups.merge(vuln_groups.where('severity = 1').count).values,
             # backgroundColor: [ '#007E33' ]
           },
         ]

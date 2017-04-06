@@ -1,4 +1,4 @@
-class ReportFile < ApplicationRecord
+class Tracking < ApplicationRecord
 
   def self.update_remedy_action(file)
     spreadsheet = open_spreadsheet(file)

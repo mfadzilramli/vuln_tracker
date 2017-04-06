@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class ReportControllerTest < ActionDispatch::IntegrationTest
+class ReportsControllerTest < ActionDispatch::IntegrationTest
   test "should get generate" do
-    get report_generate_url
+    get reports_generate_url
     assert_response :success
   end
 

@@ -12,18 +12,13 @@
             %th.col-md-1
             %th Source Name
             %th Filename
-            %th
         %tbody
           - @source_files.each do |source_file|
             %tr
               %td= f.check_box :source_file_ids, { multiple: true }, source_file.id, false
               %td= source_file.title
               %td= source_file.filename
-              %td{ align: "right" }
-                = link_to  affected_hosts_path(source_id: source_file.id),
-                  data: { toggle: "popover", trigger: "hover",
-                  placement: "top", content: "Show List" } do
-                  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+
     .panel-footer
       = link_to stats_project_group_path(@project_group), class: "btn btn-primary" do
         %span.glyphicon.glyphicon-stats{aria_hidden: "true"}

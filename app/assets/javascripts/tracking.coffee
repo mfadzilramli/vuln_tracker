@@ -6,8 +6,8 @@ $ ->
     # $('.new_report_file input[type=file]').change ->
     #   filename = $('input[type=file]').val().split('\\').pop()
     #   $('#selected_filename').text(filename)
-    $('.new_report_file input[type=file]').change ->
-      input = document.getElementById('report_file_data')
+    $('.import_tracking input[type=file]').change ->
+      input = document.getElementById('tracking_data')
       output = document.getElementById('selected_filename')
       output.innerHTML = '<ul>'
       i = 0

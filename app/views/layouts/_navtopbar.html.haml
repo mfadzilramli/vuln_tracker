@@ -13,7 +13,9 @@
           %li.active
             = link_to 'Projects', root_path
           %li
-            = link_to 'Tracking', new_report_file_path
+            = link_to 'Tracking', tracking_path
+          %li
+            = link_to 'Reporting', reports_path
           %li.dropdown
             %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               Actions
@@ -23,16 +25,6 @@
                 = link_to 'New Source Data', new_source_file_path
               %li
                 = link_to 'List Source Data', source_files_path
-              /%li.divider{:role => "separator"}
-              /%li
-              /  %a{:href => "#"}
-              /    Separated
-              /    link
-              /%li.divider{:role => "separator"}
-              /%li
-              /  %a{:href => "#"}
-              /    One more
-              /    separated link
         %ul.nav.navbar-nav.navbar-right
           %li.dropdown
             %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}

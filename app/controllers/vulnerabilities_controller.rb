@@ -1,13 +1,18 @@
 class VulnerabilitiesController < ApplicationController
   before_action :set_vulnerability, only: [:edit, :update, :destroy]
 
+  def index
+      @affected_host = AffectedHost.find(params[:affected_host_id])
+      @vulnerabilities = Vulnerability.where(affected_host_id: params[:affected_host_id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+  end
+
   def edit
   end
 
   def show
     @affected_host = AffectedHost.find(params[:id])
     if params[:v_name].present?
-      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).where('vulnerability_name == ?', params[:v_name]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).where('vulnerability_name = ?', params[:v_name]).order('severity DESC').paginate(page: params[:page], per_page: 10)
     else
       @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
     end
