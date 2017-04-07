@@ -47,9 +47,15 @@ Rails.application.routes.draw do
   end
 
   resources :reports do
-    member do
-      get 'search'
+    # member do
+    #   get 'search'
+    # end
+    collection do
+      get ':project_group_id/search', to: 'reports#search', as: 'search'
+      post ':project_group_id/insert/:affected_host_id', to: 'reports#insert', as: 'insert'
+      post ':project_group_id/delete/:affected_host_id', to: 'reports#delete', as: 'delete'
     end
+
     collection do
       get 'generate'
       get 'print_all'

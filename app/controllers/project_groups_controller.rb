@@ -48,6 +48,7 @@ class ProjectGroupsController < ApplicationController
   # POST /project_groups
   # POST /project_groups.json
   def create
+    # byebug
     @project_group = ProjectGroup.new(project_group_params)
 
     respond_to do |format|
@@ -64,6 +65,7 @@ class ProjectGroupsController < ApplicationController
   # PATCH/PUT /project_groups/1
   # PATCH/PUT /project_groups/1.json
   def update
+    # byebug
     respond_to do |format|
       if @project_group.update(project_group_params)
         format.html { redirect_to @project_group, notice: 'Project group was successfully updated.' }

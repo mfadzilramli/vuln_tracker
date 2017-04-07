@@ -90,20 +90,21 @@
           %td.center= vulnerability.cvss_score
         %tr
           %td{ bgcolor: '#efefef' } Synopsis
-          %td{ colspan: 3 }= vulnerability.synopsis.strip
+          %td{ colspan: 3 }= vulnerability.synopsis
         %tr
           %td{ bgcolor: '#efefef' } Output
           %td{ colspan: 3 }
             - if !vulnerability.output.empty?
-              %pre= vulnerability.output.strip
+              %pre= vulnerability.output
             - else
               None
         %tr
           %td{ bgcolor: '#efefef' } Remediation
           %td{ colspan: 3 }
-            %pre= vulnerability.solution.strip
+            %pre= vulnerability.solution
         %tr
           %td{ bgcolor: '#efefef' } Remarks
           %td{ colspan: 3 }= vulnerability.remedy_action.remarks
 
-  .page-break
+  - if host != AffectedHost.joins(:reports).last
+    .page-break

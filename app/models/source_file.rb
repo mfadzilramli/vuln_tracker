@@ -7,7 +7,6 @@ class SourceFile < ApplicationRecord
 
 
   def self.to_db(source)
-  ############################################################
     doc = Nokogiri::XML(source.data)
     doc.xpath('/NessusClientData_v2/Report').each do |report|
       report.xpath('./ReportHost').each do |host|
@@ -27,11 +26,9 @@ class SourceFile < ApplicationRecord
             @host.platform = tag.text.strip
           elsif tag.attributes['name'].value == 'HOST_START'
             @last_seen = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
-          # elsif tag.attributes['name'].value == 'HOST_END'
-          #   @host.scan_end = Time.parse(tag.text).strftime("%Y-%m-%d %I:%M:%S")
           end
         end
-        # @host.source_file_id = source_file_id
+
         @host.save
         host.xpath('./ReportItem').each do |item|
           if item.attributes['severity'].value.to_i > 0
@@ -57,16 +54,12 @@ class SourceFile < ApplicationRecord
             @vuln.patch_date = item.xpath('./patch_publication_date').text.strip
             @vuln.last_seen = @last_seen
 
-            # @vuln.affected_host_id = @host.id
             @vuln.save
-
             @remedy = @vuln.create_remedy_action!
-            # @remedy.save
           end
         end
       end
     end
-  ############################################################
   end
 
 end

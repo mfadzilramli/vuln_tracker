@@ -10,5 +10,7 @@
         - @project_groups.each do |project_group|
           %tr
             %td= project_group.name
-            %td
-              = link_to 'Search Hosts', search_report_path(project_group)
+            %td{ align: 'right' }
+              = link_to 'Search Hosts',
+                search_reports_path(project_group),
+                class: "btn btn-sm btn-primary"

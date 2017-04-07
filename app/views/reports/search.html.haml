@@ -4,8 +4,11 @@
   .panel-body
     = link_to print_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
       %span.glyphicon.glyphicon-print{aria_hidden: "true"}
-      Print Report
-    = form_tag search_report_path(params[:id]),
+      Print PDF Report
+    = link_to print_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-cog{aria_hidden: "true"}
+      Custom Report
+    = form_tag search_reports_path(params[:project_group_id]),
       method: :get, action: :search,
       class: "navbar-form navbar-right",
       role: "search" do
@@ -17,17 +20,8 @@
           = button_tag 'Search', class: "btn btn-success", type: "submit" do
             %span.glyphicon.glyphicon-search{aria_hidden: true}
 
-    %table.table.table-striped
-      %thead{ bgcolor: '#efefef' }
-        %tr
-          %th.col-md-2 IP Address
-          %th.col-md-2 Hostname
-          %th.col-md-1 Platform
-          %th.col-md-5 Operating System
-          %th.col-md-2
       %tbody
-    -# = form_for @report, remote: true, html: { id: 'print_items', class: 'print_items'}, url: { action:, project_group_id: @project_group } do |f|
-    = form_for @project_group, remote: true, html: {id: 'print_items', class: 'print_items'} do |f|
+    = form_for @project_group, remote: true, html: { id: 'print_items', class: 'print_items' } do |f|
       %table.table.table-striped
         %thead{ bgcolor: '#efefef' }
           %tr
@@ -35,6 +29,7 @@
             %th.col-md-2 Hostname
             %th.col-md-1 Platform
             %th.col-md-5 Operating System
+            %th
             %th.col-md-2
         %tbody
           - @affected_hosts.each do |affected_host|
@@ -44,12 +39,15 @@
               %td= affected_host.platform.capitalize
               %td= affected_host.operating_system ||= 'Unidentified'
               %td{ align: "right" }
-                = f.check_box :affected_host_ids, { multiple: true }, affected_host.id, false
-                = link_to 'Details', project_group_affected_host_vulnerabilities_path(params[:id], affected_host.id),
+                = f.check_box :affected_host_ids,
+                  { multiple: true },
+                  affected_host.id,
+                  false
+              %td{ align: "right" }
+                = link_to 'Details', project_group_affected_host_vulnerabilities_path(params[:project_group_id], affected_host.id),
                   class: "btn btn-sm btn-primary"
                 = link_to 'Delete', affected_host_path(affected_host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
                   class: "btn btn-sm btn-danger"
-
 
     %div{ align: "center" }
       = will_paginate @affected_hosts
