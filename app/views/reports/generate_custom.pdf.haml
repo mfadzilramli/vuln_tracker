@@ -1,0 +1,111 @@
+= wicked_pdf_stylesheet_link_tag 'custom.css.scss'
+- AffectedHost.joins(:reports).each do |host|
+
+  - vulnerabilities = Vulnerability.where(affected_host_id: host).where(severity: obj).order('severity DESC')
+  .panel.panel-danger
+    .panel-heading{ style: "color:#000"}
+      %h5 Host Information
+    .panel-body
+      %table.table.table-striped.font-small
+        %thead
+          %tr{ bgcolor: '#FF8800' }
+            %th IP Address
+            %th Host Name
+            %th Operating System
+        %tbody
+          %tr
+            %td= host.host_ip
+            %td= host.host_fqdn ||= host.netbios_name
+            %td= host.operating_system
+
+      %table.table.table-striped.font-small
+        %thead
+          %th.center{ bgcolor: '#ffcdd2' } Critical
+          %th.center{ bgcolor: '#ffe0b2' } High
+          %th.center{ bgcolor: '#fff9c4' } Medium
+          %th.center{ bgcolor: '#c8e6c9' } Low
+          %th.center{ bgcolor: '#d2d2d2' } Total
+        %tbody
+          - vuln_by_host = vulnerabilities.group(:severity).count
+          %td.center= vuln_by_host[4] ||= 0
+          %td.center= vuln_by_host[3] ||= 0
+          %td.center= vuln_by_host[2] ||= 0
+          %td.center= vuln_by_host[1] ||= 0
+          %td.center= vuln_by_host.values.sum ||= 0
+
+  %table.table.table-striped.font-small
+    %thead
+      %tr{ bgcolor: '#dfdfdf' }
+        %th No.
+        %th Vulnerability Name
+        %th Services
+        %th.center Severity
+        %th.center Status
+    %tbody
+      - vulnerabilities.each_with_index do |vulnerability, index|
+        %tr
+          %td= index + 1
+          %td= vulnerability.vulnerability_name
+          %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+          - case vulnerability.severity
+            - when 1
+              %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle" } Low
+            - when 2
+              %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle" } Medium
+            - when 3
+              %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle" } High
+            - when 4
+              %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle" } Critical
+            - else
+              %td.center
+          - case vulnerability.remedy_action.status
+            - when 1
+              %td.center{ style: "width:80px" } Open
+            - when 2
+              %td.center{ style: "width:80px" } In-progress
+            - when 3
+              %td.center{ style: "width:80px" } Closed
+
+  .page-break
+
+  .well
+    %h4 Vulnerability Details
+
+  - vulnerabilities.each_with_index do |vulnerability, index|
+    %strong= "#{index + 1}. #{vulnerability.vulnerability_name}"
+    %table.table.table-bordered.font-small
+      %tbody
+        %tr
+          %td{ bgcolor: '#efefef', style: "width:100px" } Severity
+          - case vulnerability.severity
+            - when 1
+              %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle;width:400px" } Low
+            - when 2
+              %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle;width:400px" } Medium
+            - when 3
+              %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle;width:400px" } High
+            - when 4
+              %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle;width:400px" } Critical
+            - else
+          %td.center Risk Score
+          %td.center= vulnerability.cvss_score
+        %tr
+          %td{ bgcolor: '#efefef' } Synopsis
+          %td{ colspan: 3 }= vulnerability.synopsis
+        %tr
+          %td{ bgcolor: '#efefef' } Output
+          %td{ colspan: 3 }
+            - if !vulnerability.output.empty?
+              %pre= vulnerability.output
+            - else
+              None
+        %tr
+          %td{ bgcolor: '#efefef' } Remediation
+          %td{ colspan: 3 }
+            %pre= vulnerability.solution
+        %tr
+          %td{ bgcolor: '#efefef' } Remarks
+          %td{ colspan: 3 }= vulnerability.remedy_action.remarks
+
+  - if host != AffectedHost.joins(:reports).last
+    .page-break

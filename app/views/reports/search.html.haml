@@ -2,12 +2,15 @@
   .panel-heading
     %h3 Search Affected Host
   .panel-body
-    = link_to print_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
+    = link_to generate_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
       %span.glyphicon.glyphicon-print{aria_hidden: "true"}
       Print PDF Report
-    = link_to print_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
+    = link_to custom_reports_path(@project_group), class: "btn btn-primary" do
       %span.glyphicon.glyphicon-cog{aria_hidden: "true"}
       Custom Report
+    = link_to clear_selection_reports_path(@project_group), class: "btn btn-primary" do
+      %span.glyphicon.glyphicon-repeat{aria_hidden: "true"}
+      Clear Selected Items
     = form_tag search_reports_path(params[:project_group_id]),
       method: :get, action: :search,
       class: "navbar-form navbar-right",
@@ -22,32 +25,67 @@
 
       %tbody
     = form_for @project_group, remote: true, html: { id: 'print_items', class: 'print_items' } do |f|
-      %table.table.table-striped
-        %thead{ bgcolor: '#efefef' }
-          %tr
-            %th.col-md-2 IP Address
-            %th.col-md-2 Hostname
-            %th.col-md-1 Platform
-            %th.col-md-5 Operating System
-            %th
-            %th.col-md-2
+      -# %table.table.table-striped
+      -#   %thead{ bgcolor: '#efefef' }
+      -#     %tr
+      -#       %th.col-md-2 IP Address
+      -#       %th.col-md-2 Hostname
+      -#       %th.col-md-1 Platform
+      -#       %th.col-md-5 Operating System
+      -#       %th
+      -#       %th.col-md-2
+      -#   %tbody
+      -#     - @affected_hosts.each do |affected_host|
+      -#       %tr
+      -#         %td= affected_host.host_ip
+      -#         %td= affected_host.host_fqdn ||= affected_host.netbios_name
+      -#         %td= affected_host.platform.capitalize
+      -#         %td= affected_host.operating_system ||= 'Unidentified'
+      -#         %td{ align: "right" }
+      -#           = f.check_box :affected_host_ids,
+      -#             { multiple: true },
+      -#             affected_host.id,
+      -#             false
+      -#         %td{ align: "right" }
+      -#           = link_to 'Details', project_group_affected_host_vulnerabilities_path(params[:project_group_id], affected_host.id),
+      -#             class: "btn btn-sm btn-primary"
+      -#           = link_to 'Delete', affected_host_path(affected_host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
+      -#             class: "btn btn-sm btn-danger"
+
+      %table.table.table-hover
+        %thead
+          %tr{ bgcolor: '#e3e3e3' }
+            %th{ rowspan: 2 }
+            %th{ rowspan: 2 } IP Address
+            %th{ rowspan: 2 } Hostname
+            %th{ rowspan: 2 } Operating System
+            /%th.center{ rowspan: 2 } Scan Date
+            %th.center{ colspan: 5, bgcolor: '#d2d2d2' } Severity
+          %tr{ bgcolor: '#e3e3e3' }
+            %th.center{ style: "width:60px", bgcolor: '#e57373' } Critical
+            %th.center{ style: "width:60px", bgcolor: '#ffb74d' } High
+            %th.center{ style: "width:60px", bgcolor: '#fff176' } Medium
+            %th.center{ style: "width:60px", bgcolor: '#81c784' } Low
+            %th.center{ style: "width:60px", bgcolor: '#c1c1c1' } Total
         %tbody
           - @affected_hosts.each do |affected_host|
             %tr
-              %td= affected_host.host_ip
-              %td= affected_host.host_fqdn ||= affected_host.netbios_name
-              %td= affected_host.platform.capitalize
-              %td= affected_host.operating_system ||= 'Unidentified'
-              %td{ align: "right" }
+              %td
                 = f.check_box :affected_host_ids,
                   { multiple: true },
                   affected_host.id,
                   false
-              %td{ align: "right" }
-                = link_to 'Details', project_group_affected_host_vulnerabilities_path(params[:project_group_id], affected_host.id),
-                  class: "btn btn-sm btn-primary"
-                = link_to 'Delete', affected_host_path(affected_host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
-                  class: "btn btn-sm btn-danger"
+              %td= link_to affected_host.host_ip, project_group_affected_host_vulnerabilities_path(@project_group, affected_host)
+              %td= affected_host.host_fqdn ||= affected_host.netbios_name
+              %td= affected_host.operating_system ||= 'Unidentified'
+
+              - severity = affected_host.vulnerabilities.group(:severity).count
+              %td.center{ bgcolor: '#ffcdd2' }= severity[4] ||= 0
+              %td.center{ bgcolor: '#ffe0b2' }= severity[3] ||= 0
+              %td.center{ bgcolor: '#fff9c4' }= severity[2] ||= 0
+              %td.center{ bgcolor: '#c8e6c9' }= severity[1] ||= 0
+              %td.center{ bgcolor: '#F6F1F0' }
+                %strong= affected_host.vulnerabilities.count
 
     %div{ align: "center" }
       = will_paginate @affected_hosts

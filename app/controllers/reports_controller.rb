@@ -1,8 +1,8 @@
 class ReportsController < ApplicationController
   before_action :set_host, only: [:generate]
-  before_action :set_project_group, only: [:search, :insert, :delete]
+  before_action :set_project_group, only: [:search, :insert, :delete, :custom, :clear_selection, :generate_custom]
   before_action :set_project_groups, only: [:index]
-  before_action :set_report_items, only: [:print_all]
+  before_action :set_report_items, only: [:generate_all, :generate_custom]
 
   def generate
     respond_to do |format|
@@ -41,7 +41,7 @@ class ReportsController < ApplicationController
   def index
   end
 
-  def print_all
+  def generate_all
     respond_to do |format|
       format.html
       format.pdf do
@@ -50,15 +50,49 @@ class ReportsController < ApplicationController
           page_size: "A4",
           footer: { font_size:  10, center: '[page] of [topage]', },
           margin: { top:    15, bottom: 15, left:   10, right:  10 }
-        Report.delete_all
       end
-      # format.xlsx do
-      #   render xlsx: 'report',
-      #   locals: { host: @host },
-      #   filename: "#{@host.host_ip}_report_tracker"
-      # end
     end
+  end
 
+  def generate_custom
+
+    respond_to do |format|
+      format.html
+
+      format.pdf do
+        # check if parameter is nil
+        if params[:report].nil?
+          raise "no severity is selected"
+        else
+          @severity = params[:report].values.map{ |x| x }
+        end
+        @filename = "hosts_details-#{DateTime.now.to_i}"
+        render pdf: @filename,
+          disposition: 'attachment',
+          locals: { obj: @severity },
+          page_size: "A4",
+          footer: { font_size:  10, center: '[page] of [topage]', },
+          margin: { top:    15, bottom: 15, left:   10, right:  10 }
+      end
+      format.xlsx do
+        render xlsx: 'generate_custom',
+        locals: { obj: @project_group },
+        filename: "#{@project_group.name}_#{DateTime.now.to_i}"
+      end
+    end
+  end
+
+  def clear_selection
+    respond_to do |format|
+      if Report.delete_all
+        format.html { redirect_to search_reports_path(@project_group), notice: 'All report items selection was successfully deleted.' }
+      else
+        format.html { render root_path }
+      end
+    end
+  end
+
+  def custom
   end
 
   def insert
@@ -69,7 +103,6 @@ class ReportsController < ApplicationController
     @affected_host_list = @project_group.affected_host_ids
     @affected_host_list.delete(params[:affected_host_id].to_i)
     @project_group.affected_host_ids = @affected_host_list
-    # @project_group.affected_host_ids = @affected_host_list.delete(params[:affected_host_id].to_i)
   end
 
   private
