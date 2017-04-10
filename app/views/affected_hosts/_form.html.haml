@@ -27,6 +27,6 @@
     = button_tag class: "btn btn-primary" do
       %span.glyphicon.glyphicon-save{aria_hidden: "true"}
       Save
-    = link_to search_project_group_path(params[:project_group_id]), class: "btn btn-primary" do
+    = link_to project_group_affected_host_vulnerabilities_path(params[:project_group_id], @affected_host), class: "btn btn-primary" do
       %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
       Back

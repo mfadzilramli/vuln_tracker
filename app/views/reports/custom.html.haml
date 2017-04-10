@@ -1,11 +1,21 @@
 .panel.panel-default
   .panel-heading
-    %h3 Custom Report
+    %h3 Report Options
   .panel-body
-    = form_for :report, url: { action: :generate_custom }, target: '_blank' do |f|
+    = form_for :report, url: { action: :generate_custom } do |f|
 
       .row
         .col-md-6
+          -# .panel.panel-default
+          -#   .panel-body
+          -#     .col-md-6
+          -#       = f.label 'Selected Host'
+          -#       %span.pull-right
+          -#         = f.radio_button :selected_host, "selected_host", "yes"
+          -#     .col-md-6
+          -#       = f.label 'All Host'
+          -#       %span.pull-right
+          -#         = f.radio_button :selected_host, "selected_host", "no"
           .panel.panel-default
             .panel-body
               .col-md-3
@@ -24,11 +34,23 @@
                 = f.label 'Low'
                 %span.pull-right
                   = f.check_box :low, { checked: true }, 1, nil
-      .form-group
-        = f.submit 'Generate PDF Report', onClick: "$(this).closest('form').attr('action',
-          '#{ generate_custom_reports_path(format: :pdf)}')",
-          class: "btn btn-primary"
-        = f.submit 'Generate Excel Report', onClick: "$(this).closest('form').attr('action',
-          '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
-          class: "btn btn-primary"
-        = link_to 'Back', :back, class: "btn btn-primary"
+
+        .col-md-6
+          .list-group
+            .list-group-item
+              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+                '#{ generate_custom_project_group_report_path(format: :pdf)}')",
+                class: "btn btn-primary"
+              Generate PDF Report (Selected Hosts)
+            .list-group-item
+              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+                '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
+                class: "btn btn-primary"
+              Generate Spreadsheet Report (Selected Hosts)
+            .list-group-item
+              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+                '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
+                class: "btn btn-primary"
+              Generate Spreadsheet Report (All Hosts)
+      .list-group-item
+        = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"

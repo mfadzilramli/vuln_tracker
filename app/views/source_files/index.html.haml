@@ -14,7 +14,7 @@
       %tbody
         - @source_files.each do |source_file|
           %tr
-            %td= source_file.title.split.map(&:capitalize).join(' ')
+            %td= source_file.title
             %td= source_file.filename
             %td= source_file.created_at
             %td{ align: 'right' }

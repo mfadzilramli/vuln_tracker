@@ -1,17 +1,8 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: 'Sample 1') do |sheet|
-  # header
-  sheet.add_row ['No.', 'Affected Host', 'Vulnerability Name', 'TVID', 'Service', 'Impact', 'Risk', 'CVE', 'Recommendation']
-  Vulnerability.where(affected_host_id: @project_group.affected_host_ids).where(severity: [4,3]).order('severity DESC').each_with_index do |vulnerability, index|
 
-    # list vulnerabilities by severity (DESC)
-    sheet.add_row [ index + 1, vulnerability.affected_host.host_ip,
-      vulnerability.vulnerability_name,
-      vulnerability.id,
-      vulnerability.port,
-      vulnerability.synopsis,
-      vulnerability.severity,
-      vulnerability.cve,
-      vulnerability.solution ]
-  end
+if options == 'all'
+  affected_host_ids = AffectedHost.where(source_file_id: project_group.source_file_ids).ids
+else
+  affected_host_ids = AffectedHost.where(id: project_group.affected_host_ids)
 end
+render partial: 'generate_custom', locals: { wb: wb, affected_host_ids: affected_host_ids, severity: severity }

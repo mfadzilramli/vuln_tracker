@@ -23,9 +23,9 @@
         %li
           /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
           = link_to 'Writable Path', '#menu5', data: { toggle: 'tab' }
-        %li
-          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-          = link_to 'Search Host', '#menu6', data: { toggle: 'tab' }
+        -# %li
+        -#   /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
+        -#   = link_to 'Search Host', '#menu6', data: { toggle: 'tab' }
 
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
@@ -57,7 +57,7 @@
               = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
 
             .col-md-3
-              = render partial: 'widgets/top_hosts', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/top_hosts', locals: { project_group: @project_group, obj: @affected_hosts }
 
             .col-md-3
               = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }
@@ -77,20 +77,20 @@
             .col-md-12
               = render partial: 'widgets/writable_path', locals: { obj: @affected_hosts }
 
-        #menu6.tab-pane.fade
-          .row{ style: "padding:5px" }
-            .col-md-12
-              .container-fluid
-                = form_tag search_project_group_path(params[:id]),
-                  id: 'search_host_form',
-                  method: :get, action: :search,
-                  class: "navbar-form navbar-right",
-                  role: "search", remote: true do
-                  .input-group
-                    = text_field_tag :search, "",
-                      class: "form-control",
-                      placeholder: "e.g. 172.16"
-                    .input-group-btn
-                      = button_tag 'Search', class: "btn btn-default", type: "submit" do
-                        %span.glyphicon.glyphicon-search{aria_hidden: true}
-            #search_box_results
+        -# #menu6.tab-pane.fade
+        -#   .row{ style: "padding:5px" }
+        -#     .col-md-12
+        -#       .container-fluid
+        -#         = form_tag search_project_group_path(params[:id]),
+        -#           id: 'search_host_form',
+        -#           method: :get, action: :search,
+        -#           class: "navbar-form navbar-right",
+        -#           role: "search", remote: true do
+        -#           .input-group
+        -#             = text_field_tag :search, "",
+        -#               class: "form-control",
+        -#               placeholder: "e.g. 172.16"
+        -#             .input-group-btn
+        -#               = button_tag 'Search', class: "btn btn-default", type: "submit" do
+        -#                 %span.glyphicon.glyphicon-search{aria_hidden: true}
+        -#     #search_box_results

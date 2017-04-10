@@ -2,12 +2,12 @@
   .panel-heading
     %h3 Search Affected Host
   .panel-body
-    = link_to generate_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-print{aria_hidden: "true"}
-      Print PDF Report
+    -# = link_to generate_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
+    -#   %span.glyphicon.glyphicon-print{aria_hidden: "true"}
+    -#   Print PDF Report
     = link_to custom_reports_path(@project_group), class: "btn btn-primary" do
       %span.glyphicon.glyphicon-cog{aria_hidden: "true"}
-      Custom Report
+      Generate Report
     = link_to clear_selection_reports_path(@project_group), class: "btn btn-primary" do
       %span.glyphicon.glyphicon-repeat{aria_hidden: "true"}
       Clear Selected Items
