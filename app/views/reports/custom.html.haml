@@ -41,7 +41,7 @@
               = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(format: :pdf)}')",
                 class: "btn btn-primary"
-              Generate PDF Report (Selected Hosts)
+              Generate PDF Report (Selected Hosts Only)
             .list-group-item
               = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
@@ -55,6 +55,11 @@
             .list-group-item
               = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xml)}')",
+                class: "btn btn-primary"
+              Generate XML Report (Selected Hosts)
+            .list-group-item
+              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+                '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xml)}')",
                 class: "btn btn-primary"
               Generate XML Report (All Hosts)
   .panel-footer

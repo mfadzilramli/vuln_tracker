@@ -1,7 +1,6 @@
 = wicked_pdf_stylesheet_link_tag 'custom.css.scss'
-- AffectedHost.joins(:reports).each do |host|
-
-  - vulnerabilities = Vulnerability.where(affected_host_id: host).where(severity: obj).order('severity DESC')
+- AffectedHost.where(id: @project_group.affected_host_ids).each do |host|
+  - vulnerabilities = Vulnerability.where(affected_host_id: host).where(severity: severity).order('severity DESC')
   .panel.panel-danger
     .panel-heading{ style: "color:#000"}
       %h5 Host Information

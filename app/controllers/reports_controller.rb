@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   before_action :set_host, only: [:generate]
   before_action :set_project_group, only: [:search, :insert, :delete, :custom, :clear_selection, :generate_custom]
   before_action :set_project_groups, only: [:index]
+  before_action :set_options, only: [:generate_custom]
   # before_action :set_report_items, only: [:generate_custom]
 
   def generate
@@ -55,7 +56,7 @@ class ReportsController < ApplicationController
         render pdf: @filename,
           disposition: 'attachment',
           template: "reports/generate_custom",
-          locals: { obj: @severity },
+          locals: { project_group: @project_group, severity: @severity },
           page_size: "A4",
           encoding: "UTF-8",
           footer: { font_size:  10, center: '[page] of [topage]', },
@@ -66,9 +67,7 @@ class ReportsController < ApplicationController
         locals: { project_group: @project_group, severity: @severity, options: params[:options] },
         filename: "#{@project_group.name}_custom-report-#{DateTime.now.to_i}"
       end
-
-      format.xml do
-      end
+      format.xml
     end
   end
 
@@ -113,7 +112,7 @@ class ReportsController < ApplicationController
     @project_group = ProjectGroup.find(params[:project_group_id])
   end
 
-  # def report_params
-  #   params.fetch(:project_group, {}).permit(:name, :affected_host_id, :project_group_id)
-  # end
+  def set_options
+    @options = params[:options]
+  end
 end
