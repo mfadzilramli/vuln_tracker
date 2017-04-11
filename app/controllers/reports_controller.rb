@@ -66,6 +66,9 @@ class ReportsController < ApplicationController
         locals: { project_group: @project_group, severity: @severity, options: params[:options] },
         filename: "#{@project_group.name}_custom-report-#{DateTime.now.to_i}"
       end
+
+      format.xml do
+      end
     end
   end
 

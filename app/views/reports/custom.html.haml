@@ -52,5 +52,10 @@
                 '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
                 class: "btn btn-primary"
               Generate Spreadsheet Report (All Hosts)
+            .list-group-item
+              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+                '#{ generate_custom_project_group_report_path(@project_group, format: :xml)}')",
+                class: "btn btn-primary"
+              Generate XML Report (All Hosts)
   .panel-footer
     = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"

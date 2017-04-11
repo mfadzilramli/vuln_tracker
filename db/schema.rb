@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 20170406150325) do
   enable_extension "plpgsql"
 
   create_table "affected_hosts", force: :cascade do |t|
-    t.string   "host_ip"
+    t.inet     "host_ip"
     t.string   "host_fqdn"
     t.string   "netbios_name"
-    t.string   "mac_address"
+    t.macaddr  "mac_address"
     t.string   "platform"
     t.string   "operating_system"
     t.datetime "created_at",       null: false
@@ -98,11 +98,12 @@ ActiveRecord::Schema.define(version: 20170406150325) do
     t.string   "vulnerability_name"
     t.string   "plugin_family"
     t.string   "cve"
-    t.decimal  "cvss_score"
+    t.float    "cvss_score"
     t.string   "cpe"
     t.datetime "vulnerability_date"
     t.datetime "patch_date"
     t.boolean  "exploit_available"
+    t.string   "plugin_type"
     t.text     "description"
     t.text     "synopsis"
     t.text     "solution"
