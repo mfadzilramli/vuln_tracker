@@ -40,19 +40,6 @@ class ReportsController < ApplicationController
   def index
   end
 
-  # def generate_all
-  #   respond_to do |format|
-  #     format.html
-  #     format.pdf do
-  #       render pdf: "hosts_details",
-  #         locals: { obj: @report_items },
-  #         page_size: "A4",
-  #         footer: { font_size:  10, center: '[page] of [topage]', },
-  #         margin: { top:    15, bottom: 15, left:   10, right:  10 }
-  #     end
-  #   end
-  # end
-
   def generate_custom
     respond_to do |format|
       # check if parameter is nil

@@ -5,7 +5,6 @@ class SourceFile < ApplicationRecord
   has_many :monitored_items, dependent: :destroy
   has_many :project_groups, through: :monitored_items
 
-
   def self.to_db(source)
     doc = Nokogiri::XML(source.data)
     doc.xpath('/NessusClientData_v2/Report').each do |report|
@@ -55,7 +54,7 @@ class SourceFile < ApplicationRecord
             @vuln.last_seen = @last_seen
 
             @vuln.save
-            @remedy = @vuln.create_remedy_action!
+            # @remedy = @vuln.create_remedy_action!
           end
         end
       end

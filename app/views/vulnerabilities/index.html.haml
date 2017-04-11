@@ -73,7 +73,7 @@
     .form-group
       = link_to edit_project_group_affected_host_path(params[:project_group_id], @affected_host),
         class: "btn btn-primary" do
-        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
         Edit Host Information
       = link_to new_project_group_affected_host_vulnerability_path(params[:project_group_id], @affected_host),
         class: "btn btn-primary" do

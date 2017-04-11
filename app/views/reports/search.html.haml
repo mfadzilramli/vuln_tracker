@@ -68,7 +68,7 @@
             %th.center{ style: "width:60px", bgcolor: '#81c784' } Low
             %th.center{ style: "width:60px", bgcolor: '#c1c1c1' } Total
         %tbody
-          - @affected_hosts.each do |affected_host|
+          - @affected_hosts.order(:host_ip).each do |affected_host|
             %tr
               %td
                 = f.check_box :affected_host_ids,
