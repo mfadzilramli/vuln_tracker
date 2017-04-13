@@ -3,7 +3,7 @@ class Tracking < ApplicationRecord
   def self.update_remedy_action(file)
     spreadsheet = open_spreadsheet(file)
     affected_host = spreadsheet.sheet('Vulnerability Tracking').cell(1,'B')
-    (7..spreadsheet.sheet('Vulnerability Tracking').last_row).each do |column|
+    (8..spreadsheet.sheet('Vulnerability Tracking').last_row).each do |column|
       row = spreadsheet.sheet('Vulnerability Tracking').row(column)
 
       case row[9]

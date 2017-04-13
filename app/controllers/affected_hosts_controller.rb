@@ -1,6 +1,6 @@
 class AffectedHostsController < ApplicationController
   before_action :set_affected_host, only: [:edit, :update, :destroy]
-    before_action :set_project_group, only: [:update]
+    before_action :set_project_group, only: [:update, :edit]
 
   def index
     @source_file = SourceFile.find(params[:source_file_id])
@@ -33,7 +33,7 @@ class AffectedHostsController < ApplicationController
       if @affected_host.save
         # format.html { redirect_to source_file_path(@affected_host.source_file_id),
         #   notice: 'New affected host was successfully created.' }
-        format.html { redirect_to affected_hosts_path(source_id: @affected_host.source_file_id),
+        format.html { redirect_to source_file_affected_hosts_path(@affected_host.source_file_id),
           notice: 'New affected host was successfully created.' }
         format.json { render :show, status: :created, location: @affected_host }
       else
@@ -56,7 +56,7 @@ class AffectedHostsController < ApplicationController
       if @affected_host.update(affected_host_params)
         # format.html { redirect_to source_files_path, notice: 'Affected host was successfully updated.' }
         # format.html { redirect_to search_project_group_path(@project_group),
-        format.html { redirect_to :back,
+        format.html { redirect_to search_reports_path(@project_group),
           notice: 'Affected host was successfully updated.' }
         format.json { render :show, status: :ok, location: @affected_host }
       else

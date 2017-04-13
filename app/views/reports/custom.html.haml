@@ -1,22 +1,15 @@
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h3 Report Options
+    %h3
+      %span.glyphicon.glyphicon-option-vertical
+      Generate Report
   .panel-body
     = form_for :report, url: { action: :generate_custom } do |f|
-
       .row
         .col-md-6
-          -# .panel.panel-default
-          -#   .panel-body
-          -#     .col-md-6
-          -#       = f.label 'Selected Host'
-          -#       %span.pull-right
-          -#         = f.radio_button :selected_host, "selected_host", "yes"
-          -#     .col-md-6
-          -#       = f.label 'All Host'
-          -#       %span.pull-right
-          -#         = f.radio_button :selected_host, "selected_host", "no"
           .panel.panel-default
+            .panel-heading
+              %strong Severity
             .panel-body
               .col-md-3
                 = f.label 'Critical'
@@ -38,29 +31,29 @@
         .col-md-6
           .list-group
             .list-group-item
-              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+              = f.submit 'PDF', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(format: :pdf)}')",
-                class: "btn btn-primary"
+                class: "btn btn-primary btn-size-fixed"
               Generate PDF Report (Selected Hosts Only)
             .list-group-item
-              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+              = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
-                class: "btn btn-primary"
+                class: "btn btn-primary btn-size-fixed"
               Generate Spreadsheet Report (Selected Hosts)
             .list-group-item
-              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+              = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
-                class: "btn btn-primary"
+                class: "btn btn-primary btn-size-fixed"
               Generate Spreadsheet Report (All Hosts)
             .list-group-item
-              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+              = f.submit 'XML', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xml)}')",
-                class: "btn btn-primary"
+                class: "btn btn-primary btn-size-fixed"
               Generate XML Report (Selected Hosts)
             .list-group-item
-              = f.submit 'Generate', onClick: "$(this).closest('form').attr('action',
+              = f.submit 'XML', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xml)}')",
-                class: "btn btn-primary"
+                class: "btn btn-primary btn-size-fixed"
               Generate XML Report (All Hosts)
   .panel-footer
     = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"

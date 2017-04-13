@@ -36,7 +36,7 @@ module ProjectGroupsHelper
     return affected_platforms
   end
 
-  def get_low_hanging_fruits(affected_hosts)
+  def get_credential_issues(affected_hosts)
     return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ? or vulnerability_name LIKE ? or vulnerability_name LIKE ?',"%password%","%default credentials%", "%unauthenticated%").group(:vulnerability_name).count
   end
 

@@ -1,5 +1,5 @@
 class VulnerabilitiesController < ApplicationController
-  before_action :set_project_group, only: [ :index ]
+  before_action :set_project_group, only: [ :index, :new, :create ]
   before_action :set_vulnerability, only: [ :edit, :update, :destroy ]
 
   def index
@@ -71,7 +71,7 @@ class VulnerabilitiesController < ApplicationController
 
   def vuln_params
     params.fetch(:vulnerability, {}).permit(
-      :affected_host_id, :vulnerability_name, :plugin_family, :cve, :cvss_score, :port, :service_name,
+      :vulnerability_name, :plugin_family, :cve, :cvss_score, :port, :service_name,
       :protocol, :severity, :description, :synopsis, :solution, :output
       )
   end

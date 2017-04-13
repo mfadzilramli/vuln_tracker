@@ -1,6 +1,8 @@
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h3 Select Project
+    %h3
+      %span.glyphicon.glyphicon-option-vertical
+      Select Project
   .panel-body
     -# %table.table.table-striped
     -#   %thead{ bgcolor: '#efefef' }
@@ -14,12 +16,12 @@
     -#           = link_to 'Hosts Listing',
     -#             search_reports_path(project_group),
     -#             class: "btn btn-sm btn-primary"
-    %table.table
+    %table.table.table-striped
       %thead
         %tr{ bgcolor: '#e2e2e2' }
           %th{ rowspan: 2 } Project Group
-          %th.center{ rowspan: 2, bgcolor: '#5bc0de' } Total Host
-          %th.center{ colspan: 5, bgcolor: '#d2d2d2' } Severity
+          %th.center{ rowspan: 2, bgcolor: '#c2c2c2' } Total Host
+          %th.center{ colspan: 5, bgcolor: '#A0A0A0' } Severity
         %tr
           %th.center{ style: "width:60px", bgcolor: '#e57373' } Critical
           %th.center{ style: "width:60px", bgcolor: '#ffb74d' } High

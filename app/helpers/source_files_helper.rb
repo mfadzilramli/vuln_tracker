@@ -2,12 +2,14 @@ module SourceFilesHelper
 
   def get_pie_data(hosts)
     #severity_data =  hosts.joins(:vulnerabilities).group(:severity).count.values
-    severity_data = Vulnerability.where(affected_host_id: hosts).joins(:remedy_action).where('status != 3').group(:severity).count.values
+    severity_data = Vulnerability.where(affected_host_id: hosts.ids).joins(:remedy_action).where.not('status = ?', 3).group(:severity).count
+
+    severity_data
     data = {
       labels: ["Low", "Medium", "High", "Critical"],
       datasets: [
         {
-          data: severity_data,
+          data: [ severity_data[1] ||= 0, severity_data[2] ||=0, severity_data[3] ||= 0, severity_data[4] ||= 0 ],
           backgroundColor: [
             '#007E33',
             '#FFFF00',

@@ -12,6 +12,6 @@
           - affected_host = obj.where(host_ip: k).first
           - if !affected_host.nil?
             %tr
-              -# %td= link_to k, show_vulnerability_path(host, project_group_id: params[:id])
-              %td= link_to k, project_group_affected_host_vulnerabilities_path(project_group, affected_host)
+              -# %td= link_to k, project_group_affected_host_vulnerabilities_path(project_group, affected_host)
+              %td= k
               %td.center= v

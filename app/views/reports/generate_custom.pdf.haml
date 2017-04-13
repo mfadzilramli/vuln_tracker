@@ -1,4 +1,5 @@
 = wicked_pdf_stylesheet_link_tag 'custom.css.scss'
+%body{ style: "background-color:#FFFFFF" }
 - AffectedHost.where(id: @project_group.affected_host_ids).each do |host|
   - vulnerabilities = Vulnerability.where(affected_host_id: host).where(severity: severity).order('severity DESC')
   .panel.panel-danger

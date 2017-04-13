@@ -6,6 +6,10 @@
       %th.center Count
 
   %tbody
+    - if unsupported_systems.empty?
+      %tr
+        %td
+          None
     - unsupported_systems.each do |key, value|
       %tr
         %td

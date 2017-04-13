@@ -42,7 +42,7 @@ class SourceFile < ApplicationRecord
 
             @vuln.cvss_score = item.xpath('./cvss_base_score').text
             # TODO : need to loop this element
-            @vuln.cve = item.xpath('./cve').text + ' '
+            @vuln.cve = item.xpath('./cve').map(&:text).join(", ")
             @vuln.cpe = item.xpath('./cpe').text
             @vuln.synopsis = item.xpath('./synopsis').text
             @vuln.description = item.xpath('./description').text.strip

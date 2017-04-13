@@ -9,6 +9,9 @@ class ProjectGroupsController < ApplicationController
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).where(
       'host_ip LIKE ?', "%#{params[:search]}%"
       ).paginate(page: params[:page], per_page: 10)
+      # @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).where(
+      # 'TEXT(host_ip) LIKE ?', "%#{params[:search]}%"
+      # ).paginate(page: params[:page], per_page: 10)
     end
 
     respond_to do |format|

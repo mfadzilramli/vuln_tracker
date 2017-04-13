@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 20170406150325) do
   enable_extension "plpgsql"
 
   create_table "affected_hosts", force: :cascade do |t|
-    t.inet     "host_ip"
+    t.string   "host_ip"
     t.string   "host_fqdn"
     t.string   "netbios_name"
-    t.macaddr  "mac_address"
+    t.string   "mac_address"
     t.string   "platform"
     t.string   "operating_system"
     t.datetime "created_at",       null: false

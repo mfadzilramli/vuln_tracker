@@ -1,10 +1,11 @@
-.panel.panel-default
+.panel.panel-info
   .panel-heading
-    %h3.center= @project_group.name.upcase
+    %h2
+      .label.label-danger= "Project: #{@project_group.name.upcase}"
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs.nav-justified
         %li.active
           /%a{"data-toggle" => "tab", :href => "#home"} Home
           = link_to 'Home', '#home', data: { toggle: 'tab' }
@@ -65,7 +66,7 @@
         #menu3.tab-pane.fade
           .row{ style: "padding:5px" }
             .col-md-12
-              = render partial: 'widgets/low_hanging_fruits', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/credential_issues', locals: { obj: @affected_hosts }
 
         #menu4.tab-pane.fade
           .row{ style: "padding:5px" }

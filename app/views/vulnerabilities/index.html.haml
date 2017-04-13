@@ -11,7 +11,7 @@
         %th.center{ bgcolor: '#d2d2d2' } Total
       %tbody
         - vuln_by_host = @vulnerabilities.group(:severity).count
-        %td= @affected_host.host_ip + " #{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
+        %td= "#{@affected_host.host_ip}" + " #{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
         %td= @affected_host.operating_system
         %td.center= vuln_by_host[4] ||= 0
         %td.center= vuln_by_host[3] ||= 0
@@ -79,5 +79,5 @@
         class: "btn btn-primary" do
         %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
         Add New Vulnerability
-      = link_to 'Back', :back, class: "btn btn-primary"
+      = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"
       -# = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"

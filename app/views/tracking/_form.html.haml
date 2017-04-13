@@ -1,11 +1,12 @@
 .row
-  .col-md-4
-    .panel.panel-success
+  .col-md-6
+    .panel.panel-default
       .panel-heading
-        Selected Files
+        Files
       .panel-body
-        #selected_filename
-  .col-md-4
+        %ul
+          #selected_filename
+  .col-md-6
     = form_for :tracking, url: import_tracking_path, html: { id: 'import_tracking', class: 'import_tracking' } do |f|
       .form-group
         = f.label :data, class: "btn btn-primary" do
