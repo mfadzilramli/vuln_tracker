@@ -30,29 +30,31 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
   sheet.add_row [ nil ]
 
   header_styles = [
-    bg_header_center,  bg_header_center,  bg_header,
-    bg_header_center,  bg_header_center,  bg_header,
-    bg_header_center,  bg_header_center,  bg_header,
+    bg_header_center,  bg_header_center,  bg_header_center, bg_header,
+    bg_header_center,  bg_header_center,  bg_header_center,
+    bg_header_center,  bg_header,  bg_header, bg_header,
     bg_header_center,  bg_header
   ]
 
   sheet.add_row [ 'No.',
-    'Affected Host',
+    'IP Address',
+     'Hostname',
     'Vulnerability Name',
     'VTID',
     'Service',
-    'Impact',
     'Risk',
     'CVE',
+    'Impact',
+    'Output',
     'Recommendation',
     'Status',
     'Action/Remarks' ], style: header_styles
 
   Vulnerability.where(affected_host_id: affected_host_ids).where(severity: severity).order('severity DESC').each_with_index do |vulnerability, index|
 
-    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'Open', :dxfId => bg_1, :priority => 1 })
-    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'In-progress', :dxfId => bg_2, :priority => 1 })
-    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'Closed', :dxfId => bg_3, :priority => 1 })
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'Open', :dxfId => bg_1, :priority => 1 })
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'In-progress', :dxfId => bg_2, :priority => 1 })
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'Closed', :dxfId => bg_3, :priority => 1 })
 
     # assign severity id to string
     case vulnerability.severity
@@ -78,10 +80,9 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     end
 
     item_row_styles = [
-      bg_color_center, bg_color_center, bg_color,
-      bg_color_center, bg_color_center, bg_color,
-      bg_color_center, bg_color_center, bg_color,
-      bg_color_center, bg_color
+      bg_color_center, bg_color_center, bg_color_center, bg_color,
+      bg_color_center, bg_color_center, bg_color_center,
+      bg_color, bg_color, bg_color, bg_color, bg_color_center, bg_color
     ]
 
     # assign remedy status to string
@@ -102,18 +103,20 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     # list vulnerabilities by severity (DESC)
     sheet.add_row [ index + 1,
       vulnerability.affected_host.host_ip,
+      vulnerability.affected_host.host_fqdn,
       vulnerability.vulnerability_name,
       vulnerability.id,
       @services,
-      vulnerability.synopsis,
       @severity,
       vulnerability.cve,
+      vulnerability.synopsis,
+      vulnerability.output,
       vulnerability.solution,
       @status,
       vulnerability.remedy_action.remarks ], style: item_row_styles
   end
 
-  sheet.add_data_validation("J7:J1000", {
+  sheet.add_data_validation("L7:L1000", {
     :type => :list,
     :formula1 => "'Vulnerability Tracking'!E$2:E$4",
     :showDropDown => false,
@@ -124,5 +127,5 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     :showInputMessage => true,
     :prompt => 'Choose the value from the dropdown'})
 
-  sheet.column_widths 10,16,60,10,20,60,10,17,70,12,50
+  sheet.column_widths 10,16,35,60,10,20,10,20,60,60,60,10,60
 end

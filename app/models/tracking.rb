@@ -2,11 +2,11 @@ class Tracking < ApplicationRecord
 
   def self.update_remedy_action(file)
     spreadsheet = open_spreadsheet(file)
-    affected_host = spreadsheet.sheet('Vulnerability Tracking').cell(1,'B')
+    # affected_host = spreadsheet.sheet('Vulnerability Tracking').cell(1,'B')
     (8..spreadsheet.sheet('Vulnerability Tracking').last_row).each do |column|
       row = spreadsheet.sheet('Vulnerability Tracking').row(column)
 
-      case row[9]
+      case row[11]
       when /open/i
         cell_status = 1
       when /in-progress/i
@@ -17,7 +17,7 @@ class Tracking < ApplicationRecord
         cell_status = 1
       end
 
-      Vulnerability.find(row[3]).remedy_action.update(status: cell_status, remarks: row[10])
+      Vulnerability.find(row[4]).remedy_action.update(status: cell_status, remarks: row[12])
     end
   end
 

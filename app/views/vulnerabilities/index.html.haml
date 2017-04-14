@@ -58,11 +58,11 @@
                 %td.center{ bgcolor: 'green', style: "vertical-align:middle" } Closed
 
             %td.center
-              = link_to edit_remedy_action_path(vulnerability, project_group_id: params[:project_group_id]) do
+              = link_to edit_project_group_affected_host_vulnerability_remedy_actions_path(@project_group, @affected_host, vulnerability) do
                 %i.glyphicon.glyphicon-tasks{aria_hidden: "true"}
-              = link_to edit_vulnerability_path(vulnerability, project_group_id: params[:project_group_id]) do
+              = link_to edit_project_group_affected_host_vulnerability_path(@project_group, @affected_host, vulnerability) do
                 %i.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              = link_to vulnerability_path(vulnerability, project_group_id: params[:project_group_id]),
+              = link_to project_group_affected_host_vulnerability_path(@project_group, @affected_host, vulnerability),
                 :method => :delete, data: { confirm: 'Are you sure?' } do
                 %i.glyphicon.glyphicon-remove{aria_hidden: "true"}
 

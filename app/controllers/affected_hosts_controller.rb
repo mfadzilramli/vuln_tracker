@@ -69,7 +69,7 @@ class AffectedHostsController < ApplicationController
   def destroy
     @affected_host.destroy
     respond_to do |format|
-      format.html { redirect_to search_affected_hosts_path(source_id: @affected_host.source_file_id),
+      format.html { redirect_to source_file_affected_hosts_path(@affected_host.source_file_id),
         notice: 'Affected host was successfully destroyed.' }
       format.json { head :no_content }
     end

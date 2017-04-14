@@ -11,12 +11,12 @@ Rails.application.routes.draw do
     patch 'users' => 'registrations#update', :as => 'user_registration'
   end
 
-  get 'vulnerabilities/:id', to: 'vulnerabilities#show', as: 'show_vulnerability'
-  get 'vulnerabilities/:host_id/new', to: 'vulnerabilities#new', as: 'new_vulnerability'
+  # get 'vulnerabilities/:id', to: 'vulnerabilities#show', as: 'show_vulnerability'
+  # get 'vulnerabilities/:host_id/new', to: 'vulnerabilities#new', as: 'new_vulnerability'
   get 'affected_hosts/:project_group_id/show', to: 'affected_hosts#show', as: 'list_affected_hosts'
   get 'affected_hosts/:source_id/new', to: 'affected_hosts#new', as: 'new_affected_host'
 
-  resources :vulnerabilities
+  # resources :vulnerabilities
   resources :affected_hosts
   resources :source_files
   resources :remedy_actions
@@ -34,7 +34,9 @@ Rails.application.routes.draw do
     end
 
     resources :affected_hosts do
-      resources :vulnerabilities
+      resources :vulnerabilities do
+        resource :remedy_actions
+      end
       resources :reports do
         collection do
           get 'generate'
