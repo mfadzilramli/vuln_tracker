@@ -1,12 +1,12 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
-    %h4
-      %span.glyphicon.glyphicon-list
-      &nbsp;Listing Project Groups
+    %h3
+      %span.glyphicon.glyphicon-option-vertical
+      Listing Project Groups
   .panel-body
     %table.table
       %thead
-        %tr
+        %tr{ bgcolor: '#efefef' }
           %th Project Name
           %th Date Created
           %th Date Updated
@@ -14,36 +14,20 @@
       %tbody
         - @project_groups.each do |project_group|
           %tr
-            %td= project_group.name.split.map(&:capitalize).join(' ')
-            %td= project_group.created_at
-            %td= project_group.updated_at
-            %td{ align: 'right'}
-              /= link_to project_group,
-              /  data: { toggle: "popover", trigger: "hover",
-              /  placement: "top", content: "Show List" } do
-              /  %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-              /&nbsp;
-              = link_to search_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Search Host Project" } do
-                %span.glyphicon.glyphicon-search{aria_hidden: "true"}
-
-              = link_to edit_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Edit Project" } do
-                %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
-
-              = link_to stats_project_group_path(project_group),
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Show Stats" } do
-                %span.glyphicon.glyphicon-stats{aria_hidden: "true"}
-
-              = link_to project_group, :method => :delete, :data => { :confirm => 'Are you sure?' },
-                data: { toggle: "popover", trigger: "hover",
-                placement: "top", content: "Remove Project" } do
-                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+            -# %td= project_group.name.split.map(&:capitalize).join(' ')
+            %td.valign= link_to project_group.name,
+              stats_project_group_path(project_group)
+            %td.valign= project_group.created_at
+            %td.valign= project_group.updated_at
+            %td.valign{ align: 'right' }
+              = link_to 'Select Source', edit_project_group_path(project_group),
+                class: "btn btn-sm btn-primary"
+              = link_to 'Delete', project_group,
+                :method => :delete,
+                :data => { :confirm => 'Are you sure?' },
+                class: "btn btn-sm btn-danger"
 
   .panel-footer
-    = link_to new_project_group_path, class: "btn btn-primary" do
+    = link_to new_project_group_path, class: "btn btn-raised btn-primary" do
       %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
       New Project

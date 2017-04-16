@@ -8,7 +8,7 @@
   %body{:bgcolor => "#E6E6FA"}
     .container
       = render partial: 'layouts/navtopbar'
-      -# = render partial: 'shared/errors_alert'
+      = render partial: 'shared/flash_message'
       = yield
 
 - if Rails.env.development?

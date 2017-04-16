@@ -1,5 +1,7 @@
 class RemedyActionsController < ApplicationController
   before_action :set_remedy_action, only: [:show, :update, :destroy]
+  before_action :set_project_group, only: [:edit, :update]
+  before_action :set_affected_host, only: [:edit]
 
   # GET /remedy_actions
   # GET /remedy_actions.json
@@ -19,7 +21,7 @@ class RemedyActionsController < ApplicationController
 
   # GET /remedy_actions/1/edit
   def edit
-    @remedy_action = RemedyAction.find_by_vulnerability_id(params[:id])
+    @remedy_action = RemedyAction.find_by_vulnerability_id(params[:vulnerability_id])
   end
 
   # POST /remedy_actions
@@ -48,9 +50,9 @@ class RemedyActionsController < ApplicationController
         # host = AffectedHost.find(vuln.affected_host_id)
         # done
 
-        host_id =  Vulnerability.find(@remedy_action.vulnerability_id).affected_host_id
+        affected_host =  Vulnerability.find(@remedy_action.vulnerability_id).affected_host_id
         # format.html { redirect_to @remedy_action, notice: 'Remedy action was successfully updated.' }
-        format.html { redirect_to show_vulnerability_path(host_id, project_group_id: params[:project_group_id]), notice: 'Remedy action was successfully updated.' }
+        format.html { redirect_to project_group_affected_host_vulnerabilities_path(@project_group, affected_host), notice: 'Remedy action was successfully updated.' }
         format.json { render :show, status: :ok, location: @remedy_action }
         format.js
       else
@@ -71,6 +73,15 @@ class RemedyActionsController < ApplicationController
   end
 
   private
+
+    def set_project_group
+      @project_group = ProjectGroup.find(params[:project_group_id])
+    end
+
+    def set_affected_host
+      @affected_host = AffectedHost.find(params[:affected_host_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_remedy_action
       @remedy_action = RemedyAction.find(params[:id])

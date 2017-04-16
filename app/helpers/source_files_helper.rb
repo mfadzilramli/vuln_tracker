@@ -2,12 +2,14 @@ module SourceFilesHelper
 
   def get_pie_data(hosts)
     #severity_data =  hosts.joins(:vulnerabilities).group(:severity).count.values
-    severity_data = Vulnerability.where(affected_host_id: hosts).joins(:remedy_action).where('status != 3').group(:severity).count.values
+    severity_data = Vulnerability.where(affected_host_id: hosts.ids).joins(:remedy_action).where.not('status = ?', 3).group(:severity).count
+
+    severity_data
     data = {
       labels: ["Low", "Medium", "High", "Critical"],
       datasets: [
         {
-          data: severity_data,
+          data: [ severity_data[1] ||= 0, severity_data[2] ||=0, severity_data[3] ||= 0, severity_data[4] ||= 0 ],
           backgroundColor: [
             '#007E33',
             '#FFFF00',
@@ -41,7 +43,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(255,99,132,1)",
-            data: groups.merge(vuln_groups.where('severity == 4').count).values
+            data: groups.merge(vuln_groups.where('severity = 4').count).values
             # backgroundColor: [ '#CC0000' ]
           },
           {
@@ -53,7 +55,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 3').count).values
+            data: groups.merge(vuln_groups.where('severity = 3').count).values
             # backgroundColor: [ '#FF8800' ]
           },
           {
@@ -64,7 +66,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 2').count).values
+            data: groups.merge(vuln_groups.where('severity = 2').count).values
             # backgroundColor: [ '#FFFF00' ]
           },
           {
@@ -75,7 +77,7 @@ module SourceFilesHelper
             # pointBorderColor: "#fff",
             # pointHoverBackgroundColor: "#fff",
             # pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: groups.merge(vuln_groups.where('severity == 1').count).values,
+            data: groups.merge(vuln_groups.where('severity = 1').count).values,
             # backgroundColor: [ '#007E33' ]
           },
         ]
@@ -160,9 +162,10 @@ module SourceFilesHelper
           data: pie_data.values,
           backgroundColor: [
             '#0d47a1',
+            '#CC0000',
+            '#9933CC',
             '#00695c',
             '#e91e63',
-            '#9933CC'
           ]
         }
       ]

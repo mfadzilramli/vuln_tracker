@@ -14,13 +14,13 @@ module ProjectGroupsHelper
 
   def get_top_vulns_critical(affected_hosts)
     #Vulnerability.where(affected_host_id: h, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).
-    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity == 4').group(:vulnerability_name).order('count_all DESC').limit(5).count
+    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:vulnerability_name).order('count_all DESC').limit(5).count
     top_vulns = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).count
     return top_vulns
   end
 
   def get_top_hosts_critical(affected_hosts)
-    #top_hosts = affected_hosts.joins(:vulnerabilities).where('severity == 4').group(:host_ip).order('count_all DESC').limit(5).count
+    #top_hosts = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:host_ip).order('count_all DESC').limit(5).count
     top_hosts = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action,:affected_host).where('status != 3').group(:host_ip).order('count_all DESC').limit(5).count
     return top_hosts
   end
@@ -36,12 +36,16 @@ module ProjectGroupsHelper
     return affected_platforms
   end
 
-  def get_low_hanging_fruits(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ? or vulnerability_name LIKE ? or vulnerability_name LIKE ?',"%password%","%default credentials%", "%unauthenticated%").group(:vulnerability_name).count
+  def get_credential_issues(affected_hosts)
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ? or vulnerability_name ILIKE ? or vulnerability_name ILIKE ?',"%password%","%default credential%", "%unauthenticated%").group(:vulnerability_name).count
   end
 
   def get_unsupported_systems(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?', "%unsupported%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?', "%unsupported%").group(:vulnerability_name).count
+  end
+
+  def get_writable_path(affected_hosts)
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?',"%writable%").group(:vulnerability_name).count
   end
 
 end

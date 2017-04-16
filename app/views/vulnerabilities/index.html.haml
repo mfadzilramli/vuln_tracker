@@ -1,0 +1,90 @@
+.panel.panel-success
+  .panel-heading
+    %table.table.font-color-black
+      %thead
+        %th IP Address
+        %th Hostname
+        %th Operating System
+        %th.center{ bgcolor: '#ffcdd2' } Critical
+        %th.center{ bgcolor: '#ffe0b2' } High
+        %th.center{ bgcolor: '#fff9c4' } Medium
+        %th.center{ bgcolor: '#c8e6c9' } Low
+        %th.center{ bgcolor: '#d2d2d2' } Total
+      %tbody
+        - vuln_by_host = @vulnerabilities.group(:severity).count
+        %td= @affected_host.host_ip
+        %td= "#{@affected_host.host_fqdn ||= @affected_host.netbios_name}"
+        %td= @affected_host.operating_system
+        %td.center= vuln_by_host[4] ||= 0
+        %td.center= vuln_by_host[3] ||= 0
+        %td.center= vuln_by_host[2] ||= 0
+        %td.center= vuln_by_host[1] ||= 0
+        %td.center= vuln_by_host.values.sum ||= 0
+  .panel-body
+    %table.table.table-hover
+      %thead
+        %tr{ bgcolor: '#efefef' }
+          -# %th.center VTID
+          %th Vulnerability Name
+          %th Services
+          %th Group
+          %th.center Severity
+          %th.center Status
+          %th
+      %tbody
+        - @vulnerabilities.each do |vulnerability|
+          - @source_id = vulnerability.affected_host.source_file_id
+          %tr
+            -# %td.center= vulnerability.id
+            %td.col-md-4= vulnerability.vulnerability_name
+            %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+            %td= vulnerability.plugin_family
+            - case vulnerability.severity
+              - when 1
+                %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle" } Low
+              - when 2
+                %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle" } Medium
+              - when 3
+                %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle" } High
+              - when 4
+                %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle" } Critical
+              - else
+                %td.center
+
+            - case vulnerability.remedy_action.status
+              - when 1
+                %td.center{ bgcolor: 'red', style: "vertical-align:middle" } Open
+              - when 2
+                %td.center{ bgcolor: 'yellow', style: "vertical-align:middle" } In-progress
+              - when 3
+                %td.center{ bgcolor: 'green', style: "vertical-align:middle" } Closed
+
+            %td.center
+              = link_to edit_project_group_affected_host_vulnerability_remedy_actions_path(@project_group, @affected_host, vulnerability) do
+                %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+              &nbsp;
+              = link_to edit_project_group_affected_host_vulnerability_path(@project_group, @affected_host, vulnerability)  do
+                %span.glyphicon.glyphicon-pencil{aria_hidden: "true"}
+              &nbsp;
+              -# = link_to edit_project_group_affected_host_vulnerability_path(@project_group, @affected_host, vulnerability) do
+              -#   = material_icon.content_copy.md_18
+              -# &nbsp;
+              -# project_group_affected_host_vulnerability
+              = link_to project_group_affected_host_vulnerability_path(@project_group, @affected_host, vulnerability),
+                :method => :delete, data: { confirm: 'Are you sure?' } do
+                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+
+    %div{ align: "center" }
+      = will_paginate
+
+  .panel-footer
+    .form-group
+      = link_to edit_project_group_affected_host_path(params[:project_group_id], @affected_host),
+        class: "btn btn-raised btn-primary" do
+        %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
+        Edit Host Information
+      = link_to new_project_group_affected_host_vulnerability_path(params[:project_group_id], @affected_host),
+        class: "btn btn-raised btn-primary" do
+        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
+        Add New Vulnerability
+      = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"

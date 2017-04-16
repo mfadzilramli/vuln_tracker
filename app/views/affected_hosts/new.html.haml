@@ -1,6 +1,8 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
-    %h4 Add New Host
+    %h3
+      %span.glyphicon.glyphicon-option-vertical
+      Add New Host
   .panel-body
     = form_for @affected_host do |f|
       .form-group
@@ -28,4 +30,3 @@
 
       .form-group
         = f.submit 'Add Host', class: "btn btn-primary"
-        = link_to "Back", :back, { class: "btn btn-primary" }

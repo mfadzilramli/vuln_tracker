@@ -1,0 +1,107 @@
+wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
+
+  # style for header
+  bg_header = sheet.styles.add_style(b: true, bg_color: 'dfdfdf')
+
+  # style for column
+  text_wrap = sheet.styles.add_style( alignment: { wrap_text: true } )
+  text_center = sheet.styles.add_style( alignment: { horizontal: :center } )
+  bg_header_center = sheet.styles.add_style( b: true, bg_color: 'dfdfdf', alignment: { horizontal: :center } )
+
+  # style for drop down
+  # bg_1 = sheet.styles.add_style(bg_color: "FF0000", border: { style: :thin, color: "0000000" }, type: :dxf)
+  bg_1 = sheet.styles.add_style(bg_color: "FF0000", type: :dxf)
+  bg_2 = sheet.styles.add_style(bg_color: "FFFF00", type: :dxf)
+  bg_3 = sheet.styles.add_style(bg_color: "00E500", type: :dxf)
+
+  # Legend color
+  bg_red = sheet.styles.add_style(bg_color: "FF0000")
+  bg_yellow = sheet.styles.add_style(bg_color: "FFFF00")
+  bg_green = sheet.styles.add_style(bg_color: "00E500")
+
+  # legend for dropdown
+  sheet.add_row [ nil, 'Legend' ], style: [ nil, bg_header ]
+  sheet.add_row [ nil, 'Open', ], style: [ nil, bg_red ]
+  sheet.add_row [ nil, 'In-progress', ], style: [ nil, bg_yellow ]
+  sheet.add_row [ nil, 'Closed' ], style: [ nil, bg_green ]
+  sheet.add_row [ nil ]
+
+  sheet.add_row [ 'No.',
+    'Affected Host',
+    'Vulnerability Name',
+    'VTID',
+    'Service',
+    'Impact',
+    'Risk',
+    'CVE',
+    'Recommendation',
+    'Status',
+    'Action/Remarks' ], style: [ bg_header_center,  bg_header,  bg_header,  bg_header_center,  bg_header,  bg_header,  bg_header_center,  bg_header,  bg_header, bg_header_center,  bg_header ]
+
+  #Vulnerability.where(affected_host_id: project_group.affected_host_ids).where(severity: severity).order('severity DESC').each_with_index do |vulnerability, index|
+  host.vulnerabilities.order('severity DESC').each_with_index do |vulnerability, index|
+
+    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'Open', :dxfId => bg_1, :priority => 1 })
+    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'In-progress', :dxfId => bg_2, :priority => 1 })
+    sheet.add_conditional_formatting("J2:J1000", { :type => :containsText, :operator => :equal, :text => 'Closed', :dxfId => bg_3, :priority => 1 })
+
+    # assign severity id to string
+    case vulnerability.severity
+    when 1
+      @severity = 'Low'
+      bg_color = sheet.styles.add_style(bg_color: 'c8e6c9',alignment: { horizontal: :center })
+    when 2
+      @severity = 'Medium'
+      bg_color = sheet.styles.add_style(bg_color: 'fff9c4', alignment: { horizontal: :center })
+    when 3
+      @severity = 'High'
+      bg_color = sheet.styles.add_style(bg_color: 'ffe0b2', alignment: { horizontal: :center })
+    when 4
+      @severity = 'Critical'
+      bg_color = sheet.styles.add_style(bg_color: 'ffcdd2', alignment: { horizontal: :center })
+    else
+      @severity = 'None'
+    end
+
+    # assign remedy status to string
+    case vulnerability.remedy_action.status
+    when 1
+      @status = "Open"
+    when 2
+      @status = "In-progress"
+    when 3
+      @status = "Closed"
+    else
+      @status = "Open"
+    end
+
+    # assign services information
+    @services = "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+
+    # list vulnerabilities by severity (DESC)
+    sheet.add_row [ index + 1,
+      vulnerability.affected_host.host_ip,
+      vulnerability.vulnerability_name,
+      vulnerability.id,
+      @services,
+      vulnerability.synopsis,
+      @severity,
+      vulnerability.cve,
+      vulnerability.solution,
+      @status,
+      vulnerability.remedy_action.remarks ], style: [ text_center, nil, text_wrap, text_center, nil, nil, bg_color, nil, text_wrap, text_center, nil ]
+  end
+
+  sheet.add_data_validation("J7:J1000", {
+    :type => :list,
+    :formula1 => "'Vulnerability Tracking'!B$2:B$4",
+    :showDropDown => false,
+    :showErrorMessage => true,
+    :errorTitle => '',
+    :error => 'Please use the dropdown selector to choose the value',
+    :errorStyle => :stop,
+    :showInputMessage => true,
+    :prompt => 'Choose the value from the dropdown'})
+
+  sheet.column_widths 10,16,60,10,20,60,10,30,70,15,50
+end

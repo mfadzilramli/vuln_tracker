@@ -1,0 +1,49 @@
+= link_to '#menu5', data: { toggle: 'tab' } do
+  = material_icon.face
+
+%h1.header Toggle Button
+.togglebutton
+  %label
+    Wi-Fi
+    %input{:checked => "checked", :type => "checkbox"}
+.togglebutton
+  %label
+    Bluetooth
+    %input{:type => "checkbox"}
+
+.form-group
+  .checkbox
+    %label
+      %input{:checked => "checked", :type => "checkbox"}/
+      Auto-updates
+  %p.help-block Auto-update apps over wifi only
+
+%ul.nav.nav-tabs
+  %li.nav-item
+    %a.nav-link.active{:href => "#"} Active
+  %li.nav-item
+    %a.nav-link{:href => "#"} Link
+  %li.nav-item
+    %a.nav-link{:href => "#"} Another link
+  %li.nav-item
+    %a.nav-link.disabled{:href => "#"} Disabled
+/ inverse
+%ul.nav.nav-tabs.bg-inverse
+  %li.nav-item
+    %a.nav-link.active{:href => "#"} Active
+  %li.nav-item
+    %a.nav-link{:href => "#"} Link
+  %li.nav-item
+    %a.nav-link{:href => "#"} Another link
+  %li.nav-item
+    %a.nav-link.disabled{:href => "#"} Disabled
+/ primary
+%ul.nav.nav-tabs.bg-primary
+  %li.nav-item
+    %a.nav-link.active{:href => "#"} Active
+  %li.nav-item
+    %a.nav-link{:href => "#"} Link
+  %li.nav-item
+    %a.nav-link{:href => "#"} Another link
+  %li.nav-item
+    %a.nav-link.disabled{:href => "#"} Disabled

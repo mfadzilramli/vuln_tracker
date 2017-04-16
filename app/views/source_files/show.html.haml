@@ -1,6 +1,6 @@
 /%p#notice= notice
 
-.panel.panel-info
+.panel.panel-success
   .panel-body
     %table.table
       %thead
@@ -19,11 +19,9 @@
           %td= @source_file.title
           %td.col-sm-1.center= @affected_hosts.count
           %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 4').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 3').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 2').count
-          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity == 1').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity = 4').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity = 3').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity = 2').count
+          %td.col-sm-1.center= @affected_hosts.joins(:vulnerabilities).where('severity = 1').count
     .panel-footer
-      = link_to 'View Details', affected_hosts_path(source_id: @source_file.id), class: "btn btn-primary"
-      /= link_to 'New Host', new_affected_host_path(source_id: @source_file.id), class: "btn btn-primary"
-      = link_to 'Back', source_files_path, class: "btn btn-primary"
+      = link_to 'OK', root_path, class: "btn btn-primary"

@@ -1,8 +1,6 @@
 = render 'shared/errors_alert', obj: @vulnerability
 
-= form_for @vulnerability do |f|
-  .form-group
-    = f.hidden_field :affected_host_id, value: @vulnerability.affected_host_id
+= form_for @vulnerability, url: { action: :create } do |f|
   .row
     .col-md-12
       .form-group
@@ -56,8 +54,9 @@
 
       .form-group
         .col-md-12{ align: "right"}
-          = hidden_field_tag :project_group_id, params[:project_group_id]
-          = button_tag class: "btn btn-primary" do
+          -# = hidden_field_tag :project_group_id, params[:project_group_id]
+          -# = hidden_field_tag :affected_host_id, @affected_host.id
+          = button_tag name: nil, class: "btn btn-primary" do
             %span.glyphicon.glyphicon-save{aria_hidden: "true"}
             Save
           = link_to :back, class: "btn btn-primary" do

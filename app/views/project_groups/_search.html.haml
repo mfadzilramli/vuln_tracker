@@ -1,0 +1,24 @@
+-# = form_for :print_items, remote: true, html: {id: 'print_host_ids'} do |f|
+%table.table.table-striped
+  %thead{ bgcolor: '#efefef' }
+    %tr
+      %th.col-md-2 IP Address
+      %th.col-md-2 Hostname
+      %th.col-md-1 Platform
+      %th.col-md-5 Operating System
+      %th.col-md-2
+  %tbody
+  - @affected_hosts.each do |host|
+    %tr
+      -# %td= link_to host.host_ip, edit_affected_host_path(host,project_group_id: params[:id])
+      %td= host.host_ip
+      %td= host.host_fqdn ||= host.netbios_name
+      %td= host.platform.capitalize
+      %td= host.operating_system ||= 'Unidentified'
+      %td{ align: "right" }
+        -# = link_to 'Details', show_vulnerability_path(host.id, project_group_id: params[:id]),
+        = link_to 'Details', project_group_affected_host_vulnerabilities_path(params[:id], host.id),
+          class: "btn btn-sm btn-primary"
+        = link_to 'Delete', affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
+          class: "btn btn-sm btn-danger"
+    %div{ align: "center" }

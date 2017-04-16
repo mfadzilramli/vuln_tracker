@@ -2,18 +2,21 @@
 
 = form_for @source_file, multipart: true do |f|
   .form-group
-    = f.label :title
-    = f.text_field :title, class: "form-control input-sm", style: "width: 300px"
+    = f.text_field :title, class: "form-control", style: "width: 300px", placeholder: 'Set data source name'
+  .form-group
+    #selected_filename
   - if (controller.action_name != 'edit')
     .form-group
-      = f.label :data, "Browse", class: "btn btn-primary"
+      = f.label :data, class: "btn btn-raised  btn-primary" do
+        %span.glyphicon.glyphicon-folder-open{aria_hidden: "true"}
+        Browse...
       = f.file_field :data, class: "form-control", style: "display:none"
       = button_tag data: { disable_with: "Please wait ..." }, class: "btn btn-primary" do
-        %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
-        Create New Source
+        %span.glyphicon.glyphicon-open{aria_hidden: "true"}
+        Upload Source File
   - else
     .form-group
-      = button_tag class: "btn btn-primary" do
+      = button_tag class: "btn btn-raised btn-primary" do
         %span.glyphicon.glyphicon-save{aria_hidden: "true"}
         Save
       = link_to source_files_path, class: "btn btn-primary" do

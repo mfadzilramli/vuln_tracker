@@ -1,0 +1,29 @@
+- if obj
+  YES
+- else
+  No
+-# %table.table.table-hover
+-#   %thead{ bgcolor: '#efefef' }
+-#     %tr
+-#       %th.col-md-2 IP Address
+-#       %th.col-md-2 Hostname
+-#       %th.col-md-2 Platform
+-#       %th.col-md-5 Operating System
+-#       %th.col-md-1
+-#   %tbody
+-#     - @affected_hosts.each do |host|
+-#       %tr
+-#         %td= link_to host.host_ip, edit_affected_host_path(host,project_group_id: params[:id])
+-#         %td= host.host_fqdn ||= host.netbios_name
+-#         %td= host.platform.capitalize
+-#         %td= host.operating_system ||= 'Unidentified'
+-#         %td{ align: "right" }
+-#           /- if host.vulnerabilities.count != 0
+-#           = link_to show_vulnerability_path(host.id, project_group_id: params[:id]),
+-#             data: { toggle: "popover", trigger: "hover",
+-#             placement: "top", content: "View Vulnerability" } do
+-#             %span.glyphicon.glyphicon-list{aria_hidden: "true"}
+-#           = link_to affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
+-#             data: { toggle: "popover", trigger: "hover",
+-#             placement: "top", content: "Delete Host" } do
+-#             %span.glyphicon.glyphicon-remove{aria_hidden: "true"}

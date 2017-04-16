@@ -1,0 +1,131 @@
+wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
+
+  # style for header
+  bg_header = sheet.styles.add_style(b: true, bg_color: 'dfdfdf')
+
+  # style for column
+  text_wrap = sheet.styles.add_style( alignment: { wrap_text: true } )
+  text_center = sheet.styles.add_style( alignment: { horizontal: :center } )
+  text_bold = sheet.styles.add_style( b: true )
+  bg_header_center = sheet.styles.add_style( b: true, bg_color: 'dfdfdf', alignment: { horizontal: :center } )
+
+  # style for drop down
+  # bg_1 = sheet.styles.add_style(bg_color: "FF0000", border: { style: :thin, color: "0000000" }, type: :dxf)
+  bg_1 = sheet.styles.add_style(bg_color: "FF0000", type: :dxf)
+  bg_2 = sheet.styles.add_style(bg_color: "FFFF00", type: :dxf)
+  bg_3 = sheet.styles.add_style(bg_color: "00E500", type: :dxf)
+
+  # Legend color
+  bg_critical    = sheet.styles.add_style(bg_color: "ffcdd2", border: Axlsx::STYLE_THIN_BORDER)
+  bg_high = sheet.styles.add_style(bg_color: "ffe0b2", border: Axlsx::STYLE_THIN_BORDER)
+  bg_medium  = sheet.styles.add_style(bg_color: "fff9c4", border: Axlsx::STYLE_THIN_BORDER)
+  bg_low  = sheet.styles.add_style(bg_color: "c8e6c9", border: Axlsx::STYLE_THIN_BORDER)
+
+  # legend for dropdown
+  sheet.add_row [ nil, 'Legend' ], style: [ nil, text_bold ]
+  sheet.add_row [ nil, nil, '  Critical',nil,'Open' ], style: [ nil, bg_critical ]
+  sheet.add_row [ nil, nil, '  High', nil, 'In-progress'], style: [ nil, bg_high ]
+  sheet.add_row [ nil, nil, '  Medium', nil, 'Closed' ], style: [ nil, bg_medium ]
+  sheet.add_row [ nil, nil, '  Low' ], style: [ nil, bg_low ]
+  sheet.add_row [ nil ]
+
+  header_styles = [
+    bg_header_center,  bg_header_center,  bg_header_center, bg_header,
+    bg_header_center,  bg_header_center,  bg_header_center,
+    bg_header_center,  bg_header,  bg_header, bg_header,
+    bg_header_center,  bg_header
+  ]
+
+  sheet.add_row [ 'No.',
+    'IP Address',
+     'Hostname',
+    'Vulnerability Name',
+    'VTID',
+    'Service',
+    'Risk',
+    'CVE',
+    'Impact',
+    'Output',
+    'Recommendation',
+    'Status',
+    'Action/Remarks' ], style: header_styles
+
+  Vulnerability.where(affected_host_id: affected_host_ids).where(severity: severity).order('severity DESC').each_with_index do |vulnerability, index|
+
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'Open', :dxfId => bg_1, :priority => 1 })
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'In-progress', :dxfId => bg_2, :priority => 1 })
+    sheet.add_conditional_formatting("L2:L1000", { :type => :containsText, :operator => :equal, :text => 'Closed', :dxfId => bg_3, :priority => 1 })
+
+    # assign severity id to string
+    case vulnerability.severity
+    when 1
+      @severity = 'Low'
+      bg_color_center = sheet.styles.add_style(bg_color: 'c8e6c9', wrap_text: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'c8e6c9', wrap_text: true, border: { style: :thin, color: '00000000' })
+    when 2
+      @severity = 'Medium'
+      bg_color_center = sheet.styles.add_style(bg_color: 'fff9c4', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'fff9c4', wrap_text: true, border: { style: :thin, color: '00000000' })
+    when 3
+      @severity = 'High'
+      bg_color_center = sheet.styles.add_style(bg_color: 'ffe0b2', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'ffe0b2', wrap_text: true, border: { style: :thin, color: '00000000' })
+    when 4
+      @severity = 'Critical'
+      bg_color_center = sheet.styles.add_style(bg_color: 'ffcdd2', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'ffcdd2', wrap_text: true, border: { style: :thin, color: '00000000' })
+
+    else
+      @severity = 'None'
+    end
+
+    item_row_styles = [
+      bg_color_center, bg_color_center, bg_color_center, bg_color,
+      bg_color_center, bg_color_center, bg_color_center,
+      bg_color, bg_color, bg_color, bg_color, bg_color_center, bg_color
+    ]
+
+    # assign remedy status to string
+    case vulnerability.remedy_action.status
+    when 1
+      @status = "Open"
+    when 2
+      @status = "In-progress"
+    when 3
+      @status = "Closed"
+    else
+      @status = "Open"
+    end
+
+    # assign services information
+    @services = "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
+
+    # list vulnerabilities by severity (DESC)
+    sheet.add_row [ index + 1,
+      vulnerability.affected_host.host_ip,
+      vulnerability.affected_host.host_fqdn,
+      vulnerability.vulnerability_name,
+      vulnerability.id,
+      @services,
+      @severity,
+      vulnerability.cve,
+      vulnerability.synopsis,
+      vulnerability.output,
+      vulnerability.solution,
+      @status,
+      vulnerability.remedy_action.remarks ], style: item_row_styles
+  end
+
+  sheet.add_data_validation("L7:L1000", {
+    :type => :list,
+    :formula1 => "'Vulnerability Tracking'!E$2:E$4",
+    :showDropDown => false,
+    :showErrorMessage => true,
+    :errorTitle => '',
+    :error => 'Please use the dropdown selector to choose the value',
+    :errorStyle => :stop,
+    :showInputMessage => true,
+    :prompt => 'Choose the value from the dropdown'})
+
+  sheet.column_widths 10,16,35,60,10,20,10,20,60,60,60,10,60
+end

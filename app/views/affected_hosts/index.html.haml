@@ -1,39 +1,28 @@
-.panel.panel-info
-  /.panel-heading
-  /  %h3 Affected Hosts
-
+.panel.panel-success
   .panel-heading
     %h4
       %span.glyphicon.glyphicon-option-vertical
       = @source_file.title
   .panel-body
-    /%div{ align: "center"}
-    /  = will_paginate
-    %nav.navbar-inverse
-      .container-fluid
-        = form_tag search_affected_hosts_path(source_id: @source_file.id), method: :get, action: :index, class: "navbar-form navbar-right", role: "search" do
-          .input-group
-            = text_field_tag :search, "", class: "form-control", placeholder: "e.g. 172.16"
-            .input-group-btn
-              = button_tag 'Search', class: "btn btn-default", type: "submit" do
-                %span.glyphicon.glyphicon-search{aria_hidden: true}
-        %p.navbar-text.navbar-right
-          %b Search Host
+
+    = form_tag source_file_affected_hosts_path(source_file_id: @source_file.id),
+      method: :get, action: :index,
+      class: "navbar-form navbar-right", role: "search" do
+      .input-group
+        = text_field_tag :search, "", class: "form-control", placeholder: "Search IP e.g. 172.16"
+        .input-group-btn
+          = button_tag 'Search', class: "btn btn-default", type: "submit" do
+            %span.glyphicon.glyphicon-search{aria_hidden: true}
+
     %table.table.table-hover
       %thead
         %tr{ bgcolor: '#e3e3e3' }
           /%th.center{ rowspan: 2 } No.
-          %th{ rowspan: 2 } IP Address
-          %th{ rowspan: 2 } Hostname
-          %th{ rowspan: 2 } Operating System
-          /%th.center{ rowspan: 2 } Scan Date
-          %th.center{ colspan: 5, bgcolor: '#d2d2d2' } Severity
-        %tr
-          %th.center.col-sm-1{ bgcolor: '#e57373' } Critical
-          %th.center.col-sm-1{ bgcolor: '#ffb74d' } High
-          %th.center.col-sm-1{ bgcolor: '#fff176' } Medium
-          %th.center.col-sm-1{ bgcolor: '#81c784' } Low
-          %th.center.col-sm-1{ bgcolor: '#c1c1c1' } Total
+          %th IP Address
+          %th Hostname
+          %th Platform
+          %th Operating System
+          %th
       %tbody
         - @affected_hosts.each_with_index do |host, index|
           %tr
@@ -41,17 +30,8 @@
             /%td= link_to host.host_ip, edit_affected_host_path(host, source_id: @source_file.id)
             %td= host.host_ip
             %td= host.host_fqdn ||= host.netbios_name
+            %td= host.platform
             %td= host.operating_system ||= 'Unidentified'
-
-            - severity = host.vulnerabilities.group(:severity).count
-            /- vuln_count = host.vulnerabilities.count
-            %td.center{ bgcolor: '#ffcdd2' }= severity[4] ||= 0
-            %td.center{ bgcolor: '#ffe0b2' }= severity[3] ||= 0
-            %td.center{ bgcolor: '#fff9c4' }= severity[2] ||= 0
-            %td.center{ bgcolor: '#c8e6c9' }= severity[1] ||= 0
-            %td.center{ bgcolor: '#F6F1F0' }
-              %strong= host.vulnerabilities.count
-
             %td.center
               / .btn-group.btn-group-sm{ role: 'group', aria: false}
               /- if host.vulnerabilities.count != 0
@@ -63,8 +43,8 @@
               /= link_to new_vulnerability_path(host) do
               /  %span.glyphicon.glyphicon-plus{aria_hidden: "true"}
               /  &nbsp;
-              /= link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
-              /  %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
+              = link_to host, method: :delete, data: { confirm: 'Are you sure?' } do
+                %span.glyphicon.glyphicon-remove{aria_hidden: "true"}
 
     %div{ align: "center" }
       = will_paginate

@@ -19,7 +19,7 @@
 
   .form-group
     = f.label :operating_system
-    = f.text_area :operating_system, class: "form-control", style: "width: 400px", rows: 3
+    ~ f.text_area :operating_system, class: "form-control", style: "width: 400px", rows: 3
 
   .form-group
     = hidden_field_tag :project_group_id, params[:project_group_id]
@@ -27,6 +27,6 @@
     = button_tag class: "btn btn-primary" do
       %span.glyphicon.glyphicon-save{aria_hidden: "true"}
       Save
-    = link_to search_project_group_path(params[:project_group_id]), class: "btn btn-primary" do
+    = link_to project_group_affected_host_vulnerabilities_path(params[:project_group_id], @affected_host), class: "btn btn-primary" do
       %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
       Back

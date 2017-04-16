@@ -7,4 +7,5 @@
 $ ->
   $(document).on 'turbolinks:load', ->
     $('.new_source_file input[type=file]').change ->
-      $('#demo_text').show()
+      filename = $('input[type=file]').val().split('\\').pop()
+      $('#selected_filename').text(filename)

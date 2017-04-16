@@ -1,36 +1,41 @@
-/# AffectedHost.where(source_file_id: pg.source_file_ids)
-/- @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids)
-
-.panel.panel-info
+.panel.panel-success
   .panel-heading
-    .badge
-      %h5.center= @project_group.name.split.map(&:capitalize).join(' ')
+    %h2
+      .label.label-danger= "Project: #{@project_group.name.upcase}"
   .panel-body
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
-      %ul.nav.nav-tabs
-        %li.active
-          /%a{"data-toggle" => "tab", :href => "#home"} Home
-          = link_to 'Home', '#home', data: { toggle: 'tab' }
+      %ul.nav.nav-tabs.nav-justified
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu1"} Remedy Action
-          = link_to 'Remedy Progress', '#menu1', data: { toggle: 'tab' }
+          = link_to '#home', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-home
+            Home
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu2"} Top 5 Critical
-          = link_to 'Top 5 Critical', '#menu2', data: { toggle: 'tab' }
+          = link_to '#menu1', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-signal
+            Remedy Progress
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu3"} Low Hanging Fruit
-          = link_to 'Low Hanging Fruit', '#menu3', data: { toggle: 'tab' }
+          = link_to '#menu2', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-star
+            Top 5
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-          = link_to 'Unsupported Systems', '#menu4', data: { toggle: 'tab' }
+          = link_to '#menu3', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-eye-open
+            Credential Issues
+        %li
+          = link_to '#menu4', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-floppy-remove
+            Unsupported Systems
+        %li
+          = link_to '#menu5', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-pencil
+            Writable Path
 
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-4
               = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
-            /  = render partial: 'widgets/total_hosts', locals: { obj: @affected_hosts }
             .col-md-5
               .row
                 = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
@@ -40,32 +45,36 @@
               = render partial: 'widgets/by_protocols', locals: { obj: @affected_hosts }
 
         #menu1.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-6
-              /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
               = render partial: 'widgets/remedy_chart', locals: { obj: @affected_hosts }
 
             .col-md-6
-              /= render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
               = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
 
         #menu2.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-6
               = render partial: 'widgets/top_vulns', locals: { obj: @affected_hosts }
 
             .col-md-3
-              = render partial: 'widgets/top_hosts', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/top_hosts', locals: { project_group: @project_group, obj: @affected_hosts }
 
             .col-md-3
               = render partial: 'widgets/top_ports', locals: { obj: @affected_hosts }
 
         #menu3.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-12
-              = render partial: 'widgets/low_hanging_fruits', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/credential_issues', locals: { obj: @affected_hosts }
 
         #menu4.tab-pane.fade
-          .row{ style: "padding:15px" }
+          .row{ style: "padding:5px" }
             .col-md-12
               = render partial: 'widgets/unsupported_systems', locals: { obj: @affected_hosts }
+
+        #menu5.tab-pane.fade
+          .row{ style: "padding:5px" }
+            .col-md-12
+              -# = render partial: 'widgets/mdb', locals: { obj: @affected_hosts }
+              = render partial: 'widgets/writable_path', locals: { obj: @affected_hosts }

@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+
+if options == 'all'
+  affected_host_ids = AffectedHost.where(source_file_id: project_group.source_file_ids).ids
+else
+  affected_host_ids = AffectedHost.where(id: project_group.affected_host_ids)
+end
+render partial: 'generate_custom', locals: { wb: wb, affected_host_ids: affected_host_ids, severity: severity }

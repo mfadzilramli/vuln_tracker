@@ -17,7 +17,7 @@
           /%td= @source_file.title
           -# %td.col-sm-1.center= obj.count
           %td.col-sm-1.center= obj.joins(:vulnerabilities).count
-          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 4').count
-          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 3').count
-          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 2').count
-          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity == 1').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity = 4').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity = 3').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity = 2').count
+          %td.col-sm-1.center= obj.joins(:vulnerabilities).where('severity = 1').count

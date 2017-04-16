@@ -1,0 +1,28 @@
+.panel.panel-success
+  .panel-heading
+    %h3
+      %span.glyphicon.glyphicon-option-vertical
+      Select Project
+  .panel-body
+    %table.table.table-striped
+      %thead
+        %tr{ bgcolor: '#e2e2e2' }
+          %th{ rowspan: 2 } Project Group
+          %th.center{ rowspan: 2, bgcolor: '#c2c2c2' } Total Host
+          %th.center{ colspan: 5, bgcolor: '#A0A0A0' } Severity
+        %tr
+          %th.center{ style: "width:60px", bgcolor: '#e57373' } Critical
+          %th.center{ style: "width:60px", bgcolor: '#ffb74d' } High
+          %th.center{ style: "width:60px", bgcolor: '#fff176' } Medium
+          %th.center{ style: "width:60px", bgcolor: '#81c784' } Low
+          %th.center{ style: "width:60px", bgcolor: '#c1c1c1' } Total
+      %tbody
+        - @project_groups.each do |project_group|
+          %tr
+            %td= link_to project_group.name, search_reports_path(project_group)
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).count
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).joins(:vulnerabilities).where('severity = 4').count
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).joins(:vulnerabilities).where('severity = 3').count
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).joins(:vulnerabilities).where('severity = 2').count
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).joins(:vulnerabilities).where('severity = 1').count
+            %td.col-sm-1.center= AffectedHost.where(source_file_id: project_group.source_file_ids).joins(:vulnerabilities).count

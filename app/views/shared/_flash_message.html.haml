@@ -1,0 +1,5 @@
+- flash.each do |name, msg|
+  %div{ class: "alert alert-warning" }
+    = link_to '#', class: "close", data: { dismiss: "alert" } do
+      = material_icon.md_18.highlight_off
+    = content_tag :div, msg, id: "flash_#{name}" if msg.is_a?(String)

@@ -1,0 +1,18 @@
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        Files
+      .panel-body
+        %ul
+          #selected_filename
+  .col-md-6
+    = form_for :tracking, url: import_tracking_path, html: { id: 'import_tracking', class: 'import_tracking' } do |f|
+      .form-group
+        = f.label :data, class: "btn btn-raised  btn-primary" do
+          %span.glyphicon.glyphicon-folder-open{aria_hidden: "true"}
+          Browse...
+        = f.file_field :data, class: "form-control", multiple: true,style: "display:none"
+        = button_tag data: { disable_with: "Please wait ..." }, class: "btn btn-raised btn-primary" do
+          %span.glyphicon.glyphicon-open{aria_hidden: "true"}
+          Upload
