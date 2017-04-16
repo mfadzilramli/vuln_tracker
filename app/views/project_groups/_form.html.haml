@@ -1,27 +1,23 @@
 = render 'shared/errors_alert', obj: @project_group
 
-= form_for @project_group do |f|
-  - if @project_group.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@project_group.errors.count, "error")} prohibited this project_group from being saved:"
-      %ul
-        - @project_group.errors.full_messages.each do |msg|
-          %li= msg
-  .form-group
-    = f.label :name
-    = f.text_field :name, class: "form-control", style: "width: 300px"
-  .form-group
-  - if (controller.action_name == 'edit')
-    = button_tag class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-save{aria_hidden: "true"}
-      Update
-    = link_to project_groups_path, class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
-      Back
-  - else
-    = button_tag class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-save{aria_hidden: "true"}
-      Save
-    = link_to project_groups_path, class: "btn btn-primary" do
-      %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
-      Back
+.panel.panel-default
+  .panel-body
+    = form_for @project_group do |f|
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: "form-control", style: "width: 300px"
+      .form-group
+      - if (controller.action_name == 'edit')
+        = button_tag class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-save{aria_hidden: "true"}
+          Update
+        = link_to project_groups_path, class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+          Back
+      - else
+        = button_tag class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-save{aria_hidden: "true"}
+          Save
+        = link_to project_groups_path, class: "btn btn-primary" do
+          %span.glyphicon.glyphicon-chevron-left{aria_hidden: "true"}
+          Back

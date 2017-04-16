@@ -1,10 +1,10 @@
 = render 'shared/errors_alert', obj: @project_group
 
 = form_for @project_group, remote: true, html: {id: 'project_group_items'} do |f|
-  .panel.panel-info
+  .panel.panel-success
     .panel-heading
       = f.label :name, 'Project Name'
-      = f.text_field :name, class: "form-control"
+      = f.text_field :name, class: "form-control", style: "width:300px"
     .panel-body
       %table.table
         %thead

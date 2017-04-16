@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h3
       %span.glyphicon.glyphicon-option-vertical
@@ -25,7 +25,7 @@
               = link_to 'Delete', source_file,
                 :method => :delete,
                 :data => { :confirm => 'Are you sure?' },
-                class: "btn btn-sm btn-danger"
+                class: "btn btn-sm btn-raised btn-danger"
               /= link_to  affected_hosts_path(source_id: source_file.id),
               /  data: { toggle: "popover", trigger: "hover",
               /  placement: "top", content: "Show details" } do

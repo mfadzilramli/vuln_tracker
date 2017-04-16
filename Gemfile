@@ -38,6 +38,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bootstrap-material-design'
+gem 'material_icons'
+# gem 'mdbootstrap-rails'
+# gem 'material_design_lite-sass'
 gem 'haml'
 gem 'haml-rails'
 gem 'chartjs-ror'
@@ -65,7 +69,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "rails-erd"
-  gem 'byebug', platform: :mri
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h3
       %span.glyphicon.glyphicon-option-vertical
@@ -7,10 +7,10 @@
     -# = link_to generate_all_reports_path(format: :pdf), target: '_blank', class: "btn btn-primary" do
     -#   %span.glyphicon.glyphicon-print{aria_hidden: "true"}
     -#   Print PDF Report
-    = link_to custom_reports_path(@project_group), class: "btn btn-primary" do
+    = link_to custom_reports_path(@project_group), class: "btn btn-raised btn-primary" do
       %span.glyphicon.glyphicon-cog{aria_hidden: "true"}
       Generate Report
-    = link_to clear_selection_reports_path(@project_group), class: "btn btn-primary" do
+    = link_to clear_selection_reports_path(@project_group), class: "btn btn-raised btn-primary" do
       %span.glyphicon.glyphicon-repeat{aria_hidden: "true"}
       Clear Selected Items
     = form_tag search_reports_path(params[:project_group_id]),
@@ -20,7 +20,7 @@
       .input-group
         = text_field_tag :search, nil,
           class: "form-control",
-          placeholder: "e.g. 172.16"
+          placeholder: "Search IP e.g. 172.16"
         .input-group-btn
           = button_tag 'Search', class: "btn btn-success", type: "submit" do
             %span.glyphicon.glyphicon-search{aria_hidden: true}
@@ -45,7 +45,7 @@
         %tbody
           - @affected_hosts.order(:host_ip).each do |affected_host|
             %tr
-              %td
+              %td{ valign: 'center' }
                 = f.check_box :affected_host_ids,
                   { multiple: true },
                   affected_host.id,

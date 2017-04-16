@@ -10,12 +10,12 @@
     - if user_signed_in?
       #bs-example-navbar-collapse-1.collapse.navbar-collapse
         %ul.nav.navbar-nav
-          %li.active
+          %li
             = link_to 'Projects', root_path
           %li
-            = link_to 'Tracking', tracking_path
-          %li
             = link_to 'Reports', reports_path
+          %li
+            = link_to 'Tracking', tracking_path
           %li.dropdown
             %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               Manage Source

@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h2
       .label.label-danger= "Project: #{@project_group.name.upcase}"
@@ -6,34 +6,36 @@
     = render partial: 'widgets/charts', locals: { obj: @affected_hosts }
     .row{ style: "padding:0px 15px 0px 15px" }
       %ul.nav.nav-tabs.nav-justified
-        %li.active
-          /%a{"data-toggle" => "tab", :href => "#home"} Home
-          = link_to 'Home', '#home', data: { toggle: 'tab' }
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu1"} Remedy Action
-          = link_to 'Remedy Progress', '#menu1', data: { toggle: 'tab' }
+          = link_to '#home', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-home
+            Home
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu2"} Top 5 Critical
-          = link_to 'Top 5 Critical', '#menu2', data: { toggle: 'tab' }
+          = link_to '#menu1', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-signal
+            Remedy Progress
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu3"} Low Hanging Fruit
-          = link_to 'Credential Issues', '#menu3', data: { toggle: 'tab' }
+          = link_to '#menu2', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-star
+            Top 5
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-          = link_to 'Unsupported Systems', '#menu4', data: { toggle: 'tab' }
+          = link_to '#menu3', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-eye-open
+            Credential Issues
         %li
-          /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-          = link_to 'Writable Path', '#menu5', data: { toggle: 'tab' }
-        -# %li
-        -#   /%a{"data-toggle" => "tab", :href => "#menu4"} Unsupported Systems
-        -#   = link_to 'Search Host', '#menu6', data: { toggle: 'tab' }
+          = link_to '#menu4', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-floppy-remove
+            Unsupported Systems
+        %li
+          = link_to '#menu5', data: { toggle: 'tab' } do
+            .glyphicon.glyphicon-pencil
+            Writable Path
 
       .tab-content{ style: "background:#efefef"  }
         #home.tab-pane.fade.in.active
           .row{ style: "padding:5px" }
             .col-md-4
               = render partial: 'widgets/affected_platforms', locals: { obj: @affected_hosts }
-            /  = render partial: 'widgets/total_hosts', locals: { obj: @affected_hosts }
             .col-md-5
               .row
                 = render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
@@ -45,11 +47,9 @@
         #menu1.tab-pane.fade
           .row{ style: "padding:5px" }
             .col-md-6
-              /= render partial: 'widgets/total_vulns', locals: { obj: @affected_hosts }
               = render partial: 'widgets/remedy_chart', locals: { obj: @affected_hosts }
 
             .col-md-6
-              /= render partial: 'widgets/uniq_vulns', locals: { obj: @affected_hosts }
               = render partial: 'widgets/total_remedy_actions', locals: { obj: @affected_hosts }
 
         #menu2.tab-pane.fade
@@ -76,22 +76,5 @@
         #menu5.tab-pane.fade
           .row{ style: "padding:5px" }
             .col-md-12
+              -# = render partial: 'widgets/mdb', locals: { obj: @affected_hosts }
               = render partial: 'widgets/writable_path', locals: { obj: @affected_hosts }
-
-        -# #menu6.tab-pane.fade
-        -#   .row{ style: "padding:5px" }
-        -#     .col-md-12
-        -#       .container-fluid
-        -#         = form_tag search_project_group_path(params[:id]),
-        -#           id: 'search_host_form',
-        -#           method: :get, action: :search,
-        -#           class: "navbar-form navbar-right",
-        -#           role: "search", remote: true do
-        -#           .input-group
-        -#             = text_field_tag :search, "",
-        -#               class: "form-control",
-        -#               placeholder: "e.g. 172.16"
-        -#             .input-group-btn
-        -#               = button_tag 'Search', class: "btn btn-default", type: "submit" do
-        -#                 %span.glyphicon.glyphicon-search{aria_hidden: true}
-        -#     #search_box_results

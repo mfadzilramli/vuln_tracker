@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h4
       %span.glyphicon.glyphicon-search
@@ -10,10 +10,10 @@
           .input-group
             = text_field_tag :search, "", class: "form-control", placeholder: "e.g. 172.16"
             .input-group-btn
-              = button_tag 'Search', class: "btn btn-default", type: "submit" do
+              = button_tag 'Search', class: "btn btn-default", type: "submit", name: nil do
                 %span.glyphicon.glyphicon-search{aria_hidden: true}
-        %p.navbar-text.navbar-right
-          %b Search Host
+        -# %p.navbar-text.navbar-right
+        -#   %b Search Host
     %table.table.table-hover
       %thead{ bgcolor: '#efefef' }
         %tr

@@ -36,10 +36,6 @@ class VulnerabilitiesController < ApplicationController
 
     respond_to do |format|
       if @vulnerability.save
-        # @remedy = RemedyAction.new
-        # @remedy.status = 1
-        # @remedy.vulnerability_id = @vulnerability.id
-        # @remedy.save
         format.html { redirect_to project_group_affected_host_vulnerabilities_path(@project_group, @affected_host), notice: 'Vulnerability was successfully created.' }
         format.json { render :show, status: :created, location: @vulnerability }
       else

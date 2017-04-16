@@ -74,7 +74,7 @@ class ReportsController < ApplicationController
   def clear_selection
     respond_to do |format|
       if @project_group.reports.delete_all.nil?
-        format.html { redirect_to search_reports_path(@project_group), notice: 'All report items selection was successfully deleted.' }
+        format.html { redirect_to search_reports_path(@project_group), notice: 'All report items selection was successfully cleared.' }
       else
         format.html { render root_path }
       end

@@ -15,4 +15,3 @@ $ ->
         output.innerHTML += '<li>' + input.files.item(i).name + '</li>'
         ++i
       output.innerHTML += '</ul>'
-      return

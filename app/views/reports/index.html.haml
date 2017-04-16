@@ -1,21 +1,9 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h3
       %span.glyphicon.glyphicon-option-vertical
       Select Project
   .panel-body
-    -# %table.table.table-striped
-    -#   %thead{ bgcolor: '#efefef' }
-    -#     %th Project Name
-    -#     %th
-    -#   %tbody
-    -#     - @project_groups.each do |project_group|
-    -#       %tr
-    -#         %td= project_group.name
-    -#         %td{ align: 'right' }
-    -#           = link_to 'Hosts Listing',
-    -#             search_reports_path(project_group),
-    -#             class: "btn btn-sm btn-primary"
     %table.table.table-striped
       %thead
         %tr{ bgcolor: '#e2e2e2' }

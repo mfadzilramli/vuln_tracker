@@ -11,8 +11,6 @@ class SourceFilesController < ApplicationController
   # GET /source_files/1.json
   def show
     @affected_hosts = AffectedHost.where(source_file_id: params[:id])
-    # @pie_data = get_pie_data(@affected_hosts)
-    # @radar_data = get_radar_data(@affected_hosts)
   end
 
   # GET /source_files/new

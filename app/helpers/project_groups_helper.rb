@@ -37,15 +37,15 @@ module ProjectGroupsHelper
   end
 
   def get_credential_issues(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ? or vulnerability_name LIKE ? or vulnerability_name LIKE ?',"%password%","%default credentials%", "%unauthenticated%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ? or vulnerability_name ILIKE ? or vulnerability_name ILIKE ?',"%password%","%default credential%", "%unauthenticated%").group(:vulnerability_name).count
   end
 
   def get_unsupported_systems(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?', "%unsupported%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?', "%unsupported%").group(:vulnerability_name).count
   end
 
   def get_writable_path(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name LIKE ?',"%writable%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?',"%writable%").group(:vulnerability_name).count
   end
 
 end

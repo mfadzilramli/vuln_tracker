@@ -1,4 +1,4 @@
-.panel.panel-info
+.panel.panel-success
   .panel-heading
     %h3
       %span.glyphicon.glyphicon-option-vertical
@@ -12,48 +12,56 @@
               %strong Severity
             .panel-body
               .col-md-3
-                = f.label 'Critical'
-                %span.pull-right
-                  = f.check_box :critical, { checked: true }, 4, nil
+                .form-group
+                  .checkbox
+                    %label
+                      = f.check_box :critical, { checked: true, type: 'checkbox' }, 4, nil
+                      &nbsp;Critical
               .col-md-3
-                = f.label 'High'
-                %span.pull-right
-                  = f.check_box :high, { checked: true }, 3, nil
+                .form-group
+                  .checkbox
+                    %label
+                      = f.check_box :high, { checked: true, type: 'checkbox' }, 3, nil
+                      &nbsp;High
               .col-md-3
-                = f.label 'Medium'
-                %span.pull-right
-                  = f.check_box :medium, { checked: true }, 2, nil
+                .form-group
+                  .checkbox
+                    %label
+                      = f.check_box :medium, { checked: true, type: 'checkbox' }, 2, nil
+                      &nbsp;Medium
               .col-md-3
-                = f.label 'Low'
-                %span.pull-right
-                  = f.check_box :low, { checked: true }, 1, nil
+                .form-group
+                  .checkbox
+                    %label
+                      = f.check_box :low, { checked: true, type: 'checkbox' }, 1, nil
+                      &nbsp;Low
 
         .col-md-6
           .list-group
             .list-group-item
               = f.submit 'PDF', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(format: :pdf)}')",
-                class: "btn btn-primary btn-size-fixed"
+                class: "btn btn-raised btn-primary"
               Generate PDF Report (Selected Hosts Only)
             .list-group-item
               = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
-                class: "btn btn-primary btn-size-fixed"
+                class: "btn btn-raised btn-primary"
               Generate Spreadsheet Report (Selected Hosts)
             .list-group-item
               = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
-                class: "btn btn-primary btn-size-fixed"
+                class: "btn btn-raised btn-primary"
               Generate Spreadsheet Report (All Hosts)
             .list-group-item
               = f.submit 'XML', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, format: :xml)}')",
-                class: "btn btn-primary btn-size-fixed"
+                class: "btn btn-raised btn-primary"
               Generate XML Report (Selected Hosts)
             .list-group-item
               = f.submit 'XML', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xml)}')",
-                class: "btn btn-primary btn-size-fixed"
+                class: "btn btn-raised btn-primary"
               Generate XML Report (All Hosts)
   .panel-footer
-    = link_to 'Back', search_reports_path(@project_group), class: "btn btn-primary"
+    = link_to 'Back', search_reports_path(@project_group), class: "btn btn-raised btn-primary"
