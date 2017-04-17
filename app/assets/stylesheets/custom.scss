@@ -11,7 +11,20 @@ body {
   margin-top: 30px;
 }
 
+// .btn-raised {
+//     -webkit-border-radius: 6px;
+//     -moz-border-radius: 6px;
+//     border-radius: 6px;
+//     position: relative;
+// }
+
 .nav {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.label {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -27,19 +40,9 @@ body {
 
 textarea { resize: none; }
 
-// .alert {
-//   margin-top: 0px;
-//   margin-bottom: 0px;
-// }
-
 li {
   font-size: 1.0em;
 }
-
-// .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-//   color:black;
-//   background-color:#efefef;
-// }
 
 .font-color-black {
   color: black;
@@ -111,12 +114,6 @@ a:visited {
 	text-align:center;
 	padding: 0 15px;
 }
-
-// .tab-content {
-//   // color : white;
-//   // background: #F4F4F4;
-//   padding: 5px 15px;
-// }
 
 .navbar {
   margin-bottom: 0px;

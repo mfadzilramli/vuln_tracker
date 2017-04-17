@@ -41,7 +41,7 @@
             .list-group-item
               = f.submit 'PDF', onClick: "$(this).closest('form').attr('action',
                 '#{ generate_custom_project_group_report_path(format: :pdf)}')",
-                class: "btn btn-raised btn-primary"
+                class: "btn badge-btn btn-raised btn-primary"
               Generate PDF Report (Selected Hosts Only)
             .list-group-item
               = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
