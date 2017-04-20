@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
     # @report = Report.new
     if params[:search]
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).where(
-      'host_ip LIKE ?', "%#{params[:search]}%"
+      'host_ip ILIKE ? OR host_fqdn ILIKE ? OR netbios_name ILIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%"
       ).paginate(page: params[:page], per_page: 10)
     else
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).paginate(page: params[:page], per_page: 10)
