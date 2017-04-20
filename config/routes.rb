@@ -35,6 +35,9 @@ Rails.application.routes.draw do
 
     resources :affected_hosts do
       resources :vulnerabilities do
+        member do
+          get 'duplicate'
+        end
         resource :remedy_actions
       end
       resources :reports do
