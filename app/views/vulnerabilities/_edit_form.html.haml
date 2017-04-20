@@ -4,7 +4,7 @@
 = form_for @vulnerability, url: { action: :update } do |f|
   .row
     .col-md-12
-      .form-group
+      .form-group.label-floating
         = f.label :vulnerability_name, "Vulnerability Name"
         = f.text_field :vulnerability_name, class: "form-control"
   .row
@@ -25,16 +25,16 @@
           .form-group
             = f.label :port
             = f.text_field :port, class: "form-control"
-          .form-group
+          .form-group.form-group-sm
             = f.label :service_name
             = f.text_field :service_name, class: "form-control"
-          .form-group
+          .form-group.form-group-sm
             = f.label :protocol
             = f.select :protocol,
               options_for_select([['TCP', 'tcp'], ['UDP', 'udp'], ['ICMP', 'icmp'], ['802.11']], selected: @vulnerability.protocol),
               {},
               { class: "form-control" }
-          .form-group
+          .form-group.form-group-sm
             = f.label :severity
             = f.select :severity,
               options_for_select([['Critical',4], ['High', 3], ['Medium', 2], ['Low', 1]], selected: @vulnerability.severity),
@@ -42,20 +42,20 @@
               { class: "form-control" }
 
     .col-md-9
-      .form-group
+      .form-group.form-group-sm
         = f.label :description
         ~ f.text_area :description, class: "form-control", rows: 6
-      .form-group
+      .form-group.form-group-sm
         = f.label :synopsis
         ~ f.text_area :synopsis, class: "form-control", rows: 4
-      .form-group
+      .form-group.form-group-sm
         = f.label :solution
         ~ f.text_area :solution, class: "form-control", rows: 4
-      .form-group
+      .form-group.form-group-sm
         = f.label :output
         ~ f.text_area :output, class: "form-control", rows: 7
 
-      .form-group
+      .form-group.form-group-sm
         .col-md-12{ align: "right"}
           -# project_group_affected_host_vulnerability(project_group, affected_host, vulnerability)
           = f.submit 'Update', class: "btn btn-raised btn-success"

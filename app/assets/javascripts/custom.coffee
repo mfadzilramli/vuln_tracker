@@ -6,4 +6,5 @@ $ ->
   #   "radioElements": ".radio > label > input[type=radio]"
   # }
   $(document).on 'turbolinks:load', ->
+    $.material.options.autofill = true
     $.material.init()
