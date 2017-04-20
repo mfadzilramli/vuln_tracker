@@ -1,6 +1,6 @@
 class VulnerabilitiesController < ApplicationController
-  before_action :set_project_group, :set_affected_host, only: [ :index, :new, :create, :destroy, :edit, :update ]
-  before_action :set_vulnerability, only: [ :edit, :update, :destroy ]
+  before_action :set_project_group, :set_affected_host, only: [ :index, :new, :create, :destroy, :edit, :update, :duplicate ]
+  before_action :set_vulnerability, only: [ :edit, :duplicate, :update, :destroy ]
 
   def index
       @affected_host = AffectedHost.find(params[:affected_host_id])
@@ -25,6 +25,30 @@ class VulnerabilitiesController < ApplicationController
     #   t.affected_host_id = @affected_host.id
     # end
     @vulnerability = Vulnerability.new
+  end
+
+  def duplicate
+    @copy_vulnerability = Vulnerability.new do |t|
+      t.port = @vulnerability.port
+      t.service_name = @vulnerability.service_name
+      t.protocol = @vulnerability.protocol
+      t.severity = @vulnerability.severity
+      t.plugin_id = @vulnerability.plugin_id
+      t.vulnerability_name = @vulnerability.vulnerability_name
+      t.plugin_family = @vulnerability.plugin_family
+      t.cve = @vulnerability.cve
+      t.cvss_score = @vulnerability.cvss_score
+      t.cpe = @vulnerability.cpe
+      t.vulnerability_date = @vulnerability.vulnerability_date
+      t.patch_date = @vulnerability.patch_date
+      t.exploit_available = @vulnerability.exploit_available
+      t.plugin_type = @vulnerability.plugin_type
+      t.description = @vulnerability.description
+      t.synopsis = @vulnerability.synopsis
+      t.solution = @vulnerability.solution
+      t.output = @vulnerability.output
+      t.last_seen = @vulnerability.last_seen
+    end
   end
 
   def create
