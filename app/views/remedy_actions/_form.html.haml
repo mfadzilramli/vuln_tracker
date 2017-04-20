@@ -1,27 +1,21 @@
 = render 'shared/errors_alert', obj: @remedy_action
 
 = form_for @remedy_action do |f|
-  - if @remedy_action.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@remedy_action.errors.count, "error")} prohibited this remedy_action from being saved:"
-      %ul
-        - @remedy_action.errors.full_messages.each do |msg|
-          %li= msg
+  .row
+    .col-md-6
+      .form-group
+        = f.label :assigned_to
+        = f.text_field :assigned_to, class: "form-control floating-label", style: "width: 500px", placeholder: "Assigned this vulnerability to?"
 
-  .form-group
-    = f.label :status
-    = f.select :status,
-      options_for_select([["Open",1],['In-progress',2],['Closed',3]], @remedy_action.status),
-      {}, { class: "form-control", style: "width: 200px" }
-
-  .form-group
-    = f.label :assigned_to
-    = f.text_field :assigned_to, class: "form-control", style: "width: 500px"
-
-  .form-group
-    = f.label :remarks
-    = f.text_area :remarks, rows: 4, class: "form-control", style: "width: 500px"
-
+      .form-group
+        = f.label :remarks
+        = f.text_area :remarks, rows: 4, class: "form-control floating-label", style: "width: 500px", placeholder: "Put your remarks here"
+    .col-md-6
+      .form-group
+        = f.label :status
+        = f.select :status,
+          options_for_select([["Open",1],['In-progress',2],['Closed',3]], @remedy_action.status),
+          {}, { class: "form-control", style: "width: 200px" }
   .form-group
     = hidden_field_tag :project_group_id, params[:project_group_id]
     = button_tag class: "btn btn-primary" do
