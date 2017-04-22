@@ -8,16 +8,17 @@ class Tracking < ApplicationRecord
 
       case row[11]
       when /open/i
-        cell_status = 1
+        status = 1
       when /in-progress/i
-        cell_status = 2
+        status = 2
       when /closed/i
-        cell_status = 3
+        status = 3
       else
-        cell_status = 1
+        status = 1
       end
 
-      Vulnerability.find(row[4]).remedy_action.update(status: cell_status, remarks: row[12])
+      Vulnerability.find(row[4]).remedy_action.update(status: status, remarks: row[12])
+      Vulnerability.find(row[4]).affected_host.update(host_fqdn: row[2])
     end
   end
 
