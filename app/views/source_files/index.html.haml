@@ -14,10 +14,10 @@
       %tbody
         - @source_files.each do |source_file|
           %tr
-            %td= source_file.title
-            %td= source_file.filename
-            %td= source_file.created_at
-            %td{ align: 'right' }
+            %td.valign= source_file.title
+            %td.valign= source_file.filename
+            %td.valign= source_file.created_at
+            %td.valign{ align: 'right' }
               = link_to 'Edit Title', edit_source_file_path(source_file.id),
                 class: "btn btn-sm btn-primary"
               = link_to  'List Host', source_file_affected_hosts_path(source_file.id),
@@ -26,19 +26,3 @@
                 :method => :delete,
                 :data => { :confirm => 'Are you sure?' },
                 class: "btn btn-sm btn-raised btn-danger"
-              /= link_to  affected_hosts_path(source_id: source_file.id),
-              /  data: { toggle: "popover", trigger: "hover",
-              /  placement: "top", content: "Show details" } do
-              /  %span.glyphicon.glyphicon-list-alt{aria_hidden: "true"}
-              -# = link_to edit_source_file_path(source_file.id),
-              -#   data: { toggle: "popover", trigger: "hover",
-              -#   placement: "top", content: "Edit source title" } do
-              -#   %span.glyphicon.glyphicon-edit{aria_hidden: "true"}
-              -# = link_to  source_file_affected_hosts_path(source_file.id),
-              -#   data: { toggle: "popover", trigger: "hover",
-              -#   placement: "top", content: "Show List" } do
-              -#   %span.glyphicon.glyphicon-list{aria_hidden: "true"}
-              -# = link_to source_file, :method => :delete,
-              -#   data: { toggle: "popover", trigger: "hover", content: "Delete this source",
-              -#   placement: "top", confirm: 'Are you sure?' } do
-              -#   %i.glyphicon.glyphicon-trash{aria_hidden: "true"}
