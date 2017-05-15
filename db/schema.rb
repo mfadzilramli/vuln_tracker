@@ -20,8 +20,10 @@ ActiveRecord::Schema.define(version: 20170406150325) do
     t.string   "host_fqdn"
     t.string   "netbios_name"
     t.string   "mac_address"
+    t.string   "cpe"
     t.string   "platform"
     t.string   "operating_system"
+    t.string   "system_type"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "source_file_id"
@@ -90,27 +92,39 @@ ActiveRecord::Schema.define(version: 20170406150325) do
   end
 
   create_table "vulnerabilities", force: :cascade do |t|
+    t.string   "affected_url"
     t.integer  "port"
     t.string   "service_name"
     t.string   "protocol"
     t.integer  "severity"
     t.integer  "plugin_id"
-    t.string   "vulnerability_name"
+    t.string   "name"
     t.string   "plugin_family"
-    t.string   "cve"
-    t.float    "cvss_score"
+    t.string   "plugin_name"
     t.string   "cpe"
-    t.datetime "vulnerability_date"
+    t.string   "cve"
+    t.string   "cwe"
+    t.float    "cvss_score"
+    t.datetime "publish_date"
     t.datetime "patch_date"
-    t.boolean  "exploit_available"
+    t.boolean  "exploit_available", default: false
+    t.boolean  "exploitable",       default: false
     t.string   "plugin_type"
     t.text     "description"
     t.text     "synopsis"
     t.text     "solution"
-    t.text     "output"
+    t.string   "parameter"
+    t.text     "request"
+    t.text     "response"
+    t.string   "xref"
+    t.string   "cert"
+    t.text     "see_also"
+    t.text     "comment"
+    t.text     "category"
+    t.boolean  "enable",            default: true
     t.datetime "last_seen"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "affected_host_id"
     t.index ["affected_host_id"], name: "index_vulnerabilities_on_affected_host_id", using: :btree
   end

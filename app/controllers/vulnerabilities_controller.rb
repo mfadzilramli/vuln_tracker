@@ -13,7 +13,7 @@ class VulnerabilitiesController < ApplicationController
   def show
     @affected_host = AffectedHost.find(params[:id])
     if params[:v_name].present?
-      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).where('vulnerability_name = ?', params[:v_name]).order('severity DESC').paginate(page: params[:page], per_page: 10)
+      @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).where('name = ?', params[:v_name]).order('severity DESC').paginate(page: params[:page], per_page: 10)
     else
       @vulnerabilities = Vulnerability.where(affected_host_id: params[:id]).order('severity DESC').paginate(page: params[:page], per_page: 10)
     end
@@ -34,19 +34,20 @@ class VulnerabilitiesController < ApplicationController
       t.protocol = @vulnerability.protocol
       t.severity = @vulnerability.severity
       t.plugin_id = @vulnerability.plugin_id
-      t.vulnerability_name = @vulnerability.vulnerability_name
+      t.name = @vulnerability.name
       t.plugin_family = @vulnerability.plugin_family
       t.cve = @vulnerability.cve
       t.cvss_score = @vulnerability.cvss_score
       t.cpe = @vulnerability.cpe
-      t.vulnerability_date = @vulnerability.vulnerability_date
+      t.vulnerability_date = @vulnerability.publish_date
       t.patch_date = @vulnerability.patch_date
       t.exploit_available = @vulnerability.exploit_available
       t.plugin_type = @vulnerability.plugin_type
       t.description = @vulnerability.description
       t.synopsis = @vulnerability.synopsis
       t.solution = @vulnerability.solution
-      t.output = @vulnerability.output
+      t.request = @vulnerability.request
+      t.response = @vulnerability.response
       t.last_seen = @vulnerability.last_seen
     end
   end
@@ -97,8 +98,8 @@ class VulnerabilitiesController < ApplicationController
 
   def vuln_params
     params.fetch(:vulnerability, {}).permit(
-      :vulnerability_name, :plugin_family, :cve, :cvss_score, :port, :service_name,
-      :protocol, :severity, :description, :synopsis, :solution, :output
+      :name, :plugin_family, :cve, :cwe, :cvss_score, :port, :service_name, :affected_url,
+      :protocol, :severity, :description, :synopsis, :solution, :request, :response, :parameter
       )
   end
 

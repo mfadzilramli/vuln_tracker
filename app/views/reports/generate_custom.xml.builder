@@ -21,7 +21,7 @@ xml.NessusClientData_v2 do
         end
         host.vulnerabilities.where(severity: @severity).each do |v|
           xml.ReportItem(port: v.port, svc_name: v.service_name, protocol: v.protocol, severity: v.severity,
-            pluginID: v.plugin_id, pluginName: v.vulnerability_name, pluginFamily: v.plugin_family) do
+            pluginID: v.plugin_id, pluginName: v.name, pluginFamily: v.plugin_family) do
               xml.cve v.cve
               xml.plugin_type v.plugin_type
               xml.risk_score v.cvss_score

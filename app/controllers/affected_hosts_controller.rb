@@ -16,13 +16,13 @@ class AffectedHostsController < ApplicationController
   def show
     #@affected_hosts = @affected_hosts.joins(:vulnerabilities).where("plugin_id = #{params[:plugin_id]}").uniq(:host_ip)
     @project_group = ProjectGroup.find(params[:project_group_id])
-    #@vulnerability_name = Vulnerability.where('plugin_id = ?', params[:plugin_id]).pluck(:vulnerability_name).first
-    @vulnerability_name = Vulnerability.where('vulnerability_name = ?', params[:v_name]).pluck(:vulnerability_name).first
+    #@name = Vulnerability.where('plugin_id = ?', params[:plugin_id]).pluck(:name).first
+    @name = Vulnerability.where('name = ?', params[:v_name]).pluck(:name).first
     if params[:search]
-      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where('vulnerability_name == ?', params[:v_name]).where('host_ip LIKE ?', "%#{params[:search]}%").distinct(:host_ip).paginate(page: params[:page], per_page: 10)
+      @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where('name = ?', params[:v_name]).where('host_ip LIKE ?', "%#{params[:search]}%").distinct(:host_ip).paginate(page: params[:page], per_page: 10)
     else
       @affected_hosts = AffectedHost.where(source_file_id: @project_group.source_file_ids).joins(:vulnerabilities).where(
-      "vulnerability_name = ?", params[:v_name]).distinct(:host_ip).paginate(page: params[:page], per_page: 10)
+      "name = ?", params[:v_name]).distinct(:host_ip).paginate(page: params[:page], per_page: 10)
     end
   end
 

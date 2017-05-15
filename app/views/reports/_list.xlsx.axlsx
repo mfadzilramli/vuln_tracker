@@ -81,7 +81,7 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     # list vulnerabilities by severity (DESC)
     sheet.add_row [ index + 1,
       vulnerability.affected_host.host_ip,
-      vulnerability.vulnerability_name,
+      vulnerability.name,
       vulnerability.id,
       @services,
       vulnerability.synopsis,

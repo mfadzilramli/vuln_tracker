@@ -4,8 +4,8 @@
   .row
     .col-md-12
       .form-group
-        = f.label :vulnerability_name, "Vulnerability Name"
-        = f.text_field :vulnerability_name, class: "form-control"
+        = f.label :name, "Vulnerability Name"
+        = f.text_field :name, class: "form-control"
   .row
     .col-md-3
       .well
@@ -49,8 +49,8 @@
         = f.label :solution
         = f.text_area :solution, class: "form-control", rows: 4
       .form-group
-        = f.label :output
-        = f.text_area :output, class: "form-control", rows: 7
+        = f.label :response
+        = f.text_area :response, class: "form-control", rows: 7
 
       .form-group
         .col-md-12{ align: "right"}

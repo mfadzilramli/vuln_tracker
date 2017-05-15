@@ -46,7 +46,7 @@ wb.add_worksheet(name: 'Host Details') do |sheet|
     end
 
     sheet.add_row [
-      index + 1, vuln.vulnerability_name, vuln.id,
+      index + 1, vuln.name, vuln.id,
       "#{vuln.port.to_s + ' / ' + vuln.service_name + ' / ' + vuln.protocol}",
       cell_data, nil, cell_status, vuln.remedy_action.remarks ],
       style: [ text_center, text_wrap, text_center, nil, cell_color, nil, nil, nil ]
