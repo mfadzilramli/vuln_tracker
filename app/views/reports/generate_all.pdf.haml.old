@@ -44,7 +44,7 @@
       - vulnerabilities.each_with_index do |vulnerability, index|
         %tr
           %td= index + 1
-          %td= vulnerability.vulnerability_name
+          %td= vulnerability.name
           %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
           - case vulnerability.severity
             - when 1
@@ -71,7 +71,7 @@
     %h4 Vulnerability Details
 
   - vulnerabilities.each_with_index do |vulnerability, index|
-    %strong= "#{index + 1}. #{vulnerability.vulnerability_name}"
+    %strong= "#{index + 1}. #{vulnerability.name}"
     %table.table.table-bordered.font-small
       %tbody
         %tr
@@ -94,8 +94,8 @@
         %tr
           %td{ bgcolor: '#efefef' } Output
           %td{ colspan: 3 }
-            - if !vulnerability.output.empty?
-              %pre= vulnerability.output
+            - if !vulnerability.response.empty?
+              %pre= vulnerability.response
             - else
               None
         %tr

@@ -34,7 +34,7 @@
           - @source_id = vulnerability.affected_host.source_file_id
           %tr
             %td.center= vulnerability.id
-            %td.col-md-4= vulnerability.vulnerability_name
+            %td.col-md-4= vulnerability.name
             %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
             %td= vulnerability.plugin_family
             - case vulnerability.severity

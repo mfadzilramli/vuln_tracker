@@ -5,8 +5,10 @@ class CreateAffectedHost < ActiveRecord::Migration[5.0]
       t.string      :host_fqdn
       t.string      :netbios_name
       t.string      :mac_address
+      t.string      :cpe
       t.string      :platform
       t.string      :operating_system
+      t.string      :system_type
       t.timestamps
     end
   end

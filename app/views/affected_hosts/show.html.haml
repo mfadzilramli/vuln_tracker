@@ -2,7 +2,7 @@
   .panel-heading
     %h4
       %span.glyphicon.glyphicon-option-vertical
-      #{@vulnerability_name}
+      #{@name}
   .panel-body
 
     %table.table.table-striped
@@ -25,7 +25,7 @@
             %td= host.host_fqdn ||= host.netbios_name
             %td= host.platform
             %td= host.operating_system ||= 'Unidentified'
-            %td.center= host.vulnerabilities.where('vulnerability_name = ?', @vulnerability_name).count
+            %td.center= host.vulnerabilities.where('name = ?', @name).count
             %td
               -# = link_to affected_host_path(host.id, project_group_id: params[:id]), method: :delete, data: { confirm: 'Are you sure?' },
               -#   data: { toggle: "popover", trigger: "hover",

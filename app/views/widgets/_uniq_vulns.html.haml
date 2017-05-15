@@ -17,12 +17,12 @@
           /%td= @source_file.title
           -# %td.col-sm-1.center= obj.count
           %td.col-sm-1.center
-            = (obj.joins(:vulnerabilities).group(:vulnerability_name).count).count
+            = (obj.joins(:vulnerabilities).group(:name).count).count
           %td.col-sm-1.center
-            = (obj.joins(:vulnerabilities).group(:vulnerability_name).where('severity = 4').count).count
+            = (obj.joins(:vulnerabilities).group(:name).where('severity = 4').count).count
           %td.col-sm-1.center
-            = (obj.joins(:vulnerabilities).group(:vulnerability_name).where('severity = 3').count).count
+            = (obj.joins(:vulnerabilities).group(:name).where('severity = 3').count).count
           %td.col-sm-1.center
-            = (obj.joins(:vulnerabilities).group(:vulnerability_name).where('severity = 2').count).count
+            = (obj.joins(:vulnerabilities).group(:name).where('severity = 2').count).count
           %td.col-sm-1.center
-            = (obj.joins(:vulnerabilities).group(:vulnerability_name).where('severity = 1').count).count
+            = (obj.joins(:vulnerabilities).group(:name).where('severity = 1').count).count

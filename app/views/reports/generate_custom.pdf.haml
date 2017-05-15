@@ -45,7 +45,7 @@
       - vulnerabilities.each_with_index do |vulnerability, index|
         %tr
           %td= index + 1
-          %td= vulnerability.vulnerability_name
+          %td= vulnerability.name
           %td= "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
           - case vulnerability.severity
             - when 1
@@ -72,22 +72,25 @@
     %h4 Vulnerability Details
 
   - vulnerabilities.each_with_index do |vulnerability, index|
-    %strong= "#{index + 1}. #{vulnerability.vulnerability_name}"
+    %strong= "#{index + 1}. #{vulnerability.name}"
     %table.table.table-bordered.font-small
       %tbody
         %tr
           %td{ bgcolor: '#efefef', style: "width:100px" } Severity
           - case vulnerability.severity
             - when 1
-              %td.center{ bgcolor: '#c8e6c9', style: "vertical-align:middle;width:400px" } Low
+              %td.center{ colspan: 3, bgcolor: '#c8e6c9', style: "vertical-align:middle;width:400px" } Low
             - when 2
-              %td.center{ bgcolor: '#fff9c4', style: "vertical-align:middle;width:400px" } Medium
+              %td.center{ colspan: 3, bgcolor: '#fff9c4', style: "vertical-align:middle;width:400px" } Medium
             - when 3
-              %td.center{ bgcolor: '#ffe0b2', style: "vertical-align:middle;width:400px" } High
+              %td.center{ colspan: 3, bgcolor: '#ffe0b2', style: "vertical-align:middle;width:400px" } High
             - when 4
-              %td.center{ bgcolor: '#ffcdd2', style: "vertical-align:middle;width:400px" } Critical
+              %td.center{ colspan: 3, bgcolor: '#ffcdd2', style: "vertical-align:middle;width:400px" } Critical
             - else
-          %td.center Risk Score
+        %tr
+          %td{ bgcolor: '#efefef' } CVE/CWE
+          %td= vulnerability.cve ||= vulnerability.cwe
+          %td.center{ bgcolor: '#efefef' } Risk Score
           %td.center= vulnerability.cvss_score
         %tr
           %td{ bgcolor: '#efefef' } Impact
@@ -95,10 +98,16 @@
         %tr
           %td{ bgcolor: '#efefef' } Output
           %td{ colspan: 3 }
-            - if !vulnerability.output.empty?
-              %pre= vulnerability.output
+            - if vulnerability.plugin_family == 'Web Application'
+              - @output = vulnerability.affected_url + "\n\n"
+              - @output << vulnerability.request + "\n\n"
+              - @output << vulnerability.parameter
+              %pre= @output
             - else
-              None
+              - if !vulnerability.response.empty?
+                %pre= vulnerability.response
+              - else
+                None
         %tr
           %td{ bgcolor: '#efefef' } Remediation
           %td{ colspan: 3 }

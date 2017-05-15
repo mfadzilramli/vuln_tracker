@@ -13,9 +13,9 @@ module ProjectGroupsHelper
   end
 
   def get_top_vulns_critical(affected_hosts)
-    #Vulnerability.where(affected_host_id: h, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).
-    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:vulnerability_name).order('count_all DESC').limit(5).count
-    top_vulns = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action).where('status != 3').group(:vulnerability_name).order('count_all DESC').limit(5).count
+    #Vulnerability.where(affected_host_id: h, severity: 4).joins(:remedy_action).where('status != 3').group(:name).order('count_all DESC').limit(5).
+    #top_vulns = affected_hosts.joins(:vulnerabilities).where('severity = 4').group(:name).order('count_all DESC').limit(5).count
+    top_vulns = Vulnerability.where(affected_host_id: affected_hosts, severity: 4).joins(:remedy_action).where('status != 3').group(:name).order('count_all DESC').limit(5).count
     return top_vulns
   end
 
@@ -37,15 +37,15 @@ module ProjectGroupsHelper
   end
 
   def get_credential_issues(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ? or vulnerability_name ILIKE ? or vulnerability_name ILIKE ?',"%password%","%default credential%", "%unauthenticated%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('name ILIKE ? or name ILIKE ? or name ILIKE ?',"%password%","%default credential%", "%unauthenticated%").group(:name).count
   end
 
   def get_unsupported_systems(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?', "%unsupported%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('name ILIKE ?', "%unsupported%").group(:name).count
   end
 
   def get_writable_path(affected_hosts)
-    return Vulnerability.where(affected_host_id: affected_hosts).where('vulnerability_name ILIKE ?',"%writable%").group(:vulnerability_name).count
+    return Vulnerability.where(affected_host_id: affected_hosts).where('name ILIKE ?',"%writable%").group(:name).count
   end
 
 end
