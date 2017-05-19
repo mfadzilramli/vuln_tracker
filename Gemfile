@@ -38,8 +38,8 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'bootstrap-material-design'
-gem 'material_icons'
+# gem 'bootstrap-material-design'
+# gem 'material_icons'
 # gem 'mdbootstrap-rails'
 # gem 'material_design_lite-sass'
 gem 'haml'
