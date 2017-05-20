@@ -63,9 +63,16 @@ class ReportsController < ApplicationController
           margin: { top:    15, bottom: 15, left:   10, right:  10 }
       end
       format.xlsx do
+        if params[:options].present? && params[:options] == 'source'
+          @source_file = SourceFile.find(params[:source])
+          @filename = @source_file.title
+        else
+          @filename = @project_group.name
+        end
+
         render xlsx: 'generate_custom',
-        locals: { project_group: @project_group, severity: @severity, options: params[:options] },
-        filename: "#{@project_group.name}_custom-report-#{DateTime.now.to_i}"
+        locals: { project_group: @project_group, source_file: @source_file, severity: @severity, options: params[:options] },
+        filename: "#{@filename}_custom-report-#{DateTime.now.to_i}"
       end
       format.xml
     end

@@ -6,7 +6,7 @@
   .panel-body
     = form_for :report, url: { action: :generate_custom } do |f|
       .row
-        .col-md-6
+        .col-md-4
           .panel.panel-default
             .panel-heading
               %strong Severity
@@ -36,23 +36,24 @@
                       = f.check_box :low, { checked: true, type: 'checkbox' }, 1, nil
                       &nbsp;Low
 
-        .col-md-6
-          .list-group
-            .list-group-item
-              = f.submit 'PDF', onClick: "$(this).closest('form').attr('action',
-                '#{ generate_custom_project_group_report_path(format: :pdf)}')",
-                class: "btn badge-btn btn-raised btn-primary"
-              Generate PDF Report (Selected Hosts Only)
-            .list-group-item
-              = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
-                '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
-                class: "btn btn-raised btn-primary"
-              Generate Spreadsheet Report (Selected Hosts)
-            .list-group-item
-              = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
-                '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
-                class: "btn btn-raised btn-primary"
-              Generate Spreadsheet Report (All Hosts)
+        .col-md-8
+          .row
+            .list-group
+              .list-group-item
+                = f.submit 'PDF', onClick: "$(this).closest('form').attr('action',
+                  '#{ generate_custom_project_group_report_path(format: :pdf)}')",
+                  class: "btn badge-btn btn-raised btn-primary"
+                Generate PDF Report (Selected Hosts Only)
+              .list-group-item
+                = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
+                  '#{ generate_custom_project_group_report_path(@project_group, format: :xlsx)}')",
+                  class: "btn btn-raised btn-primary"
+                Generate Spreadsheet Report (Selected Hosts)
+              .list-group-item
+                = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
+                  '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xlsx)}')",
+                  class: "btn btn-raised btn-primary"
+                Generate Spreadsheet Report (All Hosts)
             -# .list-group-item
             -#   = f.submit 'XML', onClick: "$(this).closest('form').attr('action',
             -#     '#{ generate_custom_project_group_report_path(@project_group, format: :xml)}')",
@@ -63,5 +64,42 @@
             -#     '#{ generate_custom_project_group_report_path(@project_group, options: 'all', format: :xml)}')",
             -#     class: "btn btn-raised btn-primary"
             -#   Generate XML Report (All Hosts)
+          .row
+            .panel.panel-default
+              .panel-body
+                %table.table.table-striped
+                  %thead
+                    %tr
+                      %th Data Source
+                      %th Host Count
+                      %th.center{ colspan: 4 } Risk Level
+                      %th{ width: 80 } Format
+                  %tbody
+                    - @project_group.source_files.each do |source_file|
+                      %tr
+                        %td= source_file.title
+                        %td= AffectedHost.where(source_file_id: source_file.id).count
+
+                        %td
+                          - if !Vulnerability.where(affected_host_id: source_file.affected_host_ids, severity: 4).empty?
+                            .circle-sm{ style: "background-color:red" }
+                              %span
+                        %td
+                          - if !Vulnerability.where(affected_host_id: source_file.affected_host_ids, severity: 3).empty?
+                            .circle-sm{ style: "background-color:orange" }
+                              %span
+                        %td
+                          - if !Vulnerability.where(affected_host_id: source_file.affected_host_ids, severity: 2).empty?
+                            .circle-sm{ style: "background-color:yellow" }
+                              %span
+                        %td
+                          - if !Vulnerability.where(affected_host_id: source_file.affected_host_ids, severity: 1).empty?
+                            .circle-sm{ style: "background-color:green" }
+                              %span
+
+                        %td
+                          = f.submit 'XLS', onClick: "$(this).closest('form').attr('action',
+                            '#{ generate_custom_project_group_report_path(@project_group, source: source_file, options: 'source', format: :xlsx)}')",
+                            class: "btn btn-sm btn-primary"
   .panel-footer
     = link_to 'Back', search_reports_path(@project_group), class: "btn btn-raised btn-primary"
