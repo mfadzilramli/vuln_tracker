@@ -42,8 +42,8 @@ class SourceFile < ApplicationRecord
             @vuln.plugin_family = item.attributes['pluginFamily'].value
 
             # TODO : need to loop this element
-            @vuln.cve = item.xpath('./cve').map(&:text).join(", ")
-            @vuln.cve = item.xpath('./cwe').map(&:text).join(", ")
+            @vuln.cve = item.xpath('./cve').map(&:text).join(",")
+            @vuln.cwe = item.xpath('./cwe').map(&:text).join(",")
             @vuln.cpe = item.xpath('./cpe').text
 
             @vuln.plugin_name = item.xpath('./plugin_name').text
@@ -59,7 +59,7 @@ class SourceFile < ApplicationRecord
             @vuln.response = item.xpath('./response').text
             @vuln.parameter = item.xpath('./parameter').text
 
-            @vuln.xref = item.xpath('./xref').map(&:text).join(", ")
+            @vuln.xref = item.xpath('./xref').map(&:text).join(",")
 
             @vuln.publish_date = item.xpath('./publish_date').text
             @vuln.patch_date = item.xpath('./patch_date').text
