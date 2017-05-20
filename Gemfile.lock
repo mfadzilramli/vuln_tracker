@@ -77,6 +77,8 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.17)
+    font-awesome-rails (4.7.0.1)
+      railties (>= 3.2, < 5.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -229,6 +231,7 @@ DEPENDENCIES
   chartjs-ror
   coffee-rails (~> 4.2)
   devise
+  font-awesome-rails
   haml
   haml-rails
   jbuilder (~> 2.5)

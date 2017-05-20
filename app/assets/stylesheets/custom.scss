@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
 
 body {
   background-color: #4e4e4e;
@@ -113,6 +114,26 @@ a:visited {
 	width:120px;
 	text-align:center;
 	padding: 0 15px;
+}
+
+.circle-sm {
+	background: grey;
+	border-radius:50%;
+	// color: white;
+	display:table;
+	height: 12px;
+	// font-weight: bold;
+	// font-size: 3.2em;
+	width: auto;
+	margin:0 auto;
+}
+.circle-sm span {
+	display:table-cell;
+	vertical-align:middle;
+	height:12px;
+	width:12px;
+	// text-align:center;
+	padding: 0 5px;
 }
 
 .navbar {

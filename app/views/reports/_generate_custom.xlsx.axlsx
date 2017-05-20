@@ -16,10 +16,15 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
   bg_3 = sheet.styles.add_style(bg_color: "00E500", type: :dxf)
 
   # Legend color
-  bg_critical    = sheet.styles.add_style(bg_color: "ffcdd2", border: Axlsx::STYLE_THIN_BORDER)
-  bg_high = sheet.styles.add_style(bg_color: "ffe0b2", border: Axlsx::STYLE_THIN_BORDER)
-  bg_medium  = sheet.styles.add_style(bg_color: "fff9c4", border: Axlsx::STYLE_THIN_BORDER)
-  bg_low  = sheet.styles.add_style(bg_color: "c8e6c9", border: Axlsx::STYLE_THIN_BORDER)
+  bg_critical    = sheet.styles.add_style(bg_color: "ff0000", border: Axlsx::STYLE_THIN_BORDER)
+  bg_high = sheet.styles.add_style(bg_color: "ff8000", border: Axlsx::STYLE_THIN_BORDER)
+  bg_medium  = sheet.styles.add_style(bg_color: "fff00", border: Axlsx::STYLE_THIN_BORDER)
+  bg_low  = sheet.styles.add_style(bg_color: "00b300", border: Axlsx::STYLE_THIN_BORDER)
+
+  # bg_critical    = sheet.styles.add_style(bg_color: "ffcdd2", border: Axlsx::STYLE_THIN_BORDER)
+  # bg_high = sheet.styles.add_style(bg_color: "ffe0b2", border: Axlsx::STYLE_THIN_BORDER)
+  # bg_medium  = sheet.styles.add_style(bg_color: "fff9c4", border: Axlsx::STYLE_THIN_BORDER)
+  # bg_low  = sheet.styles.add_style(bg_color: "c8e6c9", border: Axlsx::STYLE_THIN_BORDER)
 
   # legend for dropdown
   sheet.add_row [ nil, 'Legend' ], style: [ nil, text_bold ]
@@ -60,20 +65,20 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     case vulnerability.severity
     when 1
       @severity = 'Low'
-      bg_color_center = sheet.styles.add_style(bg_color: 'c8e6c9', wrap_text: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
-      bg_color = sheet.styles.add_style(bg_color: 'c8e6c9', wrap_text: true, border: { style: :thin, color: '00000000' })
+      bg_color_center = sheet.styles.add_style(bg_color: '00b300', wrap_text: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: '00b300', wrap_text: true, border: { style: :thin, color: '00000000' })
     when 2
       @severity = 'Medium'
-      bg_color_center = sheet.styles.add_style(bg_color: 'fff9c4', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
-      bg_color = sheet.styles.add_style(bg_color: 'fff9c4', wrap_text: true, border: { style: :thin, color: '00000000' })
+      bg_color_center = sheet.styles.add_style(bg_color: 'fff00', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'fff00', wrap_text: true, border: { style: :thin, color: '00000000' })
     when 3
       @severity = 'High'
-      bg_color_center = sheet.styles.add_style(bg_color: 'ffe0b2', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
-      bg_color = sheet.styles.add_style(bg_color: 'ffe0b2', wrap_text: true, border: { style: :thin, color: '00000000' })
+      bg_color_center = sheet.styles.add_style(bg_color: 'ff8000', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'ff8000', wrap_text: true, border: { style: :thin, color: '00000000' })
     when 4
       @severity = 'Critical'
-      bg_color_center = sheet.styles.add_style(bg_color: 'ffcdd2', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
-      bg_color = sheet.styles.add_style(bg_color: 'ffcdd2', wrap_text: true, border: { style: :thin, color: '00000000' })
+      bg_color_center = sheet.styles.add_style(bg_color: 'ff0000', text_wrap: true, border: { style: :thin, color: '00000000' }, alignment: { horizontal: :center })
+      bg_color = sheet.styles.add_style(bg_color: 'ff0000', wrap_text: true, border: { style: :thin, color: '00000000' })
 
     else
       @severity = 'None'
