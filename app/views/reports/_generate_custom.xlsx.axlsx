@@ -105,6 +105,23 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
     # assign services information
     @services = "#{vulnerability.port} / #{vulnerability.service_name} / #{vulnerability.protocol}"
 
+    @output = ""
+    # assign output results
+    # byebug
+    if !vulnerability.affected_url.empty?
+      @output << "Affected URL: #{vulnerability.affected_url}\n\n"
+      @output << vulnerability.request
+      if !vulnerability.parameter.empty?
+        @output << "\n\nAffected Parameter: #{vulnerability.parameter}"
+      end
+    else
+      @output = vulnerability.response
+    end
+
+
+
+
+
     # list vulnerabilities by severity (DESC)
     sheet.add_row [ index + 1,
       vulnerability.affected_host.host_ip,
@@ -115,7 +132,7 @@ wb.add_worksheet(name: 'Vulnerability Tracking') do |sheet|
       @severity,
       vulnerability.cve,
       vulnerability.synopsis,
-      vulnerability.response,
+      @output,
       vulnerability.solution,
       @status,
       vulnerability.remedy_action.remarks ], style: item_row_styles
